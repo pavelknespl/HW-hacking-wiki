@@ -73,4 +73,24 @@ This section ties the protocols and tools into complete workflows: how to actual
 
     [:octicons-arrow-right-24: Read](side-channel.md)
 
+-   __Chain of Trust and Secure Boot__
+
+    How verified boot chains, TrustZone, and eFuse roots are built and broken.
+
+    [:octicons-arrow-right-24: Read](chain-of-trust.md)
+
+-   __TPM Sniffing__
+
+    Capture keys off an unencrypted TPM bus, including BitLocker.
+
+    [:octicons-arrow-right-24: Read](tpm-sniffing.md)
+
+-   __Firmware Modification__
+
+    Repack, patch, defeat signatures, and flash back.
+
+    [:octicons-arrow-right-24: Read](firmware-modification.md)
+
 </div>
+
+For chip-specific read-out protection and its bypasses, see [MCU Targets](../mcu/index.md).

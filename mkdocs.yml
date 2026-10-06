@@ -120,6 +120,7 @@ nav:
       - Finding and Identifying Pins: fundamentals/identifying-pins.md
       - Logic Levels and Level Shifting: fundamentals/level-shifting.md
       - Memory Types: fundamentals/memory-types.md
+      - Soldering and Rework: fundamentals/soldering-rework.md
   - Protocols and Interfaces:
       - protocols/index.md
       - UART: protocols/uart.md
@@ -128,6 +129,14 @@ nav:
       - I2C: protocols/i2c.md
       - SPI: protocols/spi.md
       - eMMC and SD: protocols/emmc.md
+      - USB: protocols/usb.md
+      - 1-Wire: protocols/one-wire.md
+      - MDIO: protocols/mdio.md
+      - LPC: protocols/lpc.md
+  - Automotive:
+      - automotive/index.md
+      - CAN Bus: automotive/can-bus.md
+      - UDS and OBD-II: automotive/uds-obd2.md
   - Software Tools:
       - software/index.md
       - Serial Consoles: software/serial-consoles.md
@@ -150,10 +159,20 @@ nav:
       - Bootloader Bypass: attacks/bootloader-bypass.md
       - Fault Injection and Glitching: attacks/fault-injection.md
       - Side-Channel Attacks: attacks/side-channel.md
+      - Chain of Trust and Secure Boot: attacks/chain-of-trust.md
+      - TPM Sniffing: attacks/tpm-sniffing.md
+      - Firmware Modification: attacks/firmware-modification.md
+  - MCU Targets:
+      - mcu/index.md
+      - STM32 RDP: mcu/stm32-rdp.md
+      - nRF52 APPROTECT: mcu/nrf52-approtect.md
+      - ESP32 Security: mcu/esp32-security.md
+      - AVR and PIC Fuses: mcu/avr-pic-fuses.md
   - Reverse Engineering:
       - reverse-engineering/index.md
       - Ghidra Setup: reverse-engineering/ghidra-setup.md
       - Firmware RE Workflow: reverse-engineering/firmware-workflow.md
+      - Emulation and Dynamic Analysis: reverse-engineering/emulation.md
   - Radio and RF:
       - radio/index.md
       - SDR Basics: radio/sdr-basics.md
@@ -165,4 +184,6 @@ nav:
   - Reference:
       - reference/index.md
       - Pinout Cheat Sheet: reference/pinouts.md
+      - Flash Chip Reference: reference/flash-chips.md
+      - Interface Identification: reference/interface-identification.md
       - Glossary: reference/glossary.md

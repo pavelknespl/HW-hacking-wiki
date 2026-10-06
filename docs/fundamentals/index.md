@@ -40,4 +40,10 @@ Before you can attack a device you have to read it. This section covers the grou
 
     [:octicons-arrow-right-24: Read](memory-types.md)
 
+-   __Soldering and Rework__
+
+    Fine wires, hot air, chip-off, and reading BGA with adapters.
+
+    [:octicons-arrow-right-24: Read](soldering-rework.md)
+
 </div>

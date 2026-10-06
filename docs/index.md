@@ -69,6 +69,22 @@ This site collects the workflow that repeats across almost every embedded target
 
     [:octicons-arrow-right-24: Reverse Engineering](reverse-engineering/index.md)
 
+-   :material-car:{ .lg .middle } __Automotive__
+
+    ---
+
+    CAN bus, UDS, and OBD-II: reading, injecting, and diagnosing vehicle networks.
+
+    [:octicons-arrow-right-24: Automotive](automotive/index.md)
+
+-   :material-memory:{ .lg .middle } __MCU targets__
+
+    ---
+
+    Chip-specific read-out protection and its bypasses: STM32, nRF52, ESP32, AVR.
+
+    [:octicons-arrow-right-24: MCU Targets](mcu/index.md)
+
 </div>
 
 ## The core loop

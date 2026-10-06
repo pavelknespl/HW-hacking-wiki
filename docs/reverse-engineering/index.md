@@ -16,6 +16,12 @@ Extraction gets you the bytes; reverse engineering turns them into understanding
 
     [:octicons-arrow-right-24: Read](firmware-workflow.md)
 
+-   __Emulation and Dynamic Analysis__
+
+    QEMU, FirmAE, EMBA, and Qiling: run the firmware, do not just read it.
+
+    [:octicons-arrow-right-24: Read](emulation.md)
+
 </div>
 
 ## Tools worth knowing

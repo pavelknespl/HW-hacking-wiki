@@ -40,7 +40,33 @@ Chips talk to each other and to the outside world over a small set of standard b
 
     [:octicons-arrow-right-24: Read](emmc.md)
 
+-   __USB__
+
+    Descriptors, enumeration, DFU, and device emulation with Facedancer.
+
+    [:octicons-arrow-right-24: Read](usb.md)
+
+-   __1-Wire__
+
+    Single-line sensors, ID chips, and consumable authentication.
+
+    [:octicons-arrow-right-24: Read](one-wire.md)
+
+-   __MDIO__
+
+    Configuring and reading Ethernet PHY registers.
+
+    [:octicons-arrow-right-24: Read](mdio.md)
+
+-   __LPC__
+
+    The legacy bus behind TPM sniffing and BIOS flash.
+
+    [:octicons-arrow-right-24: Read](lpc.md)
+
 </div>
+
+For vehicle networks (CAN, UDS, OBD-II), see the dedicated [Automotive](../automotive/index.md) section.
 
 ## Choosing where to connect
 
