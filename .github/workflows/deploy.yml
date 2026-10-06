@@ -1,34 +1,31 @@
-name: Deploy wiki
+name: Deploy to home LXC
 
+# Only the main branch deploys. Pushes to any other branch never publish:
+# the branch filter below means the workflow is not even queued for them.
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
-permissions:
-  contents: write
+concurrency:
+  group: deploy-home
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  deploy:
+    # Pinned to the self-hosted runner inside the home LXC (label "hwhacking").
+    runs-on: [self-hosted, hwhacking]
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - name: Build site and publish to nginx webroot
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --quiet --upgrade pip
+          .venv/bin/pip install --quiet -r requirements.txt
+          .venv/bin/mkdocs build -d /var/www/hwhacking --clean
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          key: mkdocs-material-${{ hashFiles('requirements.txt') }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-
-      - run: pip install -r requirements.txt
-
-      - name: Build and deploy to gh-pages
-        run: mkdocs gh-deploy --force --clean
+      - name: Report
+        run: echo "Published $(find /var/www/hwhacking -type f | wc -l) files to /var/www/hwhacking"
