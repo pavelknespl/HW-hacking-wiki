@@ -16,6 +16,42 @@ Many devices talk wirelessly, and that radio link is an attack surface in its ow
 
     [:octicons-arrow-right-24: Read](rf-attacks.md)
 
+-   __NFC and RFID__
+
+    125 kHz and 13.56 MHz tags, MIFARE, cloning with a Proxmark3.
+
+    [:octicons-arrow-right-24: Read](nfc-rfid.md)
+
+-   __Bluetooth Low Energy__
+
+    Sniffing BLE, GATT enumeration, and pairing weaknesses.
+
+    [:octicons-arrow-right-24: Read](ble.md)
+
+-   __Zigbee, Thread, 802.15.4__
+
+    Smart-home mesh networks and the Zigbee join-key weakness.
+
+    [:octicons-arrow-right-24: Read](zigbee-thread.md)
+
+-   __LoRa and LoRaWAN__
+
+    Long-range IoT and where its AES keys leak.
+
+    [:octicons-arrow-right-24: Read](lora.md)
+
+-   __GNSS and GPS Spoofing__
+
+    Why civilian GPS is spoofable, and how to defend against it.
+
+    [:octicons-arrow-right-24: Read](gps-spoofing.md)
+
+-   __Key Fobs and Rolling Codes__
+
+    Fixed codes, rolling codes, relay attacks on car keys.
+
+    [:octicons-arrow-right-24: Read](key-fobs.md)
+
 </div>
 
 !!! warning "Transmitting is regulated"
