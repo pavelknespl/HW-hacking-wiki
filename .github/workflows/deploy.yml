@@ -8,6 +8,10 @@ on:
       - main
   workflow_dispatch:
 
+# Least privilege: the job only reads the repo (checkout); it needs nothing else.
+permissions:
+  contents: read
+
 concurrency:
   group: deploy-home
   cancel-in-progress: true
