@@ -1,0 +1,168 @@
+site_name: hwhack.info
+site_description: A practical, vendor-neutral wiki for hardware hacking, firmware security, and embedded reverse engineering.
+site_author: hwhack.info contributors
+site_url: https://hwhack.info/
+copyright: Content licensed under CC BY-SA 4.0. For authorized security research and education only.
+
+repo_name: pavelknespl/hwhack.info
+repo_url: https://github.com/pavelknespl/hwhack.info
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/chip
+  favicon: assets/favicon.png
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Follow system theme
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.keys
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/pavelknespl/hwhack.info
+  generator: false
+
+not_in_nav: |
+  /index.md
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - getting-started/index.md
+      - What Is Hardware Hacking: getting-started/what-is-hardware-hacking.md
+      - Lab Setup and Safety: getting-started/lab-setup.md
+      - The Toolkit: getting-started/toolkit.md
+      - Methodology: getting-started/methodology.md
+  - Fundamentals:
+      - fundamentals/index.md
+      - CPU Architectures: fundamentals/architectures.md
+      - Chip Identification: fundamentals/chip-identification.md
+      - PCB Recon: fundamentals/pcb-recon.md
+      - Finding and Identifying Pins: fundamentals/identifying-pins.md
+      - Logic Levels and Level Shifting: fundamentals/level-shifting.md
+      - Memory Types: fundamentals/memory-types.md
+  - Protocols and Interfaces:
+      - protocols/index.md
+      - UART: protocols/uart.md
+      - JTAG: protocols/jtag.md
+      - SWD: protocols/swd.md
+      - I2C: protocols/i2c.md
+      - SPI: protocols/spi.md
+      - eMMC and SD: protocols/emmc.md
+  - Software Tools:
+      - software/index.md
+      - Serial Consoles: software/serial-consoles.md
+      - OpenOCD: software/openocd.md
+      - flashrom: software/flashrom.md
+      - Binwalk and Extraction: software/binwalk.md
+      - dd and Imaging: software/dd-imaging.md
+      - UBI and NAND Tools: software/ubi-nand.md
+      - Logic Analyzers (sigrok): software/logic-analyzers.md
+  - Attacks and Techniques:
+      - attacks/index.md
+      - Reconnaissance: attacks/recon.md
+      - Firmware Extraction: attacks/firmware-extraction.md
+      - SPI Flash Dumping: attacks/spi-flash-dump.md
+      - NAND and eMMC Dumping: attacks/nand-emmc-dump.md
+      - Firmware Analysis: attacks/firmware-analysis.md
+      - Bootloader Access (U-Boot): attacks/bootloader-access.md
+      - Getting a Shell: attacks/getting-a-shell.md
+      - Escaping Restricted Shells: attacks/restricted-shell-escape.md
+      - Bootloader Bypass: attacks/bootloader-bypass.md
+      - Fault Injection and Glitching: attacks/fault-injection.md
+      - Side-Channel Attacks: attacks/side-channel.md
+  - Reverse Engineering:
+      - reverse-engineering/index.md
+      - Ghidra Setup: reverse-engineering/ghidra-setup.md
+      - Firmware RE Workflow: reverse-engineering/firmware-workflow.md
+  - Radio and RF:
+      - radio/index.md
+      - SDR Basics: radio/sdr-basics.md
+      - RF Attacks: radio/rf-attacks.md
+  - Scripting and Automation:
+      - scripting/index.md
+      - GPIO Control: scripting/gpio-control.md
+      - Automating Attacks: scripting/automation.md
+  - Reference:
+      - reference/index.md
+      - Pinout Cheat Sheet: reference/pinouts.md
+      - Glossary: reference/glossary.md

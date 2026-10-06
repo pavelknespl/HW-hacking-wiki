@@ -1,0 +1,66 @@
+/* hwhack.info minimal theme tweaks */
+
+:root {
+  --md-primary-fg-color: #141414;
+  --md-accent-fg-color: #ff5722;
+}
+
+/* Tighter, calmer typography */
+.md-typeset {
+  font-feature-settings: "kern", "liga";
+}
+
+.md-typeset h1 {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.md-typeset h2 {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin-top: 2.2rem;
+}
+
+/* Landing page cards */
+.grid.cards > ul > li {
+  border-radius: 0.6rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.grid.cards > ul > li:hover {
+  border-color: var(--md-accent-fg-color);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Pin reference tables read better monospaced */
+.md-typeset table:not([class]) code {
+  white-space: nowrap;
+}
+
+/* Make keyboard keys look like keys */
+.md-typeset kbd {
+  border-radius: 0.3rem;
+}
+
+/* Subtle footer */
+.md-footer-meta {
+  background-color: #0b0b0b;
+}
+
+/* Hero block on the home page */
+.hero {
+  padding: 2.4rem 0 1.2rem 0;
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+
+.hero p {
+  font-size: 1.05rem;
+  opacity: 0.8;
+  max-width: 42rem;
+}
