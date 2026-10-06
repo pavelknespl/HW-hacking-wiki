@@ -1,6 +1,6 @@
 # Secure Elements
 
-A secure element is a dedicated chip (or an on-die subsystem) built to store keys and perform cryptography while resisting the very attacks the rest of this wiki describes. You meet them as crypto-authentication chips (Microchip ATECC), SIM/eSIM and smart cards, hardware wallets, TPMs, and the secure enclaves inside SoCs. Their whole job is to make [key extraction](firmware-analysis.md#sweep-for-secrets) hard, which changes how you approach a device that uses one. For authorized testing.
+A secure element is a dedicated chip (or an on-die subsystem) built to store keys and perform cryptography while resisting the very attacks the rest of this wiki describes. You meet them as crypto-authentication chips (Microchip ATECC), SIM/eSIM and smart cards, hardware wallets, TPMs, and the secure enclaves inside SoCs. Their whole job is to make [key extraction](firmware-analysis.md) hard, which changes how you approach a device that uses one. For authorized testing.
 
 ## What they are and why they exist
 
@@ -17,7 +17,7 @@ They typically include the physical countermeasures from the [invasive](decappin
 
 When a device stores its secret in a secure element rather than plain [flash](spi-flash-dump.md), the easy wins disappear:
 
-- A [firmware dump](firmware-extraction.md) no longer contains the key; it contains only calls to the secure element.
+- A [firmware dump](firmware-extraction.md) no longer contains the key (unlike the usual [plaintext-secret sweep](firmware-analysis.md)); it contains only calls to the secure element.
 - You cannot read the key over the bus, because it never crosses the bus.
 
 So the attack shifts from "find the key" to one of:

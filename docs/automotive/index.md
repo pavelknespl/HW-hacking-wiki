@@ -16,6 +16,12 @@ Vehicles are rolling computer networks. Dozens of electronic control units (ECUs
 
     [:octicons-arrow-right-24: Read](uds-obd2.md)
 
+-   __Other Vehicle Buses__
+
+    LIN, CAN FD, FlexRay, and Automotive Ethernet (DoIP/SOME-IP).
+
+    [:octicons-arrow-right-24: Read](other-buses.md)
+
 </div>
 
 ## Why automotive is its own topic

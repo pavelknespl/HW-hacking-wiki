@@ -64,9 +64,33 @@ Chips talk to each other and to the outside world over a small set of standard b
 
     [:octicons-arrow-right-24: Read](lpc.md)
 
+-   __MCU Debug (SWIM/UPDI/PDI/debugWIRE)__
+
+    Single-wire program and debug interfaces on STM8 and AVR.
+
+    [:octicons-arrow-right-24: Read](mcu-debug.md)
+
+-   __RS-485 and Modbus__
+
+    The industrial serial bus and its unauthenticated protocol.
+
+    [:octicons-arrow-right-24: Read](rs485-modbus.md)
+
+-   __SMBus and PMBus__
+
+    I2C with a rulebook: system and power management.
+
+    [:octicons-arrow-right-24: Read](smbus-pmbus.md)
+
+-   __ARM Trace (SWO/ITM/ETM)__
+
+    Watch a core execute in real time, without halting it.
+
+    [:octicons-arrow-right-24: Read](trace.md)
+
 </div>
 
-For vehicle networks (CAN, UDS, OBD-II), see the dedicated [Automotive](../automotive/index.md) section.
+For vehicle networks (CAN, UDS, OBD-II, LIN, FlexRay, automotive Ethernet), see the dedicated [Automotive](../automotive/index.md) section.
 
 ## Choosing where to connect
 

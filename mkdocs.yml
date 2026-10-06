@@ -133,10 +133,15 @@ nav:
       - 1-Wire: protocols/one-wire.md
       - MDIO: protocols/mdio.md
       - LPC: protocols/lpc.md
+      - MCU Debug (SWIM/UPDI/PDI/debugWIRE): protocols/mcu-debug.md
+      - RS-485 and Modbus: protocols/rs485-modbus.md
+      - SMBus and PMBus: protocols/smbus-pmbus.md
+      - ARM Trace (SWO/ITM/ETM): protocols/trace.md
   - Automotive:
       - automotive/index.md
       - CAN Bus: automotive/can-bus.md
       - UDS and OBD-II: automotive/uds-obd2.md
+      - Other Vehicle Buses: automotive/other-buses.md
   - Software Tools:
       - software/index.md
       - Serial Consoles: software/serial-consoles.md
@@ -146,6 +151,12 @@ nav:
       - dd and Imaging: software/dd-imaging.md
       - UBI and NAND Tools: software/ubi-nand.md
       - Logic Analyzers (sigrok): software/logic-analyzers.md
+      - esptool: software/esptool.md
+      - Depthcharge: software/depthcharge.md
+      - ChipWhisperer: software/chipwhisperer.md
+      - JTAGulator: software/jtagulator.md
+      - Proxmark3: software/proxmark3.md
+      - Flipper Zero: software/flipper-zero.md
   - Attacks and Techniques:
       - attacks/index.md
       - Reconnaissance: attacks/recon.md
@@ -162,12 +173,23 @@ nav:
       - Chain of Trust and Secure Boot: attacks/chain-of-trust.md
       - TPM Sniffing: attacks/tpm-sniffing.md
       - Firmware Modification: attacks/firmware-modification.md
+      - NVRAM and U-Boot Environment: attacks/nvram-uboot-env.md
+      - Cold Boot Attacks: attacks/cold-boot.md
+      - DMA Attacks: attacks/dma-attacks.md
+      - Secure Elements: attacks/secure-elements.md
+      - Decapping and Invasive Attacks: attacks/decapping.md
   - MCU Targets:
       - mcu/index.md
       - STM32 RDP: mcu/stm32-rdp.md
       - nRF52 APPROTECT: mcu/nrf52-approtect.md
       - ESP32 Security: mcu/esp32-security.md
       - AVR and PIC Fuses: mcu/avr-pic-fuses.md
+  - Platform Security:
+      - platform/index.md
+      - UEFI and BIOS: platform/uefi-bios.md
+      - Intel ME and AMD PSP: platform/intel-me-amd-psp.md
+      - Qualcomm EDL and MediaTek: platform/mobile-soc-edl.md
+      - Android Bootloaders: platform/android-bootloader.md
   - Reverse Engineering:
       - reverse-engineering/index.md
       - Ghidra Setup: reverse-engineering/ghidra-setup.md
@@ -177,6 +199,12 @@ nav:
       - radio/index.md
       - SDR Basics: radio/sdr-basics.md
       - RF Attacks: radio/rf-attacks.md
+      - NFC and RFID: radio/nfc-rfid.md
+      - Bluetooth Low Energy: radio/ble.md
+      - Zigbee, Thread, 802.15.4: radio/zigbee-thread.md
+      - LoRa and LoRaWAN: radio/lora.md
+      - GNSS and GPS Spoofing: radio/gps-spoofing.md
+      - Key Fobs and Rolling Codes: radio/key-fobs.md
   - Scripting and Automation:
       - scripting/index.md
       - GPIO Control: scripting/gpio-control.md
