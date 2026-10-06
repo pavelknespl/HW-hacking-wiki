@@ -91,6 +91,36 @@ This section ties the protocols and tools into complete workflows: how to actual
 
     [:octicons-arrow-right-24: Read](firmware-modification.md)
 
+-   __NVRAM and U-Boot Environment__
+
+    Recover credentials, keys, and boot logic from config stores.
+
+    [:octicons-arrow-right-24: Read](nvram-uboot-env.md)
+
+-   __Cold Boot Attacks__
+
+    Recover keys from DRAM remanence after power loss.
+
+    [:octicons-arrow-right-24: Read](cold-boot.md)
+
+-   __DMA Attacks__
+
+    Read and patch RAM over Thunderbolt/PCIe with PCILeech.
+
+    [:octicons-arrow-right-24: Read](dma-attacks.md)
+
+-   __Secure Elements__
+
+    Attacking the system around a key-storage chip.
+
+    [:octicons-arrow-right-24: Read](secure-elements.md)
+
+-   __Decapping and Invasive__
+
+    Die-level: decap, microprobing, FIB, optical fault injection.
+
+    [:octicons-arrow-right-24: Read](decapping.md)
+
 </div>
 
-For chip-specific read-out protection and its bypasses, see [MCU Targets](../mcu/index.md).
+For chip-specific read-out protection and its bypasses, see [MCU Targets](../mcu/index.md). For PC and mobile platforms, see [Platform Security](../platform/index.md).
