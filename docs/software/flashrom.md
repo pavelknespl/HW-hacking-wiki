@@ -43,7 +43,9 @@ The core operation. Read the whole chip to a file:
 flashrom -p ch341a_spi -r dump.bin
 ```
 
-!!! tip "Read three times and compare"
+### Read three times and compare
+
+!!! tip "Verify the read is stable"
     In-circuit reads can be subtly corrupted by the rest of the board. Read the chip two or three times and compare the files:
 
     ```bash
