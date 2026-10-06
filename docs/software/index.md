@@ -46,6 +46,42 @@ Hardware access is only half the job. The other half is the software that drives
 
     [:octicons-arrow-right-24: Read](logic-analyzers.md)
 
+-   __esptool__
+
+    Read, inspect fuses, and flash Espressif chips over serial.
+
+    [:octicons-arrow-right-24: Read](esptool.md)
+
+-   __Depthcharge__
+
+    Automate attacks against a U-Boot console.
+
+    [:octicons-arrow-right-24: Read](depthcharge.md)
+
+-   __ChipWhisperer__
+
+    Integrated glitching and side-channel platform.
+
+    [:octicons-arrow-right-24: Read](chipwhisperer.md)
+
+-   __JTAGulator__
+
+    Brute-force unknown JTAG and UART pinouts.
+
+    [:octicons-arrow-right-24: Read](jtagulator.md)
+
+-   __Proxmark3__
+
+    The reference RFID/NFC read, clone, and attack tool.
+
+    [:octicons-arrow-right-24: Read](proxmark3.md)
+
+-   __Flipper Zero__
+
+    Pocket sub-GHz, NFC, IR, and GPIO multi-tool.
+
+    [:octicons-arrow-right-24: Read](flipper-zero.md)
+
 </div>
 
 ## A rough mapping of task to tool
