@@ -6,9 +6,9 @@ SWD, the Serial Wire Debug interface, is ARM's two-wire replacement for [JTAG](j
 
 | Signal | Meaning |
 | --- | --- |
-| `SWDIO` | Bidirectional data |
-| `SWCLK` | Clock |
-| `GND` | Ground reference |
+| [`SWDIO`](../reference/pin-reference.md#swdio) | Bidirectional data |
+| [`SWCLK`](../reference/pin-reference.md#swclk) | Clock |
+| [`GND`](../reference/pin-reference.md#gnd) | Ground reference |
 | `nRESET` | Optional reset line, helpful for connecting under reset |
 
 Some headers also break out `SWO`, a single-wire trace output for debug printf-style messages. It is useful but not required to debug.
@@ -83,6 +83,7 @@ If the target is a Cortex-M and offers SWD, use it; it is simpler and fully capa
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [JTAG](jtag.md)
 - [OpenOCD](../software/openocd.md)
 - [Fault Injection and Glitching](../attacks/fault-injection.md)

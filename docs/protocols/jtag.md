@@ -8,11 +8,11 @@ JTAG (IEEE 1149.1) was designed for boundary scan, a way to test board connectio
 
 | Signal | Meaning |
 | --- | --- |
-| `TCK` | Test clock, drives the state machine |
-| `TMS` | Test mode select, steers the state machine |
-| `TDI` | Test data in, data into the chip |
-| `TDO` | Test data out, data from the chip |
-| `TRST` | Test reset, optional |
+| [`TCK`](../reference/pin-reference.md#tck) | Test clock, drives the state machine |
+| [`TMS`](../reference/pin-reference.md#tms) | Test mode select, steers the state machine |
+| [`TDI`](../reference/pin-reference.md#tdi) | Test data in, data into the chip |
+| [`TDO`](../reference/pin-reference.md#tdo) | Test data out, data from the chip |
+| [`TRST`](../reference/pin-reference.md#trst) | Test reset, optional |
 
 Plus `GND` and a reference `VCC`. Multiple chips can be daisy-chained, so a scan may reveal more than one device in the chain.
 
@@ -88,6 +88,7 @@ Disable or fuse off JTAG on production silicon, or at minimum enable the highest
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [SWD](swd.md)
 - [OpenOCD](../software/openocd.md)
 - [Fault Injection and Glitching](../attacks/fault-injection.md)

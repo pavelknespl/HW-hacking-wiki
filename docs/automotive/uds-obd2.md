@@ -81,6 +81,7 @@ The flashing services (`0x34`/`0x36`/`0x37`) and memory services (`0x23`) are an
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [CAN Bus](can-bus.md)
 - [Automotive overview](index.md)
 - [MCU Targets](../mcu/index.md)

@@ -1,6 +1,6 @@
 # Pinout Cheat Sheet
 
-The standard pinouts you will reach for repeatedly. Always confirm against the specific datasheet, but these cover the common cases. For how to *find* and *identify* pins on an unknown board, see [Finding and Identifying Pins](../fundamentals/identifying-pins.md).
+The standard pinouts you will reach for repeatedly. Always confirm against the specific datasheet, but these cover the common cases. Signal names link to the [Pin Reference](pin-reference.md), which explains every pin. For how to *find* and *identify* pins on an unknown board, see [Finding and Identifying Pins](../fundamentals/identifying-pins.md).
 
 ## SPI NOR flash (SOIC-8 / SOP-8)
 
@@ -17,14 +17,14 @@ The near-universal serial flash pinout. Pin 1 is marked by a dot or bevel.
 
 | Pin | Name | Alias | Role |
 | --- | --- | --- | --- |
-| 1 | `CS#` | `CE#` | Chip select, active low |
-| 2 | `DO` | `MISO`, `SO` | Data out (chip to master) |
-| 3 | `WP#` | `IO2` | Write protect / quad IO2 |
-| 4 | `GND` | | Ground |
-| 5 | `DI` | `MOSI`, `SI` | Data in (master to chip) |
-| 6 | `CLK` | `SCK` | Clock |
-| 7 | `HOLD#` | `RESET#`, `IO3` | Hold / reset / quad IO3 |
-| 8 | `VCC` | | Power (usually 3.3 V, some 1.8 V) |
+| 1 | [`CS#`](pin-reference.md#cs) | `CE#` | Chip select, active low |
+| 2 | [`DO`](pin-reference.md#miso) | `MISO`, `SO` | Data out (chip to master) |
+| 3 | [`WP#`](pin-reference.md#wp) | `IO2` | Write protect / quad IO2 |
+| 4 | [`GND`](pin-reference.md#gnd) | | Ground |
+| 5 | [`DI`](pin-reference.md#mosi) | `MOSI`, `SI` | Data in (master to chip) |
+| 6 | [`CLK`](pin-reference.md#sclk) | `SCK` | Clock |
+| 7 | [`HOLD#`](pin-reference.md#hold) | `RESET#`, `IO3` | Hold / reset / quad IO3 |
+| 8 | [`VCC`](pin-reference.md#vcc) | | Power (usually 3.3 V, some 1.8 V) |
 
 See [SPI](../protocols/spi.md) and [SPI Flash Dumping](../attacks/spi-flash-dump.md).
 
@@ -42,11 +42,11 @@ See [SPI](../protocols/spi.md) and [SPI Flash Dumping](../attacks/spi-flash-dump
 | Pin | Name | Role |
 | --- | --- | --- |
 | 1 to 3 | `A0`,`A1`,`A2` | Address select (set the device address 0x50 to 0x57) |
-| 4 | `GND` | Ground |
-| 5 | `SDA` | Serial data |
-| 6 | `SCL` | Serial clock |
-| 7 | `WP` | Write protect |
-| 8 | `VCC` | Power |
+| 4 | [`GND`](pin-reference.md#gnd) | Ground |
+| 5 | [`SDA`](pin-reference.md#sda) | Serial data |
+| 6 | [`SCL`](pin-reference.md#scl) | Serial clock |
+| 7 | [`WP`](pin-reference.md#wp) | Write protect |
+| 8 | [`VCC`](pin-reference.md#vcc) | Power |
 
 See [I2C](../protocols/i2c.md).
 
@@ -69,6 +69,8 @@ The legacy 0.1 inch (2.54 mm) 2x10 connector. Looking at the header, pin 1 is ma
 
 Note how `TMS`/`SWDIO` (pin 7) and `TCK`/`SWCLK` (pin 9) are shared between [JTAG](../protocols/jtag.md) and [SWD](../protocols/swd.md). See [JTAG](../protocols/jtag.md) and [SWD](../protocols/swd.md).
 
+Signal meanings: [VTref](pin-reference.md#vtref), [nTRST](pin-reference.md#trst), [TDI](pin-reference.md#tdi), [TMS](pin-reference.md#tms), [SWDIO](pin-reference.md#swdio), [TCK](pin-reference.md#tck), [SWCLK](pin-reference.md#swclk), [RTCK](pin-reference.md#rtck), [TDO](pin-reference.md#tdo), [nRESET](pin-reference.md#nreset), [VCC](pin-reference.md#vcc), [GND](pin-reference.md#gnd).
+
 ## ARM Cortex Debug 10-pin header
 
 The modern 0.05 inch (1.27 mm) 2x5 connector, SWD-oriented.
@@ -80,6 +82,8 @@ The modern 0.05 inch (1.27 mm) 2x5 connector, SWD-oriented.
 | 5 | GND | 6 | SWO / TDO |
 | 7 | key (no pin) | 8 | TDI |
 | 9 | GNDDetect | 10 | nRESET |
+
+Signal meanings: [VTref](pin-reference.md#vtref), [SWDIO](pin-reference.md#swdio), [SWCLK](pin-reference.md#swclk), [SWO](pin-reference.md#swo), [TDI](pin-reference.md#tdi), [nRESET](pin-reference.md#nreset), [GND](pin-reference.md#gnd).
 
 ## Raspberry Pi 40-pin header (relevant pins)
 
@@ -134,6 +138,7 @@ See [Logic Levels and Level Shifting](../fundamentals/level-shifting.md).
 
 ## Related pages
 
+- [Pin Reference](pin-reference.md)
 - [UART](../protocols/uart.md)
 - [SPI](../protocols/spi.md)
 - [JTAG](../protocols/jtag.md)

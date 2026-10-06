@@ -184,6 +184,7 @@ nav:
   - Reference:
       - reference/index.md
       - Pinout Cheat Sheet: reference/pinouts.md
+      - Pin Reference: reference/pin-reference.md
       - Flash Chip Reference: reference/flash-chips.md
       - Interface Identification: reference/interface-identification.md
       - Glossary: reference/glossary.md

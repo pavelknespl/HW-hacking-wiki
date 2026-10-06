@@ -8,8 +8,8 @@ Two lines, both open-drain and pulled high by resistors, shared by every device 
 
 | Signal | Meaning |
 | --- | --- |
-| `SDA` | Serial data |
-| `SCL` | Serial clock |
+| [`SDA`](../reference/pin-reference.md#sda) | Serial data |
+| [`SCL`](../reference/pin-reference.md#scl) | Serial clock |
 
 Plus a common ground. Each device has a 7-bit (sometimes 10-bit) **address**. A master starts a transaction by pulling SDA low while SCL is high (a start condition), sends the target address and a read/write bit, and the addressed device acknowledges. Data then flows a byte at a time, each acknowledged, until a stop condition.
 
@@ -69,6 +69,7 @@ Pair an I2C dump with [firmware analysis](../attacks/firmware-analysis.md): the 
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [Logic Analyzers (sigrok)](../software/logic-analyzers.md)
 - [Memory Types](../fundamentals/memory-types.md)
 - [Logic Levels and Level Shifting](../fundamentals/level-shifting.md)

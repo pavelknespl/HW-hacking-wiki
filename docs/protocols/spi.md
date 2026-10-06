@@ -8,10 +8,10 @@ SPI is a synchronous, full-duplex, master-driven bus:
 
 | Signal | Also called | Meaning |
 | --- | --- | --- |
-| `SCLK` | `CLK` | Clock, driven by the master |
-| `MOSI` | `DI`, `SDI` | Master out, slave in |
-| `MISO` | `DO`, `SDO` | Master in, slave out |
-| `CS#` | `SS`, `CE#` | Chip select, active low |
+| [`SCLK`](../reference/pin-reference.md#sclk) | `CLK` | Clock, driven by the master |
+| [`MOSI`](../reference/pin-reference.md#mosi) | `DI`, `SDI` | Master out, slave in |
+| [`MISO`](../reference/pin-reference.md#miso) | `DO`, `SDO` | Master in, slave out |
+| [`CS#`](../reference/pin-reference.md#cs) | `SS`, `CE#` | Chip select, active low |
 
 The master drives the clock and selects a slave by pulling its `CS#` low. On each clock edge one bit shifts out on MOSI and one shifts in on MISO simultaneously. There is no addressing on the wire; the chip select picks the device, and commands are part of the data stream.
 
@@ -77,6 +77,7 @@ Storing firmware unencrypted in an external [SPI flash](../attacks/spi-flash-dum
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [SPI Flash Dumping](../attacks/spi-flash-dump.md)
 - [flashrom](../software/flashrom.md)
 - [Logic Analyzers (sigrok)](../software/logic-analyzers.md)

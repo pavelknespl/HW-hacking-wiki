@@ -38,6 +38,7 @@ Either way, the workflow is to sniff the host-to-chip exchange, understand wheth
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [I2C](i2c.md)
 - [Logic Analyzers (sigrok)](../software/logic-analyzers.md)
 - [GPIO Control](../scripting/gpio-control.md)

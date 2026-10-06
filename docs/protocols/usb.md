@@ -69,6 +69,7 @@ Many of the adapters elsewhere in this wiki are USB devices that bridge to [UART
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [Serial Consoles](../software/serial-consoles.md)
 - [Firmware Extraction](../attacks/firmware-extraction.md)
 - [Firmware Analysis](../attacks/firmware-analysis.md)

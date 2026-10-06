@@ -54,6 +54,7 @@ Find [ground](../fundamentals/identifying-pins.md#step-1-find-ground), find [pow
 
 ## Related pages
 
+- [Pin Reference](pin-reference.md)
 - [Finding and Identifying Pins](../fundamentals/identifying-pins.md)
 - [Pinout Cheat Sheet](pinouts.md)
 - [Flash Chip Reference](flash-chips.md)

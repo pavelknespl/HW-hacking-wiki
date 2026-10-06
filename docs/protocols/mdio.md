@@ -8,8 +8,8 @@ Two signals connect the MAC (master) to one or more PHYs (slaves):
 
 | Signal | Role |
 | --- | --- |
-| `MDC` | Management clock, driven by the MAC |
-| `MDIO` | Bidirectional data |
+| [`MDC`](../reference/pin-reference.md#mdc) | Management clock, driven by the MAC |
+| [`MDIO`](../reference/pin-reference.md#mdio-signal) | Bidirectional data |
 
 Each PHY has a 5-bit address (so up to 32 PHYs per bus), and each PHY exposes a set of 16-bit **registers**. The MAC reads and writes those registers to set link speed, duplex, autonegotiation, loopback, and vendor-specific features.
 
@@ -53,6 +53,7 @@ Off a running system, you drive MDC/MDIO directly from a [multi-protocol adapter
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [I2C](i2c.md)
 - [GPIO Control](../scripting/gpio-control.md)
 - [Logic Analyzers (sigrok)](../software/logic-analyzers.md)

@@ -8,10 +8,10 @@ LPC is a synchronous bus derived from the old ISA bus, running at 33 MHz. The si
 
 | Signal | Role |
 | --- | --- |
-| `LCLK` | 33 MHz clock |
-| `LFRAME#` | Start of a transaction |
-| `LAD[3:0]` | 4-bit multiplexed address/data |
-| `LRESET#` | Reset |
+| [`LCLK`](../reference/pin-reference.md#lclk) | 33 MHz clock |
+| [`LFRAME#`](../reference/pin-reference.md#lframe) | Start of a transaction |
+| [`LAD[3:0]`](../reference/pin-reference.md#lad) | 4-bit multiplexed address/data |
+| [`LRESET#`](../reference/pin-reference.md#lreset) | Reset |
 
 Address, data, and control are multiplexed over the four `LAD` lines across clock cycles. That multiplexing makes decoding more involved than SPI or I2C, but it is well documented and within reach of a decent [logic analyzer](../software/logic-analyzers.md) or an FPGA.
 
@@ -37,6 +37,7 @@ On modern boards LPC is increasingly replaced by **eSPI**, and discrete TPMs oft
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [TPM Sniffing](../attacks/tpm-sniffing.md)
 - [SPI](spi.md)
 - [Logic Analyzers (sigrok)](../software/logic-analyzers.md)

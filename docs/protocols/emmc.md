@@ -18,11 +18,11 @@ eMMC uses the MMC protocol, electrically similar to SD. The signals you care abo
 
 | Signal | Role |
 | --- | --- |
-| `CLK` | Clock |
-| `CMD` | Command line |
-| `DAT0` | One data line (1-bit mode) |
-| `VCC` / `VCCQ` | Core and I/O power |
-| `GND` | Ground |
+| [`CLK`](../reference/pin-reference.md#clk) | Clock |
+| [`CMD`](../reference/pin-reference.md#cmd) | Command line |
+| [`DAT0`](../reference/pin-reference.md#dat0) | One data line (1-bit mode) |
+| [`VCC`](../reference/pin-reference.md#vcc) / [`VCCQ`](../reference/pin-reference.md#vccq) | Core and I/O power |
+| [`GND`](../reference/pin-reference.md#gnd) | Ground |
 
 Full-speed operation uses eight data lines (`DAT0` to `DAT7`), but a slow 1-bit read needs only `DAT0`, which makes in-system tapping feasible.
 
@@ -76,6 +76,7 @@ Everything above applies to removable SD and microSD cards, which are even easie
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [NAND and eMMC Dumping](../attacks/nand-emmc-dump.md)
 - [Memory Types](../fundamentals/memory-types.md)
 - [dd and Imaging](../software/dd-imaging.md)

@@ -10,9 +10,9 @@ The wiring:
 
 | Signal | Role |
 | --- | --- |
-| `CAN-H` | Differential high |
-| `CAN-L` | Differential low |
-| `GND` | Reference (shared) |
+| [`CAN-H`](../reference/pin-reference.md#can-h) | Differential high |
+| [`CAN-L`](../reference/pin-reference.md#can-l) | Differential low |
+| [`GND`](../reference/pin-reference.md#gnd) | Reference (shared) |
 
 A bit is encoded as the voltage difference between CAN-H and CAN-L. The bus is terminated with 120 ohm resistors at each end; a healthy bus reads about 60 ohm across H and L with power off, which is a quick way to confirm you have found CAN.
 
@@ -82,6 +82,7 @@ Reading raw CAN tells you what the car broadcasts. To reach flashing, memory, an
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [UDS and OBD-II](uds-obd2.md)
 - [Automotive overview](index.md)
 - [MCU Targets](../mcu/index.md)

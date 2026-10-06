@@ -10,6 +10,12 @@ Quick-access material you will come back to: standard pinouts for the chips and 
 
     [:octicons-arrow-right-24: Read](pinouts.md)
 
+-   __Pin Reference__
+
+    Every known signal name explained, with a stable anchor other pages link to.
+
+    [:octicons-arrow-right-24: Read](pin-reference.md)
+
 -   __Flash Chip Reference__
 
     JEDEC manufacturer IDs, capacity decoding, and common SPI parts.

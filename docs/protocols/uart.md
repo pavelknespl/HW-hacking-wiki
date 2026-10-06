@@ -6,10 +6,10 @@ UART, the Universal Asynchronous Receiver Transmitter, is the oldest and most us
 
 UART is a point-to-point serial link with no shared clock. Two devices agree in advance on a **baud rate** (bits per second) and a frame format, then each sends data on its transmit line at that rate.
 
-- **TX** (transmit): the line a device sends on.
-- **RX** (receive): the line a device listens on.
-- **GND**: a shared ground reference, mandatory.
-- Optional **VCC**, which you usually leave unconnected on the target.
+- [**TX**](../reference/pin-reference.md#tx) (transmit): the line a device sends on.
+- [**RX**](../reference/pin-reference.md#rx) (receive): the line a device listens on.
+- [**GND**](../reference/pin-reference.md#gnd): a shared ground reference, mandatory.
+- Optional [**VCC**](../reference/pin-reference.md#vcc), which you usually leave unconnected on the target.
 
 The classic frame is **8N1**: 8 data bits, no parity, 1 stop bit. The line idles high, drops low for a start bit, sends 8 data bits least significant first, then returns high for the stop bit.
 
@@ -100,6 +100,7 @@ Shipping a production device with an open UART root shell, or an interruptible b
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [Serial Consoles](../software/serial-consoles.md)
 - [Finding and Identifying Pins](../fundamentals/identifying-pins.md)
 - [Bootloader Access (U-Boot)](../attacks/bootloader-access.md)

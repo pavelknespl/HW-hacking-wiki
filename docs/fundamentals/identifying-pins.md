@@ -86,6 +86,7 @@ You now wire adapter `RX` to pad 3, adapter `TX` to pad 2, ground to pad 1, leav
 
 ## Related pages
 
+- [Pin Reference](../reference/pin-reference.md)
 - [UART](../protocols/uart.md)
 - [JTAG](../protocols/jtag.md)
 - [Logic Analyzers (sigrok)](../software/logic-analyzers.md)
