@@ -28,16 +28,16 @@ Full detail: [Reconnaissance](../attacks/recon.md) and [PCB Recon](../fundamenta
 
 Every later step needs a way in. In rough order of effort:
 
-1. **Serial console (UART).** Look for a 3 or 4 pin header or a row of test pads near the SoC. This is the first thing to check because it so often yields a shell or at least a verbose boot log. See [Finding and Identifying Pins](../fundamentals/identifying-pins.md).
-2. **External memory chip.** A SOIC-8 SPI flash is a standing invitation to clip on and read the firmware with no cooperation from the CPU.
-3. **Debug port (JTAG/SWD).** More powerful and more work. Lets you halt the CPU and read all memory, including internal flash.
-4. **Inter-chip buses (I2C/SPI).** Sniff them to catch EEPROM contents or secrets moving between parts.
+1. **[Serial console](../protocols/uart.md) (UART).** Look for a 3 or 4 pin header or a row of test pads near the SoC. This is the first thing to check because it so often yields a shell or at least a verbose boot log. See [Finding and Identifying Pins](../fundamentals/identifying-pins.md).
+2. **External memory chip.** A SOIC-8 [SPI flash](../attacks/spi-flash-dump.md) is a standing invitation to clip on and read the firmware with no cooperation from the CPU.
+3. **Debug port ([JTAG](../protocols/jtag.md)/[SWD](../protocols/swd.md)).** More powerful and more work. Lets you halt the CPU and read all memory, including internal flash.
+4. **Inter-chip buses ([I2C](../protocols/i2c.md)/[SPI](../protocols/spi.md)).** Sniff them to catch EEPROM contents or secrets moving between parts.
 
 ## Stage 3: Get in or get the data
 
 Two broad paths, often pursued in parallel:
 
-- **Interactive access.** Drop to a shell over [UART](../protocols/uart.md), [interrupt the bootloader](../attacks/bootloader-access.md) to get a U-Boot prompt, or halt the CPU over [JTAG](../protocols/jtag.md). This gives you a live system to explore.
+- **Interactive access.** Drop to a shell over [UART](../protocols/uart.md), [interrupt the bootloader](../attacks/bootloader-access.md) to get a [U-Boot](../attacks/bootloader-access.md) prompt, or halt the CPU over [JTAG](../protocols/jtag.md). This gives you a live system to explore.
 - **Static extraction.** [Dump the SPI flash](../attacks/spi-flash-dump.md) or [NAND/eMMC](../attacks/nand-emmc-dump.md) to get the firmware without a running shell. This works even when every interactive path is locked.
 
 ## Stage 4: Analyze
@@ -62,9 +62,18 @@ These are powerful and slow. They are a last resort, not a first move.
 
 ## Principles that hold across every target
 
-- **Cheapest step first.** Check for an open UART shell before you reach for a glitcher.
+- **Cheapest step first.** Check for an open [UART](../protocols/uart.md) shell before you reach for a glitcher.
 - **Non-invasive before invasive.** Clip onto a chip before you desolder it. Desolder before you decap.
 - **Change one thing at a time.** When a capture is wrong or a device misbehaves, isolate the variable.
 - **Common ground, correct voltage, always.** The two mistakes that destroy the most hardware. See [Lab Setup](lab-setup.md).
 - **Write it down.** Your notebook is part of the toolkit. See [Lab Setup](lab-setup.md#keep-a-lab-notebook).
 - **Expect to brick things.** Buy two of a cheap target when you can. The second unit is your reference for voltages and pinouts after you break the first.
+
+
+## Related pages
+
+- [Reconnaissance](../attacks/recon.md)
+- [Firmware Extraction](../attacks/firmware-extraction.md)
+- [Finding and Identifying Pins](../fundamentals/identifying-pins.md)
+- [Getting a Shell](../attacks/getting-a-shell.md)
+- [What Is Hardware Hacking](what-is-hardware-hacking.md)

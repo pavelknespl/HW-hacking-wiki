@@ -26,8 +26,8 @@ Identify every significant chip with [Chip Identification](../fundamentals/chip-
 | Chip | Marking | Identity | Role | I/O voltage |
 | --- | --- | --- | --- | --- |
 | U1 | large BGA | SoC | runs firmware | 1.8 V I/O |
-| U2 | `W25Q128` | Winbond SPI NOR | firmware store | 3.3 V |
-| U3 | `24C64` | I2C EEPROM | config / MAC | 3.3 V |
+| U2 | `W25Q128` | Winbond [SPI](../protocols/spi.md) NOR | firmware store | 3.3 V |
+| U3 | `24C64` | [I2C](../protocols/i2c.md) EEPROM | config / MAC | 3.3 V |
 
 This table drives everything: it names your extraction target, your console voltage, and your analysis architecture.
 
@@ -35,9 +35,9 @@ This table drives everything: it names your extraction target, your console volt
 
 Walk the board for ways in, in order of likely payoff:
 
-1. **UART header or pads** near the SoC, a 3 or 4 pin group whose TX bursts at boot. The fastest path to a shell. See [Finding and Identifying Pins](../fundamentals/identifying-pins.md).
+1. **[UART](../protocols/uart.md) header or pads** near the SoC, a 3 or 4 pin group whose TX bursts at boot. The fastest path to a shell. See [Finding and Identifying Pins](../fundamentals/identifying-pins.md).
 2. **External flash** you can clip, for a direct [firmware dump](spi-flash-dump.md).
-3. **JTAG/SWD** header or test points for full [memory access](../protocols/jtag.md).
+3. **[JTAG](../protocols/jtag.md)/[SWD](../protocols/swd.md)** header or test points for full [memory access](../protocols/jtag.md).
 4. **I2C/SPI buses** worth [sniffing](../protocols/i2c.md) for secrets in transit.
 
 ## Measure the voltages
@@ -58,8 +58,17 @@ If you found a UART, read the boot log before anything invasive. It is pure reco
 
 Finish recon with a concrete plan written down:
 
-- "Firmware is in the Winbond SPI NOR; clip and dump with flashrom at 3.3 V."
+- "Firmware is in the Winbond SPI NOR; clip and dump with [flashrom](../software/flashrom.md) at 3.3 V."
 - "UART at 115200 gives a login prompt; recover the password from the dump."
 - "No external flash; internal MCU flash over SWD, expect RDP, plan for glitching if locked."
 
 A clear plan keeps you from thrashing between techniques and from reaching for the oscilloscope when a UART shell was sitting open the whole time.
+
+
+## Related pages
+
+- [PCB Recon](../fundamentals/pcb-recon.md)
+- [Chip Identification](../fundamentals/chip-identification.md)
+- [Finding and Identifying Pins](../fundamentals/identifying-pins.md)
+- [Firmware Extraction](firmware-extraction.md)
+- [Methodology](../getting-started/methodology.md)

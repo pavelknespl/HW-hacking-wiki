@@ -70,7 +70,7 @@ Power-cycle the target and you should see the bootloader and kernel log stream p
 Even a read-only boot log is valuable:
 
 - The **SoC and CPU model**, confirming the [architecture](../fundamentals/architectures.md).
-- The **bootloader** (usually U-Boot) and its version, and whether you can interrupt it. See [Bootloader Access](../attacks/bootloader-access.md).
+- The **bootloader** (usually [U-Boot](../attacks/bootloader-access.md)) and its version, and whether you can interrupt it. See [Bootloader Access](../attacks/bootloader-access.md).
 - The **kernel version**, command line, and the **memory layout** of the flash partitions.
 - Driver messages that reveal chips, radios, and features.
 - Sometimes a login prompt, and sometimes a **root shell with no password at all**.
@@ -80,9 +80,9 @@ Even a read-only boot log is valuable:
 The outcomes, from best to most work:
 
 1. **Open root shell.** The log ends at a `#` prompt. You are in. See [Getting a Shell](../attacks/getting-a-shell.md).
-2. **Login prompt.** Try default and discovered credentials. Firmware analysis often recovers the password hash or a hardcoded account.
+2. **Login prompt.** Try default and discovered credentials. [Firmware analysis](../attacks/firmware-analysis.md) often recovers the password hash or a hardcoded account.
 3. **Interruptible bootloader.** A prompt like "Hit any key to stop autoboot" lets you break into U-Boot and change the boot arguments to force a shell. See [Bootloader Access](../attacks/bootloader-access.md).
-4. **Silent or disabled console.** TX prints but RX is ignored, or the console is locked. Fall back to firmware extraction or a debug port.
+4. **Silent or disabled console.** TX prints but RX is ignored, or the console is locked. Fall back to [firmware extraction](../attacks/firmware-extraction.md) or a debug port.
 
 ## TX active but no input accepted
 
@@ -90,9 +90,18 @@ A common frustration: the log prints but typing does nothing. Causes and fixes:
 
 - **RX not actually connected** or wired to the wrong pad. Re-check the pinout.
 - **Console input disabled** in the kernel command line or U-Boot environment. Interrupt the bootloader earlier, or extract the firmware to find why.
-- **Voltage mismatch** on the RX line so your characters are misread. Verify with a logic analyzer.
+- **Voltage mismatch** on the RX line so your characters are misread. Verify with a [logic analyzer](../software/logic-analyzers.md).
 - **Flow control** expected. Try toggling hardware/software flow control in your terminal.
 
 ## Security note for defenders
 
 Shipping a production device with an open UART root shell, or an interruptible bootloader, hands local attackers the keys. Disable the console shell, set a bootloader password, and lock the boot sequence on production builds. Attackers read this interface first precisely because it is so often left open.
+
+
+## Related pages
+
+- [Serial Consoles](../software/serial-consoles.md)
+- [Finding and Identifying Pins](../fundamentals/identifying-pins.md)
+- [Bootloader Access (U-Boot)](../attacks/bootloader-access.md)
+- [Getting a Shell](../attacks/getting-a-shell.md)
+- [Pinout Cheat Sheet](../reference/pinouts.md)

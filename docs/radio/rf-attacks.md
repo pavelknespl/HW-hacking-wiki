@@ -67,3 +67,10 @@ RF analysis rarely stands alone. The radio protocol is implemented in [firmware]
 ## Defender's view
 
 Authenticate and encrypt wireless commands, use rolling codes or proper challenge-response with sound key management, include anti-replay freshness, and do not rely on the obscurity of a custom protocol. Assume an attacker can receive, decode, and record everything the device transmits.
+
+
+## Related pages
+
+- [SDR Basics](sdr-basics.md)
+- [Firmware Analysis](../attacks/firmware-analysis.md)
+- [Side-Channel Attacks](../attacks/side-channel.md)

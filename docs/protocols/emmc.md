@@ -1,6 +1,6 @@
 # eMMC and SD
 
-eMMC is managed NAND flash: a NAND die plus a controller in a single BGA package that presents a clean block device, just like an SD card or a disk. On larger embedded devices, such as set-top boxes, tablets, and higher-end routers, the whole operating system lives in eMMC. Reading it gives you a complete, partitioned filesystem image with none of the ECC and bad-block hassle of [raw NAND](../attacks/nand-emmc-dump.md).
+eMMC is managed [NAND](../fundamentals/memory-types.md) flash: a NAND die plus a controller in a single BGA package that presents a clean block device, just like an SD card or a disk. On larger embedded devices, such as set-top boxes, tablets, and higher-end routers, the whole operating system lives in eMMC. Reading it gives you a complete, partitioned filesystem image with none of the ECC and bad-block hassle of [raw NAND](../attacks/nand-emmc-dump.md).
 
 ## Why eMMC is friendlier than raw NAND
 
@@ -72,3 +72,11 @@ From there it is ordinary [firmware analysis](../attacks/firmware-analysis.md).
 ## SD cards
 
 Everything above applies to removable SD and microSD cards, which are even easier: pull the card and image it in any reader. On devices that boot from a microSD (many single-board computers and some appliances), the card *is* the firmware store, and reading or modifying it needs no soldering at all.
+
+
+## Related pages
+
+- [NAND and eMMC Dumping](../attacks/nand-emmc-dump.md)
+- [Memory Types](../fundamentals/memory-types.md)
+- [dd and Imaging](../software/dd-imaging.md)
+- [UBI and NAND Tools](../software/ubi-nand.md)

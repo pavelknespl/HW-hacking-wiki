@@ -112,3 +112,12 @@ Emulation lets you fuzz and debug the services without the physical device, thou
 ## Keep notes and diff
 
 Record findings as you go, and when you have two firmware versions, **diff them**. A security update's changed files point straight at what was vulnerable, which is one of the fastest ways to find a bug worth reporting.
+
+
+## Related pages
+
+- [Binwalk and Extraction](../software/binwalk.md)
+- [Ghidra Setup](../reverse-engineering/ghidra-setup.md)
+- [Firmware RE Workflow](../reverse-engineering/firmware-workflow.md)
+- [Firmware Extraction](firmware-extraction.md)
+- [UBI and NAND Tools](../software/ubi-nand.md)

@@ -24,7 +24,7 @@ Before you can attack a device you have to read it. This section covers the grou
 
 -   __Finding and Identifying Pins__
 
-    Locate UART, JTAG, and memory pins with a multimeter and a logic analyzer.
+    Locate [UART](../protocols/uart.md), [JTAG](../protocols/jtag.md), and memory pins with a multimeter and a [logic analyzer](../software/logic-analyzers.md).
 
     [:octicons-arrow-right-24: Read](identifying-pins.md)
 
@@ -36,7 +36,7 @@ Before you can attack a device you have to read it. This section covers the grou
 
 -   __Memory Types__
 
-    NOR, NAND, eMMC, EEPROM, and where firmware actually lives.
+    NOR, [NAND](memory-types.md), [eMMC](../protocols/emmc.md), EEPROM, and where firmware actually lives.
 
     [:octicons-arrow-right-24: Read](memory-types.md)
 

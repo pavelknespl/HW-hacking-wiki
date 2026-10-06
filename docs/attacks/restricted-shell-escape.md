@@ -78,3 +78,10 @@ These sidestep the restriction rather than fighting it, and are often faster tha
 ## Defender's view
 
 A restricted interface is only as strong as its weakest command. Never pass menu input to a shell without strict validation, remove interpreters and editors from production images, do not rely on `rbash` as a security boundary, and lock the bootloader so the menu cannot be bypassed with `init=`.
+
+
+## Related pages
+
+- [Getting a Shell](getting-a-shell.md)
+- [Bootloader Access (U-Boot)](bootloader-access.md)
+- [Firmware Analysis](firmware-analysis.md)

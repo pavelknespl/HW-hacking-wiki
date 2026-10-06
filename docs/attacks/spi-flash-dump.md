@@ -1,6 +1,6 @@
 # SPI Flash Dumping
 
-Pulling a firmware image off an external SPI NOR flash is the most common and most reliable hardware extraction. The chip uses a standard pinout, a cheap clip connects to it, and [`flashrom`](../software/flashrom.md) speaks its protocol. This page is the end-to-end procedure, including what to do when an in-circuit read fights back.
+Pulling a firmware image off an external [SPI](../protocols/spi.md) NOR flash is the most common and most reliable hardware extraction. The chip uses a standard pinout, a cheap clip connects to it, and [`flashrom`](../software/flashrom.md) speaks its protocol. This page is the end-to-end procedure, including what to do when an in-circuit read fights back.
 
 ## What you need
 
@@ -28,7 +28,7 @@ Most clip-to-programmer cables are pre-wired; just align pin 1.
 
 ## Step 1: clip on and probe
 
-With the board **unpowered**, clip onto the chip aligning pin 1, and ask flashrom to identify it:
+With the board **unpowered**, clip onto the chip aligning pin 1, and ask [flashrom](../software/flashrom.md) to identify it:
 
 ```bash
 flashrom -p ch341a_spi        # or ft2232_spi:type=2232H,port=A
@@ -113,3 +113,12 @@ Keep `dump1.bin` as your restore image. If the device verifies the image at boot
 ## Defender's note
 
 An unencrypted SPI NOR is an open book to anyone with a two dollar clip. Encrypt secrets at rest, authenticate the boot image, and never assume physical storage is private.
+
+
+## Related pages
+
+- [SPI](../protocols/spi.md)
+- [flashrom](../software/flashrom.md)
+- [Firmware Extraction](firmware-extraction.md)
+- [Firmware Analysis](firmware-analysis.md)
+- [Memory Types](../fundamentals/memory-types.md)

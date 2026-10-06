@@ -18,7 +18,7 @@ Because SWD multiplexes data and direction onto one `SWDIO` line, it needs only 
 ## When you will meet it
 
 - Almost every **ARM Cortex-M** microcontroller (STM32, nRF5x, SAM, Kinetis, RP2040, and so on).
-- Many Cortex-A application processors expose SWD alongside or instead of JTAG.
+- Many Cortex-A application processors expose SWD alongside or instead of [JTAG](jtag.md).
 - Development boards expose it through an onboard debugger (ST-Link, CMSIS-DAP, J-Link OB).
 
 Many debug adapters auto-negotiate between JTAG and SWD, and ARM's **SWJ-DP** lets a target offer both on shared pins.
@@ -44,7 +44,7 @@ openocd -f interface/cmsis-dap.cfg -c "transport select swd" \
         -c "adapter speed 1000" -c "init" -c "dap info" -c "shutdown"
 ```
 
-A good connection reports the DAP and the core. Then attach GDB or use the OpenOCD console as with [JTAG](jtag.md).
+A good connection reports the DAP and the core. Then attach GDB or use the [OpenOCD](../software/openocd.md) console as with [JTAG](jtag.md).
 
 ## Dumping internal flash
 
@@ -79,3 +79,11 @@ A fully locked part returns no useful flash contents over SWD. This is exactly w
 | Best for | Cortex-M, tight pin budgets | Non-ARM, board test, multi-TAP chains |
 
 If the target is a Cortex-M and offers SWD, use it; it is simpler and fully capable. Reach for JTAG when you need boundary scan, a daisy chain, or a non-ARM core.
+
+
+## Related pages
+
+- [JTAG](jtag.md)
+- [OpenOCD](../software/openocd.md)
+- [Fault Injection and Glitching](../attacks/fault-injection.md)
+- [Ghidra Setup](../reverse-engineering/ghidra-setup.md)

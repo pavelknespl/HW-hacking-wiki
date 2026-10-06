@@ -4,7 +4,7 @@ A shell on the target turns a static teardown into a live system you can explore
 
 ## The routes, easiest first
 
-1. **Open root shell on UART.** The boot log simply ends at a `#` prompt. You are root with no further work. Rare but it happens, especially on development or cost-reduced hardware.
+1. **Open root shell on [UART](../protocols/uart.md).** The boot log simply ends at a `#` prompt. You are root with no further work. Rare but it happens, especially on development or cost-reduced hardware.
 2. **UART login with known or recovered credentials.** A login prompt that accepts defaults, or a password you cracked from the [firmware dump](firmware-analysis.md#cracking-password-hashes).
 3. **Bootloader to shell via `init=`.** [Interrupt U-Boot](bootloader-access.md) and set `bootargs` to `init=/bin/sh`, booting directly to root.
 4. **Restricted shell escape.** You get a limited menu or a jailed shell and break out. See [Escaping Restricted Shells](restricted-shell-escape.md).
@@ -16,7 +16,7 @@ Before anything clever, try the obvious:
 
 - Vendor defaults for the product line (documented or community-known).
 - Common pairs: `root`/`root`, `admin`/`admin`, `root` with an empty password.
-- Credentials recovered from the firmware: plaintext passwords in config files, or cracked `shadow` hashes. Firmware analysis is often the key that opens the login you are staring at. See [Firmware Analysis](firmware-analysis.md).
+- Credentials recovered from the firmware: plaintext passwords in config files, or cracked `shadow` hashes. [Firmware analysis](firmware-analysis.md) is often the key that opens the login you are staring at. See [Firmware Analysis](firmware-analysis.md).
 
 ## Forcing a shell from the bootloader
 
@@ -71,7 +71,7 @@ See [Firmware Extraction](firmware-extraction.md) for the full menu.
 
 ### Make access persistent (on your own device)
 
-For ongoing testing of hardware you own, you may want durable access rather than re-glitching U-Boot every boot:
+For ongoing testing of hardware you own, you may want durable access rather than re-glitching [U-Boot](bootloader-access.md) every boot:
 
 - Enable the device's own telnet/SSH daemon if present, or drop a static `dropbear`/`telnetd` built for the [architecture](../fundamentals/architectures.md).
 - Add or change an account in `/etc/passwd` and `/etc/shadow` (requires a writable root filesystem or a writable overlay).
@@ -86,3 +86,11 @@ For ongoing testing of hardware you own, you may want durable access rather than
 ## Defender's view
 
 A production device should not expose a root shell over UART, accept default credentials, or allow `init=/bin/sh` from an unlocked bootloader. Lock the bootloader, disable the console shell, and store no plaintext credentials in firmware.
+
+
+## Related pages
+
+- [UART](../protocols/uart.md)
+- [Bootloader Access (U-Boot)](bootloader-access.md)
+- [Escaping Restricted Shells](restricted-shell-escape.md)
+- [Firmware Extraction](firmware-extraction.md)

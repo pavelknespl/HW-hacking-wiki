@@ -14,7 +14,7 @@ Walk the board and classify every significant chip using [Chip Identification](c
 
 - **The SoC / CPU.** The largest chip, often shielded, surrounded by the densest routing and the DRAM. This runs the firmware.
 - **DRAM.** Right next to the SoC, high pin count. Not usually a direct target but confirms the class of device.
-- **Flash / storage.** The firmware store. A SOIC-8 is a SPI flash; a TSOP-48 is parallel NAND; a BGA is likely eMMC. This is a primary target. See [Memory Types](memory-types.md).
+- **Flash / storage.** The firmware store. A SOIC-8 is a [SPI flash](../attacks/spi-flash-dump.md); a TSOP-48 is parallel [NAND](memory-types.md); a BGA is likely [eMMC](../protocols/emmc.md). This is a primary target. See [Memory Types](memory-types.md).
 - **PMIC and regulators.** Near the power input, surrounded by inductors and capacitors. Tells you the supply rails and voltages.
 - **Radios.** Wi-Fi, Bluetooth, cellular, or sub-GHz modules, each with an antenna trace or connector.
 - **EEPROM.** Small 8-pin chips often hold configuration, MAC addresses, or calibration data.
@@ -46,8 +46,16 @@ You often need to know which test point goes where.
 
 ## Look for obvious wins before anything invasive
 
-- A populated, labeled UART header with a boot log is the fastest path to a shell.
-- A socketed or clip-accessible SPI flash means a firmware dump with no cooperation from the CPU.
-- A visible JTAG header on a Linux device may give full memory access.
+- A populated, labeled [UART](../protocols/uart.md) header with a boot log is the fastest path to a shell.
+- A socketed or clip-accessible [SPI](../protocols/spi.md) flash means a firmware dump with no cooperation from the CPU.
+- A visible [JTAG](../protocols/jtag.md) header on a Linux device may give full memory access.
 
 Only when these easy paths are closed do you escalate to desoldering, bus sniffing, or physical attacks. Finish recon with a clear plan: this is the console, this is the flash, this is the debug port, and this is the voltage everything runs at.
+
+
+## Related pages
+
+- [Finding and Identifying Pins](identifying-pins.md)
+- [Chip Identification](chip-identification.md)
+- [Reconnaissance](../attacks/recon.md)
+- [Logic Levels and Level Shifting](level-shifting.md)

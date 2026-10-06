@@ -1,6 +1,6 @@
 # dd and Imaging
 
-`dd` makes byte-exact copies. In hardware hacking it images block devices (SD cards, eMMC, USB mass storage exposed by a device) and carves known-offset regions out of a firmware dump. It is blunt, fast, and unforgiving, so the discipline is in choosing the right source and destination.
+`dd` makes byte-exact copies. In hardware hacking it images block devices (SD cards, [eMMC](../protocols/emmc.md), USB mass storage exposed by a device) and carves known-offset regions out of a firmware dump. It is blunt, fast, and unforgiving, so the discipline is in choosing the right source and destination.
 
 ## The mental model
 
@@ -17,6 +17,54 @@ dd if=<source> of=<dest> bs=<blocksize> [skip=N] [seek=N] [count=N] status=progr
 
 !!! danger "if and of are easy to swap, and the mistake is destructive"
     Writing to the wrong `of=` overwrites it with no confirmation. Double-check the device node with `lsblk` before every write, and prefer imaging *to* a file rather than *onto* a device whenever possible.
+
+## Choosing a block size
+
+`bs` sets how many bytes `dd` reads and writes per I/O operation. It is the setting people most often get wrong, and it affects two different things: **speed** and, when `skip`/`seek`/`count` are involved, **what bytes you actually copy**. Understanding it means understanding a little about how the underlying memory is organized.
+
+### Block size is about memory geometry
+
+Storage is not a flat tape of bytes to the hardware; it is organized into fixed-size units, and matching `dd` to those units is what makes a copy fast and correct.
+
+- **Logical sector (512 B or 4 KiB).** Block devices present data in sectors. Most tools report partition offsets in 512-byte sectors, which is why offset math so often multiplies by 512. See the [eMMC and SD](../protocols/emmc.md) page, where a partition starting at "sector 2048" means byte offset `2048 * 512`.
+- **Flash page (for example 2 KiB).** [NAND flash](../fundamentals/memory-types.md) is read and written a page at a time. A page plus its spare [OOB](../software/ubi-nand.md) area is the smallest unit the chip hands out.
+- **Flash erase block (for example 128 KiB).** [NAND](../fundamentals/memory-types.md) is erased a whole block at a time, which is why [UBI and NAND tooling](../software/ubi-nand.md) cares about erase-block size, and why writing flash is never truly byte-granular underneath.
+
+When you image a whole [block device](../protocols/emmc.md), the block size is purely a performance knob: too small and `dd` makes millions of tiny calls and crawls; too large and you waste memory with no gain. `bs=4M` is the usual sweet spot for whole-device reads.
+
+### Block size changes what skip and count mean
+
+The subtlety: `skip`, `seek`, and `count` are counted in **blocks**, not bytes. The same `skip=1` copies a completely different region depending on `bs`:
+
+```bash
+dd if=fw.bin of=out.bin bs=1   skip=320      # skip 320 bytes
+dd if=fw.bin of=out.bin bs=1K  skip=320      # skip 320 KiB  (327680 bytes)
+dd if=fw.bin of=out.bin bs=4K  skip=320      # skip 1.25 MiB (1310720 bytes)
+```
+
+So when you carve a region at a known byte offset (for example a [SquashFS](binwalk.md) that [binwalk](../software/binwalk.md) located at `0x140000`), you have two correct choices:
+
+1. **`bs=1`, offset in bytes.** Exact and foolproof, but slow because `dd` does one byte per operation:
+
+    ```bash
+    dd if=firmware.bin of=rootfs.squashfs bs=1 skip=$((0x140000))
+    ```
+
+2. **A larger block size, offset in blocks.** Fast, but only correct when the byte offset is an exact multiple of the block size. `0x140000` is `1310720`, which divides evenly by `4096`, so:
+
+    ```bash
+    # 0x140000 / 4096 = 320 blocks
+    dd if=firmware.bin of=rootfs.squashfs bs=4096 skip=320
+    ```
+
+!!! tip "The alignment trap"
+    If the offset is **not** a multiple of your block size, `bs=4K skip=N` lands in the wrong place and your carve is garbage, often silently. When the offset is awkward, either fall back to `bs=1`, or carve the misaligned leading bytes with `bs=1` and the aligned bulk with a big block size. When in doubt, `bs=1` is always correct, just slow.
+
+### A rule of thumb
+
+- **Whole-device image:** `bs=4M` (speed only, offsets not involved).
+- **Carving at a byte offset that is block-aligned:** large `bs`, offset expressed in blocks.
+- **Carving at an arbitrary byte offset:** `bs=1` with the offset in bytes, or let [binwalk](../software/binwalk.md) carve it for you.
 
 ## Imaging a block device
 
@@ -87,6 +135,15 @@ sync
 
 ## When not to use dd
 
-- For **SPI NOR flash**, use [`flashrom`](flashrom.md), which speaks the chip's protocol. `dd` only works on something that already presents as a block device.
+- For **[SPI](../protocols/spi.md) NOR flash**, use [`flashrom`](flashrom.md), which speaks the chip's protocol. `dd` only works on something that already presents as a block device.
 - For **raw NAND** with ECC and OOB, `dd` on the raw device gives you an un-processed image that still needs [NAND tooling](ubi-nand.md) to become a filesystem.
 - For **structured extraction**, let [`binwalk`](binwalk.md) carve; reserve `dd` for when you want exact, known offsets.
+
+
+## Related pages
+
+- [eMMC and SD](../protocols/emmc.md)
+- [Binwalk and Extraction](binwalk.md)
+- [NAND and eMMC Dumping](../attacks/nand-emmc-dump.md)
+- [Memory Types](../fundamentals/memory-types.md)
+- [UBI and NAND Tools](ubi-nand.md)

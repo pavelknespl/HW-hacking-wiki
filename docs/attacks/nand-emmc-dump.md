@@ -1,6 +1,6 @@
 # NAND and eMMC Dumping
 
-When firmware is too large for a NOR flash, it lives in NAND or eMMC. These are higher-capacity but harder to read: raw NAND needs ECC and bad-block handling, and eMMC is a dense BGA. This page covers both, and makes the case that reading from a live device beats reading the raw chip whenever you can manage it.
+When firmware is too large for a NOR flash, it lives in [NAND](../fundamentals/memory-types.md) or [eMMC](../protocols/emmc.md). These are higher-capacity but harder to read: raw NAND needs ECC and bad-block handling, and eMMC is a dense BGA. This page covers both, and makes the case that reading from a live device beats reading the raw chip whenever you can manage it.
 
 ## Prefer reading from inside the device
 
@@ -52,7 +52,7 @@ sudo mount -o loop,ro,offset=$((2048*512)) emmc.img /mnt
 
 ## Raw NAND
 
-Raw NAND (SPI NAND in SOIC-8, or parallel NAND in TSOP-48) is the hardest common case because a raw read is not a filesystem. See [Memory Types](../fundamentals/memory-types.md) and [UBI and NAND Tools](../software/ubi-nand.md).
+Raw NAND ([SPI](../protocols/spi.md) NAND in SOIC-8, or parallel NAND in TSOP-48) is the hardest common case because a raw read is not a filesystem. See [Memory Types](../fundamentals/memory-types.md) and [UBI and NAND Tools](../software/ubi-nand.md).
 
 ### Reading the chip
 
@@ -94,3 +94,12 @@ For JFFS2, use `jefferson`; for YAFFS, the YAFFS tools with the correct page and
 | Parallel NAND, no shell | Desolder, programmer, then `ubireader`/`jefferson` |
 
 In every case, verify the dump by reading twice and comparing, and confirm the structure matches the boot log before trusting it.
+
+
+## Related pages
+
+- [eMMC and SD](../protocols/emmc.md)
+- [UBI and NAND Tools](../software/ubi-nand.md)
+- [Memory Types](../fundamentals/memory-types.md)
+- [Firmware Extraction](firmware-extraction.md)
+- [dd and Imaging](../software/dd-imaging.md)

@@ -6,10 +6,10 @@ You do not need a laboratory. A corner of a desk, decent light, and about a hund
 
 === "Starter (around 50 to 100 USD)"
 
-    Enough to find a UART, read a flash chip, and watch simple buses.
+    Enough to find a [UART](../protocols/uart.md), read a flash chip, and watch simple buses.
 
     - A USB to multi-protocol adapter such as a **Bus Pirate**, **FT2232H breakout**, or **CH341A** programmer
-    - A cheap **USB logic analyzer** (an 8 channel clone works with [sigrok](../software/logic-analyzers.md))
+    - A cheap **USB [logic analyzer](../software/logic-analyzers.md)** (an 8 channel clone works with [sigrok](../software/logic-analyzers.md))
     - A **multimeter** with continuity beep
     - **Jumper wires**, **SOIC-8 test clip**, and a **breadboard**
     - A basic soldering iron
@@ -18,16 +18,16 @@ You do not need a laboratory. A corner of a desk, decent light, and about a hund
 
     Comfortable, reliable work on a wide range of boards.
 
-    - A quality **JTAG/SWD probe** such as a J-Link or an FT2232H based adapter
+    - A quality **[JTAG](../protocols/jtag.md)/[SWD](../protocols/swd.md) probe** such as a J-Link or an FT2232H based adapter
     - A **temperature controlled soldering station** and **hot air rework** station
     - A proper **bench power supply** with current limiting
     - A real **logic analyzer** (Saleae clone or a Saleae) at higher sample rates
     - A **binocular microscope** or a USB microscope
-    - A **flash programmer** that handles SPI, I2C, and parallel chips
+    - A **flash programmer** that handles [SPI](../protocols/spi.md), [I2C](../protocols/i2c.md), and parallel chips
 
 === "Advanced"
 
-    For fault injection, side-channel work, and dense boards.
+    For [fault injection](../attacks/fault-injection.md), [side-channel](../attacks/side-channel.md) work, and dense boards.
 
     - An **oscilloscope** (bandwidth of 100 MHz or more)
     - A **ChipWhisperer** for glitching and power analysis, or a custom crowbar glitcher
@@ -78,3 +78,11 @@ You have two sane options:
 ## Keep a lab notebook
 
 Photograph every board before and after modification. Label the chips. Record which pin you connected to what, what voltage you measured, and what each command returned. When a device bricks or a capture confuses you, good notes are the difference between a five minute recovery and starting over.
+
+
+## Related pages
+
+- [The Toolkit](toolkit.md)
+- [Logic Levels and Level Shifting](../fundamentals/level-shifting.md)
+- [Methodology](methodology.md)
+- [Finding and Identifying Pins](../fundamentals/identifying-pins.md)

@@ -8,7 +8,7 @@ These bridge your computer's USB port to the low level buses on the target.
 
 ### USB to UART adapters
 
-The most used tool in the kit. Converts a serial console to something a terminal program can read.
+The most used tool in the kit. Converts a [serial console](../protocols/uart.md) to something a terminal program can read.
 
 - **FTDI FT232R** based cables are reliable and well supported.
 - **CP2102** and **CH340** based adapters are cheaper and perfectly usable.
@@ -22,10 +22,10 @@ One device that speaks several buses, ideal for exploration.
 
 | Device | Speaks | Notes |
 | --- | --- | --- |
-| **Bus Pirate** | UART, SPI, I2C, 1-Wire, JTAG (slow) | Interactive menu, great for learning. Slower than dedicated tools. |
-| **FT2232H / FT232H breakout** | UART, SPI, I2C, JTAG, SWD | Fast, works with OpenOCD, `flashrom`, and `pyftdi`. Excellent value. |
+| **Bus Pirate** | [UART](../protocols/uart.md), [SPI](../protocols/spi.md), [I2C](../protocols/i2c.md), 1-Wire, [JTAG](../protocols/jtag.md) (slow) | Interactive menu, great for learning. Slower than dedicated tools. |
+| **FT2232H / FT232H breakout** | UART, SPI, I2C, JTAG, [SWD](../protocols/swd.md) | Fast, works with [OpenOCD](../software/openocd.md), `flashrom`, and `pyftdi`. Excellent value. |
 | **Tigard** | UART, SPI, I2C, JTAG, SWD | Purpose built for hardware hacking, with voltage selection done well. |
-| **Raspberry Pi** | UART, SPI, I2C, bit-banged anything, JTAG | A general purpose GPIO workhorse. See [GPIO Control](../scripting/gpio-control.md). |
+| **[Raspberry Pi](../scripting/gpio-control.md)** | UART, SPI, I2C, bit-banged anything, JTAG | A general purpose GPIO workhorse. See [GPIO Control](../scripting/gpio-control.md). |
 
 ### JTAG and SWD probes
 
@@ -42,7 +42,7 @@ For reading and writing memory chips directly. See [SPI Flash Dumping](../attack
 
 - **CH341A**: the ubiquitous cheap SPI/I2C programmer. Watch its voltage, many clones drive 5 V on the data lines, which is risky for 3.3 V chips. A 3.3 V mod or a known-good clone is advised.
 - **FT2232H**: drives `flashrom` cleanly at the correct voltage.
-- **Dedicated universal programmers** (for example, a XGecu T48/T56): handle parallel NOR, NAND, and odd packages with adapters.
+- **Dedicated universal programmers** (for example, a XGecu T48/T56): handle parallel NOR, [NAND](../fundamentals/memory-types.md), and odd packages with adapters.
 
 ## Clips, sockets, and probes
 
@@ -50,7 +50,7 @@ For reading and writing memory chips directly. See [SPI Flash Dumping](../attack
 - **Pomona 5250/5252** clips are the reliable, more expensive option over cheap clones.
 - **Chip sockets and adapters** (SOIC to DIP, TSOP, BGA adapters) let a desoldered chip drop into a programmer.
 - **Pogo pin jigs** make repeatable contact with test pads and unpopulated headers.
-- **Fine-tip probes and grabbers** attach logic analyzer channels to tiny pads.
+- **Fine-tip probes and grabbers** attach [logic analyzer](../software/logic-analyzers.md) channels to tiny pads.
 
 ## Measurement and observation
 
@@ -95,3 +95,12 @@ If you are starting from nothing and want one order that covers the most ground:
 5. A basic **soldering iron**, flux, and jumper wires.
 
 That kit finds serial consoles, decodes buses, and dumps the most common flash chips, which is the majority of consumer device work.
+
+
+## Related pages
+
+- [Lab Setup and Safety](lab-setup.md)
+- [Serial Consoles](../software/serial-consoles.md)
+- [Logic Analyzers (sigrok)](../software/logic-analyzers.md)
+- [flashrom](../software/flashrom.md)
+- [OpenOCD](../software/openocd.md)

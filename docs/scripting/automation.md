@@ -49,7 +49,7 @@ This encodes the ["read three times and compare"](../software/flashrom.md#read-t
 
 ## Scripting bootloader interaction
 
-Catching the [U-Boot interrupt window](../attacks/bootloader-access.md) by hand is unreliable. Script the UART to flood keys at power-on and then issue commands:
+Catching the [U-Boot interrupt window](../attacks/bootloader-access.md) by hand is unreliable. Script the [UART](../protocols/uart.md) to flood keys at power-on and then issue commands:
 
 ```python
 import serial, time
@@ -96,7 +96,7 @@ Afterward, plot the results: the map of normal/crash/success over the parameter 
 Reliable `classify()` is what makes a campaign work. Good success signals:
 
 - A UART string that only appears on success (a prompt, a leaked value).
-- A [debug port read](../software/openocd.md) that returns real data instead of zeros (read-out protection defeated).
+- A [debug port read](../software/openocd.md) that returns real data instead of zeros ([read-out protection](../protocols/swd.md) defeated).
 - A status pin that changes level.
 - A change in current draw on the [bench supply](../getting-started/lab-setup.md#powering-the-target).
 
@@ -107,7 +107,7 @@ Make the signal unambiguous and machine-readable so an overnight run needs no ba
 You rarely need to reimplement protocols. Script the existing tools:
 
 - **`flashrom`**, **`nanddump`**, **`dd`** from shell for extraction.
-- **OpenOCD** via its Tcl/telnet interface, or **pyOCD** from Python, to halt, dump, and flash in a loop. See [OpenOCD](../software/openocd.md).
+- **[OpenOCD](../software/openocd.md)** via its Tcl/telnet interface, or **pyOCD** from Python, to halt, dump, and flash in a loop. See [OpenOCD](../software/openocd.md).
 - **`esptool.py`** for Espressif targets.
 - **sigrok-cli** to capture and auto-decode a bus as part of a test. See [Logic Analyzers](../software/logic-analyzers.md).
 
@@ -120,3 +120,11 @@ Treat a campaign like an experiment:
 - Save the exact scripts with the results so a successful run is reproducible later.
 
 Reproducibility is what turns a lucky glitch into a documented, repeatable finding, which is the whole point of writing the automation in the first place.
+
+
+## Related pages
+
+- [GPIO Control](gpio-control.md)
+- [Fault Injection and Glitching](../attacks/fault-injection.md)
+- [flashrom](../software/flashrom.md)
+- [OpenOCD](../software/openocd.md)

@@ -67,7 +67,7 @@ sf read 0x80000000 0x0 0x1000000
 tftpput 0x80000000 0x1000000 firmware.bin
 ```
 
-For NAND, `nand read 0x80000000 0x0 0x<size>` then transfer. If you have no network, some builds support `loady`/`loadb` over serial, or you can `md` regions and capture the console log, which is slow but works for small areas.
+For [NAND](../fundamentals/memory-types.md), `nand read 0x80000000 0x0 0x<size>` then transfer. If you have no network, some builds support `loady`/`loadb` over serial, or you can `md` regions and capture the console log, which is slow but works for small areas.
 
 ## Getting a shell by changing bootargs
 
@@ -96,3 +96,11 @@ If the device uses BusyBox, `init=/bin/sh` or `init=/bin/ash` usually lands you 
 ## Defender's view
 
 Lock the bootloader on production units: set `bootdelay` to 0 *and* require a password for the prompt (U-Boot supports a prompt password and locked-down environment), disable interactive commands, and do not ship `init=/bin/sh` reachable. An open U-Boot prompt is equivalent to root plus firmware read/write.
+
+
+## Related pages
+
+- [UART](../protocols/uart.md)
+- [Getting a Shell](getting-a-shell.md)
+- [Bootloader Bypass](bootloader-bypass.md)
+- [Firmware Extraction](firmware-extraction.md)

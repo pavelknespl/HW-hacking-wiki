@@ -75,3 +75,10 @@ Side-channel analysis is measurement-intensive and sensitive to setup quality, b
 ## Defender's view
 
 Assume physical attackers can measure power and EM. Use constant-time comparisons everywhere a secret is involved, choose cryptographic libraries with side-channel countermeasures, mask sensitive operations, and limit the number of key operations an unauthenticated party can invoke. Treat any non-constant-time secret comparison as a bug.
+
+
+## Related pages
+
+- [Fault Injection and Glitching](fault-injection.md)
+- [Firmware Analysis](firmware-analysis.md)
+- [Automating Attacks](../scripting/automation.md)

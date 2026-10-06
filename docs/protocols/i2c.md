@@ -16,7 +16,7 @@ Plus a common ground. Each device has a 7-bit (sometimes 10-bit) **address**. A 
 Key consequences for attackers:
 
 - **Addressable.** You can enumerate the bus by probing every address and noting which ones acknowledge.
-- **Open-drain and bidirectional.** Level shifting must respect that; use a [MOSFET-based shifter](../fundamentals/level-shifting.md), not a push-pull translator.
+- **Open-drain and bidirectional.** [Level shifting](../fundamentals/level-shifting.md) must respect that; use a [MOSFET-based shifter](../fundamentals/level-shifting.md), not a push-pull translator.
 - **Slow.** Standard mode is 100 kHz, fast mode 400 kHz. Easy to sniff with a cheap [logic analyzer](../software/logic-analyzers.md).
 
 ## Finding the bus
@@ -29,13 +29,13 @@ Key consequences for attackers:
 
 Passive sniffing reveals what moves across the bus at boot, which often includes an EEPROM read of configuration.
 
-1. Connect a logic analyzer's two channels to `SDA` and `SCL`, plus ground.
+1. Connect a [logic analyzer](../software/logic-analyzers.md)'s two channels to `SDA` and `SCL`, plus ground.
 2. Capture during power-up.
 3. Decode with sigrok/PulseView's I2C decoder to get addresses and byte values. See [Logic Analyzers](../software/logic-analyzers.md).
 
 ## Actively reading a chip
 
-To dump an EEPROM yourself, become the bus master with a [multi-protocol adapter](../getting-started/toolkit.md#multi-protocol-adapters) (Bus Pirate, FT2232H with `pyftdi`, or a Raspberry Pi).
+To dump an EEPROM yourself, become the bus master with a [multi-protocol adapter](../getting-started/toolkit.md#multi-protocol-adapters) (Bus Pirate, FT2232H with `pyftdi`, or a [Raspberry Pi](../scripting/gpio-control.md)).
 
 On a Raspberry Pi with I2C enabled:
 
@@ -65,3 +65,11 @@ For larger EEPROMs a proper tool handles 16-bit addressing. `eeprog`, `i2c-tools
 - Occasionally **credentials or keys** stored lazily in an external EEPROM.
 
 Pair an I2C dump with [firmware analysis](../attacks/firmware-analysis.md): the firmware code that reads the EEPROM tells you what each byte means.
+
+
+## Related pages
+
+- [Logic Analyzers (sigrok)](../software/logic-analyzers.md)
+- [Memory Types](../fundamentals/memory-types.md)
+- [Logic Levels and Level Shifting](../fundamentals/level-shifting.md)
+- [SPI](spi.md)

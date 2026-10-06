@@ -6,19 +6,19 @@ Hardware access is only half the job. The other half is the software that drives
 
 -   __Serial Consoles__
 
-    `screen`, `minicom`, `tio`, `picocom`: reading and driving a UART.
+    `screen`, `minicom`, `tio`, `picocom`: reading and driving a [UART](../protocols/uart.md).
 
     [:octicons-arrow-right-24: Read](serial-consoles.md)
 
 -   __OpenOCD__
 
-    The bridge from a JTAG/SWD adapter to GDB and memory dumps.
+    The bridge from a [JTAG](../protocols/jtag.md)/[SWD](../protocols/swd.md) adapter to GDB and memory dumps.
 
     [:octicons-arrow-right-24: Read](openocd.md)
 
 -   __flashrom__
 
-    Read and write SPI, parallel, and LPC flash chips.
+    Read and write [SPI](../protocols/spi.md), parallel, and LPC flash chips.
 
     [:octicons-arrow-right-24: Read](flashrom.md)
 
@@ -54,8 +54,8 @@ Hardware access is only half the job. The other half is the software that drives
 | --- | --- |
 | Read a UART console | [`tio`](serial-consoles.md), `screen`, `minicom` |
 | Halt a CPU, dump internal flash | [OpenOCD](openocd.md) + GDB |
-| Dump an external SPI flash | [`flashrom`](flashrom.md) |
-| Image a block device (eMMC/SD) | [`dd`](dd-imaging.md) |
+| Dump an external [SPI flash](../attacks/spi-flash-dump.md) | [`flashrom`](flashrom.md) |
+| Image a block device ([eMMC](../protocols/emmc.md)/SD) | [`dd`](dd-imaging.md) |
 | Carve a firmware image | [`binwalk`](binwalk.md) |
 | Rebuild a UBI/NAND filesystem | [`ubireader`, `nanddump`](ubi-nand.md) |
 | Decode a captured bus | [sigrok / PulseView](logic-analyzers.md) |

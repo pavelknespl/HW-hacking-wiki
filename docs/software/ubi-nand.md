@@ -1,6 +1,6 @@
 # UBI and NAND Tools
 
-Raw NAND flash is not a clean image. It carries spare bytes, error-correcting codes, and bad-block markers, and its filesystems (UBIFS, JFFS2, YAFFS) are designed around those quirks. This page covers the tools that turn a raw NAND dump into a readable filesystem, with UBI/UBIFS as the main focus because it dominates modern embedded Linux.
+Raw [NAND](../fundamentals/memory-types.md) flash is not a clean image. It carries spare bytes, error-correcting codes, and bad-block markers, and its filesystems (UBIFS, JFFS2, YAFFS) are designed around those quirks. This page covers the tools that turn a raw NAND dump into a readable filesystem, with UBI/UBIFS as the main focus because it dominates modern embedded Linux.
 
 ## What makes NAND different
 
@@ -31,7 +31,7 @@ ubireader_extract_files firmware_nand.bin -o extracted/
 ubireader_extract_images firmware_nand.bin -o volumes/
 ```
 
-`ubireader` figures out the block and page sizes from the image, which saves you guessing. If it struggles, pass the parameters explicitly (`-b` block size, `-e` LEB size) based on the chip datasheet.
+`ubireader` figures out the block and page sizes from the image, which saves you guessing. If it struggles, pass the parameters explicitly (`-b` [block size](dd-imaging.md), `-e` LEB size) based on the chip datasheet.
 
 ### ubidump
 
@@ -89,3 +89,11 @@ If your [NAND dump](../attacks/nand-emmc-dump.md) came off the raw chip with OOB
 3. **Extract files** with `ubireader_extract_files`, falling back to `ubidump` if needed.
 4. **For JFFS2/YAFFS**, use `jefferson` or the YAFFS tools with the correct page/spare sizes.
 5. **Then analyze** the extracted tree exactly as in [firmware analysis](../attacks/firmware-analysis.md).
+
+
+## Related pages
+
+- [NAND and eMMC Dumping](../attacks/nand-emmc-dump.md)
+- [Memory Types](../fundamentals/memory-types.md)
+- [Binwalk and Extraction](binwalk.md)
+- [Firmware Analysis](../attacks/firmware-analysis.md)

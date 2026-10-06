@@ -1,6 +1,6 @@
 # OpenOCD
 
-OpenOCD (Open On-Chip Debugger) is the open-source glue between a JTAG or SWD adapter and your debugger. It drives the debug transport, exposes a GDB server and a command console, and knows how to flash and dump a wide range of targets. If you are working over [JTAG](../protocols/jtag.md) or [SWD](../protocols/swd.md), OpenOCD is almost always in the loop.
+OpenOCD (Open On-Chip Debugger) is the open-source glue between a [JTAG](../protocols/jtag.md) or [SWD](../protocols/swd.md) adapter and your debugger. It drives the debug transport, exposes a GDB server and a command console, and knows how to flash and dump a wide range of targets. If you are working over [JTAG](../protocols/jtag.md) or [SWD](../protocols/swd.md), OpenOCD is almost always in the loop.
 
 ## The two config files
 
@@ -117,7 +117,7 @@ gdb-multiarch firmware.elf
 - **"Error: no device found"** points at the interface config or USB permissions. Check the adapter is detected (`lsusb`) and that you have a udev rule or run with the right permissions.
 - **Unstable connection, random resets** usually means the adapter speed is too high. Drop `adapter speed`.
 - **"target not halted"** means a command needs the core stopped first; run `halt` or `reset halt`.
-- **Reads return zeros on internal flash** is the signature of read-out protection, not a wiring fault.
+- **Reads return zeros on internal flash** is the signature of [read-out protection](../protocols/swd.md), not a wiring fault.
 
 ## Alternatives
 
@@ -125,3 +125,12 @@ gdb-multiarch firmware.elf
 - **Vendor tools** (ST-Link Utility / STM32CubeProgrammer, J-Link Commander, nRF Command Line Tools) sometimes handle quirks of their own silicon better.
 
 For most cross-vendor work, OpenOCD plus GDB is the dependable combination.
+
+
+## Related pages
+
+- [JTAG](../protocols/jtag.md)
+- [SWD](../protocols/swd.md)
+- [Fault Injection and Glitching](../attacks/fault-injection.md)
+- [Ghidra Setup](../reverse-engineering/ghidra-setup.md)
+- [Firmware Extraction](../attacks/firmware-extraction.md)

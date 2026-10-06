@@ -1,6 +1,6 @@
 # GPIO Control
 
-Driving a target's pins from code is the foundation of automation. A Raspberry Pi exposes general-purpose I/O plus hardware UART, SPI, and I2C controllers, all at 3.3 V, and all scriptable from Python. This page covers the practical ways to control those pins and when to use each.
+Driving a target's pins from code is the foundation of automation. A Raspberry Pi exposes general-purpose I/O plus hardware [UART](../protocols/uart.md), [SPI](../protocols/spi.md), and [I2C](../protocols/i2c.md) controllers, all at 3.3 V, and all scriptable from Python. This page covers the practical ways to control those pins and when to use each.
 
 !!! warning "Voltage and ground"
     Pi GPIO is 3.3 V and **not** 5 V tolerant. Use a [level shifter](../fundamentals/level-shifting.md) for anything other than 3.3 V targets, and tie grounds together first. See [Lab Setup](../getting-started/lab-setup.md).
@@ -108,7 +108,7 @@ def shift_byte(out_byte):
     return in_byte
 ```
 
-Bit-banging is slow and timing-approximate on a non-real-time OS, but it is universal: anything with a defined sequence of edges can be driven this way. For JTAG, projects like `jtagenum` bit-bang candidate pins to [find the pinout](../fundamentals/identifying-pins.md#identifying-jtag-and-swd).
+Bit-banging is slow and timing-approximate on a non-real-time OS, but it is universal: anything with a defined sequence of edges can be driven this way. For [JTAG](../protocols/jtag.md), projects like `jtagenum` bit-bang candidate pins to [find the pinout](../fundamentals/identifying-pins.md#identifying-jtag-and-swd).
 
 ## pigpio for precise timing
 
@@ -117,3 +117,12 @@ When bit-banging needs better timing (tighter pulses, hardware-timed waveforms),
 ## From control to automation
 
 Once you can drive reset, read a status line, and talk a bus from code, you can wrap the whole attack in a loop: reset the target, perform an action, observe the result, repeat. That is the subject of [Automating Attacks](automation.md).
+
+
+## Related pages
+
+- [Automating Attacks](automation.md)
+- [UART](../protocols/uart.md)
+- [SPI](../protocols/spi.md)
+- [I2C](../protocols/i2c.md)
+- [JTAG](../protocols/jtag.md)

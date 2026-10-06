@@ -8,8 +8,8 @@ The point is almost never the solder joint itself. It is what access to the hard
 
 A networked service is written defensively because its authors assume hostile input from strangers. The same product's circuit board is usually designed under the opposite assumption, that nobody untrusted will ever have physical access. That gap is where most of the interesting findings live:
 
-- **Debug interfaces left enabled.** UART consoles, JTAG, and SWD ports are invaluable during development and frequently ship enabled on production units.
-- **Unencrypted external memory.** Firmware and configuration often sit in a SPI flash or NAND chip in the clear, readable with a clip and a cheap programmer.
+- **Debug interfaces left enabled.** [UART](../protocols/uart.md) consoles, [JTAG](../protocols/jtag.md), and [SWD](../protocols/swd.md) ports are invaluable during development and frequently ship enabled on production units.
+- **Unencrypted external memory.** Firmware and configuration often sit in a [SPI flash](../attacks/spi-flash-dump.md) or [NAND](../fundamentals/memory-types.md) chip in the clear, readable with a clip and a cheap programmer.
 - **Trusting boot chains.** Many devices load code from external storage without verifying it, so modifying that storage modifies the device.
 - **Secrets at rest.** Wi-Fi passwords, API tokens, private keys, and customer data are regularly stored in plaintext on the flash.
 
@@ -17,7 +17,7 @@ A networked service is written defensively because its authors assume hostile in
 
 The capabilities you gain tend to compound. A typical progression looks like this:
 
-1. A serial console reveals the boot log, the Linux version, and sometimes a root prompt.
+1. A [serial console](../protocols/uart.md) reveals the boot log, the Linux version, and sometimes a root prompt.
 2. A firmware dump gives you every binary on the device to analyze offline.
 3. Analysis uncovers hardcoded credentials, a command injection bug, or a cryptographic weakness.
 4. That weakness turns into a remote exploit that needs no physical access at all, which is the real prize for a product security assessment.
@@ -33,10 +33,19 @@ Hardware access is therefore both an end in itself (recovering data, unlocking a
 | [SPI flash dumping](../attacks/spi-flash-dump.md) | External NOR flash | Full firmware image |
 | [NAND / eMMC dumping](../attacks/nand-emmc-dump.md) | Larger external storage | Full filesystem image |
 | [Bus sniffing (I2C/SPI)](../protocols/i2c.md) | Inter-chip communication | Secrets in transit, EEPROM contents |
-| [Bootloader attacks](../attacks/bootloader-access.md) | U-Boot and friends | Boot modified code, dump memory, get a shell |
-| [Fault injection](../attacks/fault-injection.md) | Secure boot, read-out protection | Skip a security check, defeat a lock bit |
+| [Bootloader attacks](../attacks/bootloader-access.md) | [U-Boot](../attacks/bootloader-access.md) and friends | Boot modified code, dump memory, get a shell |
+| [Fault injection](../attacks/fault-injection.md) | [Secure boot](../attacks/bootloader-bypass.md), [read-out protection](../protocols/swd.md) | Skip a security check, defeat a lock bit |
 | [Side-channel analysis](../attacks/side-channel.md) | Cryptographic implementations | Recover keys without reading them directly |
 
 ## A note on realism
 
 Not every device yields to the first technique you try, and a surprising number give up everything to the very first one. Experienced practitioners do not reach for an oscilloscope and a glitcher before checking whether there is simply a UART header with an open root shell. Start cheap and non-invasive, escalate only as the target forces you to, and keep careful notes so you can retrace your steps. The [Methodology](methodology.md) page formalizes this.
+
+
+## Related pages
+
+- [Methodology](methodology.md)
+- [The Toolkit](toolkit.md)
+- [Reconnaissance](../attacks/recon.md)
+- [Firmware Extraction](../attacks/firmware-extraction.md)
+- [Getting a Shell](../attacks/getting-a-shell.md)

@@ -21,7 +21,7 @@ This covers most router/camera/IoT work: a CGI handler, a web server, a daemon.
 
 ### Orient yourself
 
-- Let Ghidra's auto-analysis finish. For a dynamically linked binary it labels library calls, which are your signposts.
+- Let [Ghidra](ghidra-setup.md)'s auto-analysis finish. For a dynamically linked binary it labels library calls, which are your signposts.
 - Find `main` (or the entry for a CGI, which may be driven by environment variables rather than `argv`).
 - Identify the **input sources**: network reads (`recv`, `read` on a socket), CGI environment (`getenv("QUERY_STRING")`), and file reads.
 
@@ -59,7 +59,7 @@ An MCU image with no OS. Harder, because there are no library symbols to anchor 
 
 Bare-metal code is driven by hardware. Find where it touches peripherals and reason outward:
 
-- Writes to a UART data register mark logging and command handling.
+- Writes to a [UART](../protocols/uart.md) data register mark logging and command handling.
 - Reads from a crypto or flash-controller register mark the security-relevant code.
 - GPIO accesses map to physical pins (LEDs, resets, chip selects) you can correlate with the board.
 
@@ -86,3 +86,10 @@ Static reading has blind spots. Confirm hypotheses by running the code:
 - **Debug on hardware** over [JTAG/SWD](../protocols/jtag.md) with [OpenOCD](../software/openocd.md) and GDB, using `ret-sync` to keep Ghidra aligned with the live state. Set a breakpoint on the function you identified and watch the real arguments.
 
 Static analysis tells you where to look; dynamic analysis confirms what actually happens. Alternating between the two is how firmware gets fully understood.
+
+
+## Related pages
+
+- [Ghidra Setup](ghidra-setup.md)
+- [Firmware Analysis](../attacks/firmware-analysis.md)
+- [CPU Architectures](../fundamentals/architectures.md)

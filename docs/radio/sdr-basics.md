@@ -54,3 +54,9 @@ Once you have a recording, the workflow in [URH](https://github.com/jopohl/urh) 
 5. **Capture several transmissions** and diff them to see which bits are fixed (addressing, command) and which change (counters, sensor values).
 
 That decoded structure is what the [RF Attacks](rf-attacks.md) page builds on.
+
+
+## Related pages
+
+- [RF Attacks](rf-attacks.md)
+- [Firmware Analysis](../attacks/firmware-analysis.md)

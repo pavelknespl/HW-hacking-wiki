@@ -54,7 +54,7 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 **ECC**
 : Error-Correcting Code stored alongside [NAND](../fundamentals/memory-types.md) pages to fix bit flips.
 
-**eMMC**
+**[eMMC](../protocols/emmc.md)**
 : Managed [NAND](../protocols/emmc.md) with an on-chip controller presenting a clean block device.
 
 **Endianness**
@@ -65,10 +65,10 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## F
 
-**Fault injection**
+**[Fault injection](../attacks/fault-injection.md)**
 : Deliberately disturbing a chip (voltage, clock, EM, laser) to cause a useful malfunction. See [Fault Injection](../attacks/fault-injection.md).
 
-**flashrom**
+**[flashrom](../software/flashrom.md)**
 : The tool that reads and writes [flash chips](../software/flashrom.md) through a programmer.
 
 **FCC ID**
@@ -76,7 +76,7 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## G
 
-**Ghidra**
+**[Ghidra](../reverse-engineering/ghidra-setup.md)**
 : The free NSA reverse engineering suite. See [Ghidra Setup](../reverse-engineering/ghidra-setup.md).
 
 **Glitching**
@@ -87,7 +87,7 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## I
 
-**I2C**
+**[I2C](../protocols/i2c.md)**
 : A two-wire bus (`SDA`, `SCL`) for low-speed peripherals and [EEPROMs](../protocols/i2c.md).
 
 **IDCODE**
@@ -98,7 +98,7 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## J
 
-**JTAG**
+**[JTAG](../protocols/jtag.md)**
 : A debug and test interface giving [full CPU control](../protocols/jtag.md): halt, read/write memory, dump flash.
 
 **JTAGulator**
@@ -106,10 +106,10 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## L
 
-**Level shifter**
+**[Level shifter](../fundamentals/level-shifting.md)**
 : A circuit that bridges two [logic voltages](../fundamentals/level-shifting.md) safely.
 
-**Logic analyzer**
+**[Logic analyzer](../software/logic-analyzers.md)**
 : A tool that captures and [decodes digital buses](../software/logic-analyzers.md).
 
 ## M
@@ -122,7 +122,7 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## N
 
-**NAND / NOR flash**
+**[NAND](../fundamentals/memory-types.md) / NOR flash**
 : The two [flash types](../fundamentals/memory-types.md). NOR is small, random-access, easy to dump; NAND is large, block-based, needs ECC and bad-block handling.
 
 **nanddump**
@@ -133,7 +133,7 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 **OOB (Out-Of-Band)**
 : Spare bytes after each [NAND](../fundamentals/memory-types.md) page, holding ECC and metadata.
 
-**OpenOCD**
+**[OpenOCD](../software/openocd.md)**
 : The open-source bridge from a [JTAG/SWD adapter](../software/openocd.md) to GDB and memory dumps.
 
 ## P
@@ -143,7 +143,7 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## R
 
-**Read-out protection (RDP / CRP / APPROTECT)**
+**[Read-out protection](../protocols/swd.md) (RDP / CRP / APPROTECT)**
 : A lock bit that stops a [debug port reading internal flash](../protocols/swd.md#read-out-protection-again). A target of [fault injection](../attacks/fault-injection.md).
 
 **Replay attack**
@@ -157,10 +157,10 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## S
 
-**Secure boot**
+**[Secure boot](../attacks/bootloader-bypass.md)**
 : A [verified boot chain](../attacks/bootloader-bypass.md) that refuses to run unauthorized code.
 
-**Side-channel**
+**[Side-channel](../attacks/side-channel.md)**
 : Information leaked physically (power, timing, EM) that reveals [secrets](../attacks/side-channel.md).
 
 **SoC**
@@ -169,13 +169,13 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 **SPA (Simple Power Analysis)**
 : Reading a secret from the shape of one or a few [power traces](../attacks/side-channel.md).
 
-**SPI**
+**[SPI](../protocols/spi.md)**
 : A fast four-wire bus connecting most [external flash](../protocols/spi.md).
 
-**SquashFS**
+**[SquashFS](../software/binwalk.md)**
 : A compressed read-only filesystem common in firmware; vendor variants often need [sasquatch](../software/binwalk.md).
 
-**SWD**
+**[SWD](../protocols/swd.md)**
 : ARM's [two-wire debug interface](../protocols/swd.md), standard on Cortex-M.
 
 ## T
@@ -188,10 +188,10 @@ Plain definitions of the terms used across the wiki. Where a full page exists, t
 
 ## U
 
-**U-Boot**
+**[U-Boot](../attacks/bootloader-access.md)**
 : The dominant embedded Linux [bootloader](../attacks/bootloader-access.md).
 
-**UART**
+**[UART](../protocols/uart.md)**
 : The asynchronous [serial interface](../protocols/uart.md) behind most device consoles.
 
 **UBI / UBIFS**

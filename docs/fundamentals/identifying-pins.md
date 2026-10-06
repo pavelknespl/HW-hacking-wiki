@@ -1,6 +1,6 @@
 # Finding and Identifying Pins
 
-An unlabeled row of pads is the most common puzzle in hardware hacking. This page shows how to turn a mystery header into a known UART or JTAG pinout using a multimeter, a logic analyzer, and a little reasoning. The same approach identifies individual signal pins on an unmarked chip.
+An unlabeled row of pads is the most common puzzle in hardware hacking. This page shows how to turn a mystery header into a known [UART](../protocols/uart.md) or [JTAG](../protocols/jtag.md) pinout using a multimeter, a [logic analyzer](../software/logic-analyzers.md), and a little reasoning. The same approach identifies individual signal pins on an unmarked chip.
 
 ## Step 1: Find ground
 
@@ -23,7 +23,7 @@ Connect a [logic analyzer](../software/logic-analyzers.md) to the unknown pads (
 
 - **UART TX** bursts into activity immediately: a steady stream of pulses as the boot log prints. It idles **high** and drops low for start bits. This is the easiest signal to spot.
 - **UART RX** is usually quiet at boot, idling high, because nothing is typing yet.
-- **Clock lines** (SPI `CLK`, JTAG `TCK`, I2C `SCL`) show regular, periodic toggling.
+- **Clock lines** ([SPI](../protocols/spi.md) `CLK`, JTAG `TCK`, [I2C](../protocols/i2c.md) `SCL`) show regular, periodic toggling.
 - **Floating or unused pins** drift or sit at odd voltages.
 
 ## Identifying a UART
@@ -41,11 +41,11 @@ To confirm and read it:
 3. Connect your adapter: adapter `RX` to target `TX`, adapter `TX` to target `RX`, and ground to ground. Open a [serial console](../software/serial-consoles.md).
 
 !!! tip "JTAGulator and UART bruteforcing"
-    Tools like the **JTAGulator** automate pin identification by driving and sensing combinations across a header. In software, `jtagenum` running on a microcontroller or Raspberry Pi brute-forces JTAG pinouts. For UART, scripts that cycle through common baud rates while watching for printable ASCII quickly lock onto the right speed.
+    Tools like the **JTAGulator** automate pin identification by driving and sensing combinations across a header. In software, `jtagenum` running on a microcontroller or [Raspberry Pi](../scripting/gpio-control.md) brute-forces JTAG pinouts. For UART, scripts that cycle through common baud rates while watching for printable ASCII quickly lock onto the right speed.
 
 ## Identifying JTAG and SWD
 
-JTAG uses four or five signals: `TCK`, `TMS`, `TDI`, `TDO`, and optional `TRST`. SWD uses two: `SWDIO` and `SWCLK`. Both are harder to identify by eye than UART because they are quiet unless a debugger is talking.
+JTAG uses four or five signals: `TCK`, `TMS`, `TDI`, `TDO`, and optional `TRST`. [SWD](../protocols/swd.md) uses two: `SWDIO` and `SWCLK`. Both are harder to identify by eye than UART because they are quiet unless a debugger is talking.
 
 Approaches:
 
@@ -82,3 +82,12 @@ Suppose you find an unlabeled 4-pad row near a router's SoC:
 4. Pulse width of the narrowest bit on pad 3 is about 8.68 microseconds, which is 115200 baud.
 
 You now wire adapter `RX` to pad 3, adapter `TX` to pad 2, ground to pad 1, leave pad 4 alone, open a terminal at 115200, and read the boot log. That is the whole method in miniature.
+
+
+## Related pages
+
+- [UART](../protocols/uart.md)
+- [JTAG](../protocols/jtag.md)
+- [Logic Analyzers (sigrok)](../software/logic-analyzers.md)
+- [Pinout Cheat Sheet](../reference/pinouts.md)
+- [PCB Recon](pcb-recon.md)

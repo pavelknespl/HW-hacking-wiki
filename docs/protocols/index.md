@@ -6,7 +6,7 @@ Chips talk to each other and to the outside world over a small set of standard b
 
 -   __UART__
 
-    The serial console. The single most productive interface on most devices.
+    The [serial console](uart.md). The single most productive interface on most devices.
 
     [:octicons-arrow-right-24: Read](uart.md)
 
@@ -36,7 +36,7 @@ Chips talk to each other and to the outside world over a small set of standard b
 
 -   __eMMC and SD__
 
-    Reading large managed NAND as a block device.
+    Reading large managed [NAND](../fundamentals/memory-types.md) as a block device.
 
     [:octicons-arrow-right-24: Read](emmc.md)
 

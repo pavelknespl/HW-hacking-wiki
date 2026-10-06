@@ -1,6 +1,6 @@
 # SPI
 
-SPI (Serial Peripheral Interface) is the fast, four-wire bus that connects most external flash chips to a processor. Because the firmware on a huge class of devices lives in a SOIC-8 SPI NOR flash, SPI is the single most important bus for firmware extraction. Clip onto the chip, speak SPI, and read the whole image.
+SPI (Serial Peripheral Interface) is the fast, four-wire bus that connects most external flash chips to a processor. Because the firmware on a huge class of devices lives in a SOIC-8 SPI NOR flash, SPI is the single most important bus for [firmware extraction](../attacks/firmware-extraction.md). Clip onto the chip, speak SPI, and read the whole image.
 
 ## How it works
 
@@ -15,7 +15,7 @@ SPI is a synchronous, full-duplex, master-driven bus:
 
 The master drives the clock and selects a slave by pulling its `CS#` low. On each clock edge one bit shifts out on MOSI and one shifts in on MISO simultaneously. There is no addressing on the wire; the chip select picks the device, and commands are part of the data stream.
 
-SPI runs far faster than I2C (tens of MHz), so a full dump is quick, but capturing it with a logic analyzer needs a correspondingly higher sample rate.
+SPI runs far faster than [I2C](i2c.md) (tens of MHz), so a full dump is quick, but capturing it with a [logic analyzer](../software/logic-analyzers.md) needs a correspondingly higher sample rate.
 
 ## The standard flash pinout
 
@@ -68,8 +68,16 @@ The decoded stream shows read commands and the data returned, effectively a part
 
 ## Writing and modifying
 
-`flashrom -w newimage.bin` writes a modified image back. On devices that load firmware from SPI without verifying it, this is a direct way to run your own code: dump, modify, write back, boot. Where secure boot verifies the image, a straight rewrite fails and you move to [bootloader](../attacks/bootloader-access.md) or [fault injection](../attacks/fault-injection.md) approaches.
+`flashrom -w newimage.bin` writes a modified image back. On devices that load firmware from SPI without verifying it, this is a direct way to run your own code: dump, modify, write back, boot. Where [secure boot](../attacks/bootloader-bypass.md) verifies the image, a straight rewrite fails and you move to [bootloader](../attacks/bootloader-access.md) or [fault injection](../attacks/fault-injection.md) approaches.
 
 ## Defender's view
 
-Storing firmware unencrypted in an external SPI flash means anyone with a clip has your code and any secrets in it. Encrypt sensitive data at rest, verify the boot image, and do not trust the contents of an external, clippable chip as if it were tamper-proof.
+Storing firmware unencrypted in an external [SPI flash](../attacks/spi-flash-dump.md) means anyone with a clip has your code and any secrets in it. Encrypt sensitive data at rest, verify the boot image, and do not trust the contents of an external, clippable chip as if it were tamper-proof.
+
+
+## Related pages
+
+- [SPI Flash Dumping](../attacks/spi-flash-dump.md)
+- [flashrom](../software/flashrom.md)
+- [Logic Analyzers (sigrok)](../software/logic-analyzers.md)
+- [Memory Types](../fundamentals/memory-types.md)

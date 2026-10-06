@@ -16,8 +16,8 @@ For two chips to communicate, the driver's VOH must clear the receiver's VIH, an
 | Rail | Where you see it | Notes |
 | --- | --- | --- |
 | **5 V** | Older logic, Arduino Uno, some sensors | Increasingly rare on signal lines. Dangerous to modern 1.8 V parts. |
-| **3.3 V** | The embedded default: most SoCs' I/O, SPI flash, UART headers | Your adapters should default here. |
-| **1.8 V** | Modern SoC I/O, high-density flash and eMMC, newer cores | Common and easy to overlook. Check the datasheet. |
+| **3.3 V** | The embedded default: most SoCs' I/O, [SPI flash](../attacks/spi-flash-dump.md), [UART](../protocols/uart.md) headers | Your adapters should default here. |
+| **1.8 V** | Modern SoC I/O, high-density flash and [eMMC](../protocols/emmc.md), newer cores | Common and easy to overlook. Check the datasheet. |
 | **1.2 V / 1.1 V** | SoC core rails, DDR | Rarely a signal interface you connect to directly. |
 
 !!! danger "The number one way to kill a target"
@@ -39,15 +39,15 @@ For two chips to communicate, the driver's VOH must clear the receiver's VIH, an
 
 === "Bidirectional MOSFET shifter"
 
-    The standard for I2C and other open-drain, bidirectional buses. A small board (often based on the BSS138 FET) with a low-voltage side, a high-voltage side, and the two reference voltages. Wire the low rail, the high rail, grounds, and the signal pairs.
+    The standard for [I2C](../protocols/i2c.md) and other open-drain, bidirectional buses. A small board (often based on the BSS138 FET) with a low-voltage side, a high-voltage side, and the two reference voltages. Wire the low rail, the high rail, grounds, and the signal pairs.
 
-    - Works for I2C, and for push-pull buses at modest speeds (SPI, UART at common rates).
+    - Works for I2C, and for push-pull buses at modest speeds ([SPI](../protocols/spi.md), UART at common rates).
     - Needs both reference voltages supplied.
     - Cheap, widely available, the default choice for exploration.
 
 === "Dedicated level-translator IC"
 
-    Chips like the **TXB0108** (auto-direction, push-pull) or **TXS0108** (open-drain) handle multiple channels at higher speed and are better for fast SPI or JTAG.
+    Chips like the **TXB0108** (auto-direction, push-pull) or **TXS0108** (open-drain) handle multiple channels at higher speed and are better for fast SPI or [JTAG](../protocols/jtag.md).
 
     - Pick auto-direction parts for buses where direction changes (SPI data), and be careful: some auto-direction parts misbehave on open-drain buses like I2C, where a MOSFET shifter is safer.
 
@@ -72,4 +72,12 @@ Level shifting assumes every device shares a ground reference. Without a common 
 2. Set your adapter to match if it can.
 3. If voltages differ, choose a shifter: MOSFET board for I2C and general use, a translator IC for fast SPI/JTAG, a divider only for a read-only slow line.
 4. Tie all grounds together.
-5. Verify with a logic analyzer that the shifted signal swings cleanly between the expected rails before trusting it.
+5. Verify with a [logic analyzer](../software/logic-analyzers.md) that the shifted signal swings cleanly between the expected rails before trusting it.
+
+
+## Related pages
+
+- [Lab Setup and Safety](../getting-started/lab-setup.md)
+- [UART](../protocols/uart.md)
+- [I2C](../protocols/i2c.md)
+- [Logic Analyzers (sigrok)](../software/logic-analyzers.md)

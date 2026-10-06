@@ -51,7 +51,7 @@ The attacker's whole job is to land that disturbance at the precise moment a sec
 Glitching is a search for the right parameters, so structure matters more than luck.
 
 1. **Pick the target moment.** Identify the instruction or operation you want to disturb: the signature compare, the read-protection check, a password comparison. [Firmware analysis](firmware-analysis.md) tells you where it is in the boot flow.
-2. **Establish a trigger.** You need a repeatable reference point in time. A GPIO that toggles, a recognizable pattern on a bus, a UART byte, or the power signature of the operation itself. The glitch offset is measured from this trigger.
+2. **Establish a trigger.** You need a repeatable reference point in time. A GPIO that toggles, a recognizable pattern on a bus, a [UART](../protocols/uart.md) byte, or the power signature of the operation itself. The glitch offset is measured from this trigger.
 3. **Instrument the outcome.** Define how you know a glitch succeeded: the device prints something it should not, a locked read returns data, a check passes. Automate detecting that.
 4. **Sweep the parameters.** Scan glitch **offset** (delay after trigger) and **width** across ranges, many attempts per point, logging results. Success is often rare (a fraction of a percent of attempts), so you repeat and look for the parameter window that works.
 5. **Classify each attempt** as normal, crash/reset, or success. Crashes bracket the interesting region: the boundary between "normal" and "crash" is where faults often land.
@@ -70,8 +70,8 @@ That loop is the essence of every glitching campaign, whatever the tooling.
 
 ## What it is used for
 
-- **Defeating read-out protection** to dump internal MCU flash the debug port refuses to read.
-- **Bypassing secure boot** by faulting the signature comparison. See [Bootloader Bypass](bootloader-bypass.md).
+- **Defeating [read-out protection](../protocols/swd.md)** to dump internal MCU flash the debug port refuses to read.
+- **Bypassing [secure boot](bootloader-bypass.md)** by faulting the signature comparison. See [Bootloader Bypass](bootloader-bypass.md).
 - **Skipping a password or PIN check** in a bare-metal device.
 - **Reaching a hidden state**, such as a serial loader or debug path normally gated by a check.
 
@@ -82,3 +82,12 @@ Glitching is probabilistic, slow, and device-specific. You will spend most of th
 ## Defender's view
 
 Make the critical check fault-resistant: perform it twice with different code, verify the result in more than one place, add random delays so the attacker cannot find a stable trigger, and use a chip with glitch sensors where the threat warrants it. A single comparison that decides everything is exactly what fault injection targets.
+
+
+## Related pages
+
+- [Side-Channel Attacks](side-channel.md)
+- [Bootloader Bypass](bootloader-bypass.md)
+- [SWD](../protocols/swd.md)
+- [JTAG](../protocols/jtag.md)
+- [Automating Attacks](../scripting/automation.md)

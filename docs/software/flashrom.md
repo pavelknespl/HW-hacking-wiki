@@ -11,7 +11,7 @@
 | CH341A | `ch341a_spi` | Cheap and everywhere. Watch the voltage (see below). |
 | FT2232H / FT232H | `ft2232_spi:type=2232H,port=A` | Reliable, correct 3.3 V, great value. |
 | Bus Pirate | `buspirate_spi:dev=/dev/ttyUSB0` | Slow but universal. |
-| Raspberry Pi SPI | `linux_spi:dev=/dev/spidev0.0,spispeed=10000` | Uses the Pi's own SPI controller. |
+| [Raspberry Pi](../scripting/gpio-control.md) [SPI](../protocols/spi.md) | `linux_spi:dev=/dev/spidev0.0,spispeed=10000` | Uses the Pi's own SPI controller. |
 | Dediprog | `dediprog` | Commercial, fast, dependable. |
 
 List what your build supports with `flashrom -L`.
@@ -97,3 +97,11 @@ The full decision tree is on [SPI Flash Dumping](../attacks/spi-flash-dump.md).
 ## After the dump
 
 Run [`binwalk`](binwalk.md) over the image to see its structure and carve out the filesystems. That is where [firmware analysis](../attacks/firmware-analysis.md) begins.
+
+
+## Related pages
+
+- [SPI](../protocols/spi.md)
+- [SPI Flash Dumping](../attacks/spi-flash-dump.md)
+- [Binwalk and Extraction](binwalk.md)
+- [Memory Types](../fundamentals/memory-types.md)

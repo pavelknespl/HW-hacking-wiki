@@ -1,6 +1,6 @@
 # Reverse Engineering
 
-Extraction gets you the bytes; reverse engineering turns them into understanding. This section covers setting up Ghidra correctly for each embedded architecture, which is the step people most often get wrong, and a practical workflow for going from a firmware image to located vulnerabilities and keys.
+Extraction gets you the bytes; reverse engineering turns them into understanding. This section covers setting up [Ghidra](ghidra-setup.md) correctly for each embedded architecture, which is the step people most often get wrong, and a practical workflow for going from a firmware image to located vulnerabilities and keys.
 
 <div class="grid cards" markdown>
 

@@ -41,7 +41,7 @@ This site collects the workflow that repeats across almost every embedded target
 
     ---
 
-    UART, JTAG, SWD, I2C, and SPI explained from the wire up, with wiring and the commands to probe each one.
+    [UART](protocols/uart.md), [JTAG](protocols/jtag.md), [SWD](protocols/swd.md), [I2C](protocols/i2c.md), and [SPI](protocols/spi.md) explained from the wire up, with wiring and the commands to probe each one.
 
     [:octicons-arrow-right-24: Protocols](protocols/index.md)
 
@@ -49,7 +49,7 @@ This site collects the workflow that repeats across almost every embedded target
 
     ---
 
-    `screen`, `minicom`, `tio`, `flashrom`, `binwalk`, `dd`, OpenOCD, sigrok, and the rest of the toolchain.
+    `screen`, `minicom`, `tio`, `flashrom`, `binwalk`, `dd`, [OpenOCD](software/openocd.md), sigrok, and the rest of the toolchain.
 
     [:octicons-arrow-right-24: Software Tools](software/index.md)
 
@@ -57,7 +57,7 @@ This site collects the workflow that repeats across almost every embedded target
 
     ---
 
-    Firmware extraction, flash dumping, bootloader access and bypass, fault injection, and side-channel analysis.
+    [Firmware extraction](attacks/firmware-extraction.md), flash dumping, bootloader access and bypass, [fault injection](attacks/fault-injection.md), and [side-channel](attacks/side-channel.md) analysis.
 
     [:octicons-arrow-right-24: Attacks](attacks/index.md)
 
@@ -65,7 +65,7 @@ This site collects the workflow that repeats across almost every embedded target
 
     ---
 
-    Ghidra set up per architecture, a firmware analysis workflow, and an introduction to RF and SDR.
+    [Ghidra](reverse-engineering/ghidra-setup.md) set up per architecture, a [firmware analysis](attacks/firmware-analysis.md) workflow, and an introduction to RF and SDR.
 
     [:octicons-arrow-right-24: Reverse Engineering](reverse-engineering/index.md)
 
@@ -76,7 +76,7 @@ This site collects the workflow that repeats across almost every embedded target
 Most assessments follow the same arc regardless of the device in front of you:
 
 1. **Recon.** Open the case, photograph the board, read the chip markings, and pull datasheets. Decide what you are looking at before you touch it. See [Reconnaissance](attacks/recon.md).
-2. **Find an interface.** Hunt for a serial console, a debug port, or an external memory chip. See [Finding and Identifying Pins](fundamentals/identifying-pins.md).
+2. **Find an interface.** Hunt for a [serial console](protocols/uart.md), a debug port, or an external memory chip. See [Finding and Identifying Pins](fundamentals/identifying-pins.md).
 3. **Get in or get the data.** Drop to a shell over [UART](protocols/uart.md), halt the CPU over [JTAG](protocols/jtag.md), interrupt [U-Boot](attacks/bootloader-access.md), or dump the [SPI flash](attacks/spi-flash-dump.md) directly.
 4. **Analyze.** Carve the image with [binwalk](software/binwalk.md), rebuild filesystems, and load binaries into [Ghidra](reverse-engineering/ghidra-setup.md).
 5. **Go deeper when needed.** When software paths are locked down, fall back to [fault injection](attacks/fault-injection.md) or [side-channel analysis](attacks/side-channel.md).

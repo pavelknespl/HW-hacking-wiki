@@ -21,7 +21,7 @@ This section ties the protocols and tools into complete workflows: how to actual
 
 -   __SPI Flash Dumping__
 
-    Clip on and read a NOR flash with flashrom.
+    Clip on and read a NOR flash with [flashrom](../software/flashrom.md).
 
     [:octicons-arrow-right-24: Read](spi-flash-dump.md)
 
@@ -57,7 +57,7 @@ This section ties the protocols and tools into complete workflows: how to actual
 
 -   __Bootloader Bypass__
 
-    Defeat secure boot and verified boot chains.
+    Defeat [secure boot](bootloader-bypass.md) and verified boot chains.
 
     [:octicons-arrow-right-24: Read](bootloader-bypass.md)
 

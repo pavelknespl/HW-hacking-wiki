@@ -42,16 +42,16 @@ Then move the files off the device over the network (`tftp`, `scp`, `nc`), to a 
 
 No shell, but a readable memory chip on the board. The most common hardware route.
 
-- **SPI NOR (SOIC-8):** clip on and read with [`flashrom`](spi-flash-dump.md). The friendliest case.
-- **SPI NAND:** a SPI reader with NAND support, then [reassembly](nand-emmc-dump.md).
+- **[SPI](../protocols/spi.md) NOR (SOIC-8):** clip on and read with [`flashrom`](spi-flash-dump.md). The friendliest case.
+- **SPI [NAND](../fundamentals/memory-types.md):** a SPI reader with NAND support, then [reassembly](nand-emmc-dump.md).
 - **Parallel NAND (TSOP-48):** usually desolder and read in a programmer, then reassemble. See [NAND and eMMC Dumping](nand-emmc-dump.md).
-- **eMMC (BGA):** read in-system through `CLK/CMD/DAT0` or off-board on an adapter. A clean block image. See [eMMC](../protocols/emmc.md).
+- **[eMMC](../protocols/emmc.md) (BGA):** read in-system through `CLK/CMD/DAT0` or off-board on an adapter. A clean block image. See [eMMC](../protocols/emmc.md).
 
 ## 4. Dump internal MCU flash over the debug port
 
 When the firmware lives inside the microcontroller and there is no external chip:
 
-- If [JTAG](../protocols/jtag.md) or [SWD](../protocols/swd.md) is enabled and read-out protection is off, [OpenOCD](../software/openocd.md) reads the internal flash with `dump_image`.
+- If [JTAG](../protocols/jtag.md) or [SWD](../protocols/swd.md) is enabled and [read-out protection](../protocols/swd.md) is off, [OpenOCD](../software/openocd.md) reads the internal flash with `dump_image`.
 - If read-out protection is set, the debug port refuses, and you escalate to [fault injection](fault-injection.md).
 
 ## 5. When the image is encrypted
@@ -59,7 +59,7 @@ When the firmware lives inside the microcontroller and there is no external chip
 If the stored image is encrypted (uniform high [entropy](../software/binwalk.md#entropy-analysis-spotting-encryption-and-compression), no signatures), reading the chip gives you ciphertext. Options:
 
 - Find the **decryption routine and key** by analyzing the bootloader, which must decrypt to run.
-- **Capture the plaintext in RAM** after the device decrypts it, by halting over JTAG or by [glitching](fault-injection.md) to a state where you can read memory.
+- **Capture the plaintext in RAM** after the device decrypts it, by halting over [JTAG](../protocols/jtag.md) or by [glitching](fault-injection.md) to a state where you can read memory.
 - Look for an **update path** or a debug mode that handles plaintext.
 
 ## Verify every dump
@@ -71,3 +71,12 @@ Whatever the route, prove the copy is faithful before trusting it:
 - A dump that fails to carve cleanly often means a bad read, not a clever obfuscation. Re-read before you conclude anything.
 
 With a verified image in hand, move to [Firmware Analysis](firmware-analysis.md).
+
+
+## Related pages
+
+- [SPI Flash Dumping](spi-flash-dump.md)
+- [NAND and eMMC Dumping](nand-emmc-dump.md)
+- [Firmware Analysis](firmware-analysis.md)
+- [Getting a Shell](getting-a-shell.md)
+- [Bootloader Access (U-Boot)](bootloader-access.md)

@@ -18,11 +18,11 @@ Example: a flash chip marked `W25Q128JVSIQ` decodes as Winbond (`W`), serial fla
 | --- | --- | --- |
 | **Main SoC / CPU** | Large BGA or QFP, often the biggest chip | Many pins, near the DRAM, often under a shield or heatsink |
 | **DRAM** | BGA or TSOP, usually next to the SoC | Marked with Samsung/Hynix/Micron codes, high pin count |
-| **SPI NOR flash** | SOIC-8 (sometimes SOIC-16 / WSON) | 8 legs, marked `25` series (`W25`, `MX25`, `GD25`, `EN25`) |
-| **SPI NAND flash** | SOIC-8 / WSON | Marked with a `25` style code but larger capacity, different command set |
+| **[SPI](../protocols/spi.md) NOR flash** | SOIC-8 (sometimes SOIC-16 / WSON) | 8 legs, marked `25` series (`W25`, `MX25`, `GD25`, `EN25`) |
+| **SPI [NAND](memory-types.md) flash** | SOIC-8 / WSON | Marked with a `25` style code but larger capacity, different command set |
 | **Parallel NAND** | TSOP-48 | 48 legs, marked `29F`, `TC58`, Samsung `K9` series |
-| **eMMC** | BGA-153 / BGA-169 | Ball grid, marked Samsung `KLM`, SK Hynix, Micron `JY`/`FE` |
-| **EEPROM** | SOIC-8 / TSSOP | Small, marked `24Cxx` (I2C) or `93Cxx` (Microwire) |
+| **[eMMC](../protocols/emmc.md)** | BGA-153 / BGA-169 | Ball grid, marked Samsung `KLM`, SK Hynix, Micron `JY`/`FE` |
+| **EEPROM** | SOIC-8 / TSSOP | Small, marked `24Cxx` ([I2C](../protocols/i2c.md)) or `93Cxx` (Microwire) |
 | **PMIC** | QFN | Near the power input, many inductors and capacitors around it |
 
 ## Decoding by prefix
@@ -48,7 +48,7 @@ The `25` in the middle marks an SPI serial flash using the common command set, w
 Manufacturers sometimes sand off or black-top chips, or the laser etch is faint. Options:
 
 - **Angle a light across the surface.** Faint etching becomes legible with raking light and a loupe or microscope.
-- **Count pins and measure the package.** The footprint plus pin count narrows the category. An 8-pin SOIC near the SoC is almost certainly a SPI flash.
+- **Count pins and measure the package.** The footprint plus pin count narrows the category. An 8-pin SOIC near the SoC is almost certainly a [SPI flash](../attacks/spi-flash-dump.md).
 - **Probe the pins.** A quick continuity and signal check against the standard SPI flash pinout confirms a guess even with no markings. See [Finding and Identifying Pins](identifying-pins.md).
 - **Ask `flashrom`.** On an unmarked SPI chip, `flashrom` reads the JEDEC ID directly from the chip and tells you the manufacturer and capacity, no markings needed.
 
@@ -66,3 +66,11 @@ Found Winbond flash chip "W25Q128.V" (16384 kB) ...
 ## What to record
 
 For each chip, note in your [lab notebook](../getting-started/lab-setup.md#keep-a-lab-notebook): the full marking, the decoded identity, the package, the I/O voltage from the datasheet, and its role on the board. That table becomes your map for the rest of the assessment.
+
+
+## Related pages
+
+- [PCB Recon](pcb-recon.md)
+- [Memory Types](memory-types.md)
+- [Finding and Identifying Pins](identifying-pins.md)
+- [SPI](../protocols/spi.md)

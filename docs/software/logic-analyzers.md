@@ -1,12 +1,12 @@
 # Logic Analyzers (sigrok)
 
-A logic analyzer captures the state of several digital lines over time and lets you decode them back into protocol transactions. It turns "I think these pads are a UART" into "this is a 115200 baud UART and here is the boot log." For most hardware hacking an inexpensive 8-channel analyzer and the open-source [sigrok](https://sigrok.org/) stack cover the work.
+A logic analyzer captures the state of several digital lines over time and lets you decode them back into protocol transactions. It turns "I think these pads are a [UART](../protocols/uart.md)" into "this is a 115200 baud UART and here is the boot log." For most hardware hacking an inexpensive 8-channel analyzer and the open-source [sigrok](https://sigrok.org/) stack cover the work.
 
 ## Hardware
 
-- **Cheap 8-channel clones** (the ubiquitous "Saleae clone" based on the Cypress FX2) sample up to around 24 MS/s and are supported by sigrok as `fx2lafw`. Fine for UART, I2C, and slow SPI.
+- **Cheap 8-channel clones** (the ubiquitous "Saleae clone" based on the Cypress FX2) sample up to around 24 MS/s and are supported by sigrok as `fx2lafw`. Fine for UART, [I2C](../protocols/i2c.md), and slow [SPI](../protocols/spi.md).
 - **Genuine Saleae Logic** units sample faster and have excellent software; sigrok also supports many.
-- **Faster/standalone analyzers** (DSLogic, and various USB units) handle fast SPI and JTAG.
+- **Faster/standalone analyzers** (DSLogic, and various USB units) handle fast SPI and [JTAG](../protocols/jtag.md).
 
 The limiting factor is **sample rate**: to capture a signal cleanly you want to sample at least four times, ideally ten times, its fastest edge rate. A 24 MS/s clone comfortably reads a 10 MHz SPI bus; it will struggle with a 50 MHz one.
 
@@ -85,3 +85,11 @@ A logic analyzer is the best tool for [identifying unknown pins](../fundamentals
 ## Analyzer versus oscilloscope
 
 A logic analyzer sees digital states (high/low) across many channels and decodes protocols, which is what you want 90% of the time. An **oscilloscope** sees the analog waveform on one or two channels and is the right tool when the question is analog: is this edge clean, how much does the power rail dip, did my [glitch](../attacks/fault-injection.md) land, what is the exact timing of a transient. Own both eventually; reach for the logic analyzer first for bus work.
+
+
+## Related pages
+
+- [Finding and Identifying Pins](../fundamentals/identifying-pins.md)
+- [UART](../protocols/uart.md)
+- [SPI](../protocols/spi.md)
+- [I2C](../protocols/i2c.md)

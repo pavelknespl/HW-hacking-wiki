@@ -7,7 +7,7 @@ Modern devices increasingly verify their own boot chain: the ROM checks the boot
 A chain of trust starts from something immutable and extends outward:
 
 1. **Root of trust.** An on-chip boot ROM holds, or hashes, a public key burned into one-time-programmable fuses. This is immutable.
-2. Each stage **verifies the next** with a signature before executing it: ROM verifies the first bootloader, which verifies U-Boot or the kernel, which verifies the root filesystem.
+2. Each stage **verifies the next** with a signature before executing it: ROM verifies the first bootloader, which verifies [U-Boot](bootloader-access.md) or the kernel, which verifies the root filesystem.
 3. A broken signature anywhere **halts the boot**, so a straight firmware modification is rejected.
 
 The attacker's question is always the same: where in this chain is the verification weak, missing, or skippable?
@@ -31,7 +31,7 @@ Even when a check exists, it may be wrong:
 
 ### Non-verified boot sources
 
-Some SoCs can be told to boot from an alternate source (serial download mode, USB, an SD card, a UART loader) that is less strictly verified than the normal flash path. If that mode accepts code the normal path would reject, it is a bypass. Vendor "download modes" are a recurring weak point.
+Some SoCs can be told to boot from an alternate source (serial download mode, USB, an SD card, a [UART](../protocols/uart.md) loader) that is less strictly verified than the normal flash path. If that mode accepts code the normal path would reject, it is a bypass. Vendor "download modes" are a recurring weak point.
 
 ## Forcing a check to pass with a glitch
 
@@ -42,7 +42,7 @@ When the logic is sound but you can affect the hardware, a [fault injection](fau
 Keep two related but distinct protections straight:
 
 - **Secure boot** stops the device from *running* unauthorized code.
-- **Read-out protection** (RDP, CRP, APPROTECT) stops you from *reading* the firmware over a [debug port](../protocols/jtag.md).
+- **[Read-out protection](../protocols/swd.md)** (RDP, CRP, APPROTECT) stops you from *reading* the firmware over a [debug port](../protocols/jtag.md).
 
 A device can have either, both, or neither. Defeating read-out protection (often via [glitching](fault-injection.md) the protection check) gets you the code; defeating secure boot lets you run your own. An assessment may need both.
 
@@ -60,3 +60,11 @@ If the image is also **encrypted**, a boot bypass alone may not help you read it
 ## Defender's view
 
 Verify every stage, over the whole payload, and act on the result. Disable debug and download modes on production silicon, implement anti-rollback, never ship test keys, and assume a determined attacker will try to glitch the one comparison that matters, so make that comparison redundant and fault-resistant.
+
+
+## Related pages
+
+- [Bootloader Access (U-Boot)](bootloader-access.md)
+- [Fault Injection and Glitching](fault-injection.md)
+- [Firmware Analysis](firmware-analysis.md)
+- [SWD](../protocols/swd.md)

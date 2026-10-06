@@ -4,7 +4,7 @@ A serial terminal is how you read a [UART](../protocols/uart.md) boot log and dr
 
 ## The adapter and the device node
 
-Plug in your USB-to-UART adapter and find its device node:
+Plug in your USB-to-[UART](../protocols/uart.md) adapter and find its device node:
 
 ```bash
 # list likely serial devices and watch the kernel log on plug-in
@@ -90,3 +90,11 @@ picocom -b 115200 /dev/ttyUSB0
 ## Logging is not optional
 
 Always capture the session to a file. Boot logs scroll fast and contain the architecture, partition layout, and sometimes credentials. `tio --log`, `screen`'s hardcopy, or simply `picocom | tee` all work. Your [lab notebook](../getting-started/lab-setup.md#keep-a-lab-notebook) should end up with the full boot log of every target.
+
+
+## Related pages
+
+- [UART](../protocols/uart.md)
+- [Finding and Identifying Pins](../fundamentals/identifying-pins.md)
+- [Bootloader Access (U-Boot)](../attacks/bootloader-access.md)
+- [The Toolkit](../getting-started/toolkit.md)

@@ -6,11 +6,11 @@ Firmware has to live somewhere, and where it lives determines how you extract it
 
 | Type | Interface | Typical size | Package | How you read it |
 | --- | --- | --- | --- | --- |
-| **SPI NOR flash** | SPI | 1 to 32 MB | SOIC-8, WSON-8 | Clip and [`flashrom`](../software/flashrom.md) |
+| **[SPI](../protocols/spi.md) NOR flash** | SPI | 1 to 32 MB | SOIC-8, WSON-8 | Clip and [`flashrom`](../software/flashrom.md) |
 | **SPI NAND flash** | SPI | 128 MB to 2 GB | SOIC-8, WSON-8 | SPI reader with NAND support |
 | **Parallel NAND** | Parallel (x8/x16) | 128 MB to several GB | TSOP-48 | Desolder and NAND programmer |
-| **eMMC** | MMC bus | 4 to 128 GB | BGA-153/169 | [In-system or socketed reader](../attacks/nand-emmc-dump.md) |
-| **EEPROM** | I2C or SPI/Microwire | bytes to 1 Mbit | SOIC-8, TSSOP | [I2C](../protocols/i2c.md) dump or programmer |
+| **[eMMC](../protocols/emmc.md)** | MMC bus | 4 to 128 GB | BGA-153/169 | [In-system or socketed reader](../attacks/nand-emmc-dump.md) |
+| **EEPROM** | [I2C](../protocols/i2c.md) or SPI/Microwire | bytes to 1 Mbit | SOIC-8, TSSOP | [I2C](../protocols/i2c.md) dump or programmer |
 | **Internal MCU flash** | On-chip | tens of KB to a few MB | inside the SoC | [JTAG](../protocols/jtag.md)/[SWD](../protocols/swd.md) if not locked |
 | **DRAM** | Parallel memory bus | MB to GB | BGA, TSOP | Volatile, not a firmware store |
 
@@ -53,8 +53,8 @@ Dump an I2C EEPROM by [sniffing or mastering the I2C bus](../protocols/i2c.md), 
 
 On a microcontroller, the firmware lives inside the chip. There is no external chip to clip. Your options:
 
-- **Debug port.** If [SWD](../protocols/swd.md) or [JTAG](../protocols/jtag.md) is enabled and read-out protection is off, OpenOCD reads the internal flash directly.
-- **Read-out protection.** Most MCUs offer a lock bit (STM32 RDP, the NXP CRP, the ESP32 flash encryption and secure boot). When set, the debug port refuses to read flash. Defeating it is where [fault injection](../attacks/fault-injection.md) comes in.
+- **Debug port.** If [SWD](../protocols/swd.md) or [JTAG](../protocols/jtag.md) is enabled and [read-out protection](../protocols/swd.md) is off, [OpenOCD](../software/openocd.md) reads the internal flash directly.
+- **Read-out protection.** Most MCUs offer a lock bit (STM32 RDP, the NXP CRP, the ESP32 flash encryption and [secure boot](../attacks/bootloader-bypass.md)). When set, the debug port refuses to read flash. Defeating it is where [fault injection](../attacks/fault-injection.md) comes in.
 - **Bootloader ROM.** Some MCUs expose a built-in serial or USB bootloader that may or may not respect the read protection, occasionally a weak point.
 
 ## DRAM
@@ -68,3 +68,12 @@ Volatile working memory. It is not where firmware is stored, but it is where sec
 3. For SPI NAND or eMMC, plan for reassembly (NAND) or an in-system tap (eMMC).
 4. For an MCU with internal flash, try the debug port, and expect read-out protection that may require a physical attack.
 5. Always check small EEPROMs; they hold secrets out of proportion to their size.
+
+
+## Related pages
+
+- [SPI Flash Dumping](../attacks/spi-flash-dump.md)
+- [NAND and eMMC Dumping](../attacks/nand-emmc-dump.md)
+- [UBI and NAND Tools](../software/ubi-nand.md)
+- [eMMC and SD](../protocols/emmc.md)
+- [Chip Identification](chip-identification.md)

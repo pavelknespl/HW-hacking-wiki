@@ -6,7 +6,7 @@ Quick-access material you will come back to: standard pinouts for the chips and 
 
 -   __Pinout Cheat Sheet__
 
-    SPI flash, common debug headers, the Raspberry Pi, and standard adapters.
+    [SPI flash](../attacks/spi-flash-dump.md), common debug headers, the [Raspberry Pi](../scripting/gpio-control.md), and standard adapters.
 
     [:octicons-arrow-right-24: Read](pinouts.md)
 

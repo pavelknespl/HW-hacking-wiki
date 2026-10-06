@@ -67,7 +67,7 @@ The legacy 0.1 inch (2.54 mm) 2x10 connector. Looking at the header, pin 1 is ma
 | 17 | DBGRQ | 18 | GND |
 | 19 | VCC | 20 | GND |
 
-Note how `TMS`/`SWDIO` (pin 7) and `TCK`/`SWCLK` (pin 9) are shared between JTAG and SWD. See [JTAG](../protocols/jtag.md) and [SWD](../protocols/swd.md).
+Note how `TMS`/`SWDIO` (pin 7) and `TCK`/`SWCLK` (pin 9) are shared between [JTAG](../protocols/jtag.md) and [SWD](../protocols/swd.md). See [JTAG](../protocols/jtag.md) and [SWD](../protocols/swd.md).
 
 ## ARM Cortex Debug 10-pin header
 
@@ -90,7 +90,7 @@ BCM numbering, as used by [GPIO scripts](../scripting/gpio-control.md).
 | 3.3 V power | | 1, 17 |
 | 5 V power | | 2, 4 |
 | Ground | | 6, 9, 14, 20, 25, 30, 34, 39 |
-| UART TXD | GPIO14 | 8 |
+| [UART](../protocols/uart.md) TXD | GPIO14 | 8 |
 | UART RXD | GPIO15 | 10 |
 | I2C1 SDA | GPIO2 | 3 |
 | I2C1 SCL | GPIO3 | 5 |
@@ -125,8 +125,18 @@ Try in this order when a rate is unknown: **115200**, 57600, 38400, 19200, 9600,
 | Voltage | Where |
 | --- | --- |
 | 5 V | Older logic, Arduino Uno, some sensors |
-| 3.3 V | The embedded default: most SoC I/O, SPI flash, UART headers |
-| 1.8 V | Modern SoC I/O, high-density flash, eMMC |
+| 3.3 V | The embedded default: most SoC I/O, [SPI flash](../attacks/spi-flash-dump.md), UART headers |
+| 1.8 V | Modern SoC I/O, high-density flash, [eMMC](../protocols/emmc.md) |
 | 1.2 V / 1.1 V | SoC core rails, DDR |
 
 See [Logic Levels and Level Shifting](../fundamentals/level-shifting.md).
+
+
+## Related pages
+
+- [UART](../protocols/uart.md)
+- [SPI](../protocols/spi.md)
+- [JTAG](../protocols/jtag.md)
+- [SWD](../protocols/swd.md)
+- [Finding and Identifying Pins](../fundamentals/identifying-pins.md)
+- [Logic Levels and Level Shifting](../fundamentals/level-shifting.md)

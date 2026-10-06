@@ -126,3 +126,11 @@ grep -rnI -E "password|passwd|secret|BEGIN .*PRIVATE KEY|api[_-]?key" extracted/
 ```
 
 This flow, dump, scan, carve, mount, search, is the backbone of every [firmware analysis](../attacks/firmware-analysis.md).
+
+
+## Related pages
+
+- [Firmware Analysis](../attacks/firmware-analysis.md)
+- [dd and Imaging](dd-imaging.md)
+- [UBI and NAND Tools](ubi-nand.md)
+- [Firmware Extraction](../attacks/firmware-extraction.md)

@@ -62,7 +62,7 @@ Bootloaders, bare-metal MCU firmware, and carved sections usually have **no ELF 
 ## Useful extensions
 
 - **SVD-Loader:** labels MCU peripheral registers from a CMSIS SVD file.
-- **ret-sync:** syncs Ghidra with a live debugger (GDB/OpenOCD), so static and dynamic views line up.
+- **ret-sync:** syncs Ghidra with a live debugger (GDB/[OpenOCD](../software/openocd.md)), so static and dynamic views line up.
 - **Ghidra scripts** (Python/Java) automate repetitive labeling; the script manager ships with many.
 
 ## After loading: let analysis run, then verify
@@ -74,3 +74,10 @@ Run auto-analysis and then sanity-check:
 - Can you find `main` or the reset handler and follow control flow? If yes, you are set up correctly.
 
 Only once the setup checks out do you move on to the [firmware workflow](firmware-workflow.md) of actually hunting through the code.
+
+
+## Related pages
+
+- [Firmware RE Workflow](firmware-workflow.md)
+- [CPU Architectures](../fundamentals/architectures.md)
+- [Firmware Analysis](../attacks/firmware-analysis.md)
