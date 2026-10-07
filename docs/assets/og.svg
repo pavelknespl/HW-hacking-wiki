@@ -8,21 +8,30 @@
   <rect width="1200" height="630" fill="url(#bg)"/>
   <!-- circuit traces -->
   <g stroke="#26262d" stroke-width="3" fill="none">
-    <path d="M0 120 H180 l40 40 H420"/>
-    <path d="M1200 520 H1000 l-40 -40 H760"/>
+    <path d="M0 120 H180 l40 40 H520"/>
+    <path d="M1200 520 H1000 l-40 -40 H680"/>
     <path d="M60 540 h120 m40 0 h80"/>
-    <circle cx="420" cy="160" r="5" fill="#ff5722" stroke="none"/>
-    <circle cx="760" cy="480" r="5" fill="#ff5722" stroke="none"/>
+    <circle cx="520" cy="160" r="5" fill="#ff5722" stroke="none"/>
+    <circle cx="680" cy="480" r="5" fill="#ff5722" stroke="none"/>
   </g>
-  <!-- mascot -->
-  <g transform="translate(96,135) scale(5.6)">
-    <image href="mascot.svg" width="64" height="64"/>
+
+  <!-- chip glyph -->
+  <g transform="translate(110,215)">
+    <rect x="30" y="30" width="140" height="140" rx="16" fill="#1f1f25" stroke="#ff5722" stroke-width="6"/>
+    <rect x="68" y="68" width="64" height="64" rx="8" fill="#ff5722"/>
+    <g stroke="#ff5722" stroke-width="6" stroke-linecap="round">
+      <path d="M70 30 V8 M100 30 V8 M130 30 V8"/>
+      <path d="M70 170 V192 M100 170 V192 M130 170 V192"/>
+      <path d="M30 70 H8 M30 100 H8 M30 130 H8"/>
+      <path d="M170 70 H192 M170 100 H192 M170 130 H192"/>
+    </g>
   </g>
+
   <!-- wordmark -->
   <g font-family="Inter, Segoe UI, sans-serif">
-    <text x="520" y="285" font-size="74" font-weight="800" fill="#ffffff">hwhacking</text>
-    <text x="520" y="345" font-size="34" font-weight="600" fill="#ff5722">.pavelknespl.cz</text>
-    <text x="520" y="415" font-size="30" font-weight="400" fill="#b8b8c0">Hardware hacking, firmware security,</text>
-    <text x="520" y="455" font-size="30" font-weight="400" fill="#b8b8c0">and embedded reverse engineering.</text>
+    <text x="360" y="285" font-size="78" font-weight="800" fill="#ffffff">hwhacking</text>
+    <text x="360" y="345" font-size="34" font-weight="600" fill="#ff5722">.pavelknespl.cz</text>
+    <text x="360" y="415" font-size="30" font-weight="400" fill="#b8b8c0">Hardware hacking, firmware security,</text>
+    <text x="360" y="455" font-size="30" font-weight="400" fill="#b8b8c0">and embedded reverse engineering.</text>
   </g>
 </svg>
