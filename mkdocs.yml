@@ -1,7 +1,11 @@
-site_name: hwhack.info
-site_description: A practical, vendor-neutral wiki for hardware hacking, firmware security, and embedded reverse engineering.
-site_author: hwhack.info contributors
-site_url: https://hwhack.info/
+site_name: hwhacking.pavelknespl.cz
+site_description: >-
+  hwhacking.pavelknespl.cz is a practical, vendor-neutral wiki for hardware
+  hacking, firmware security, and embedded reverse engineering: protocols
+  (UART, JTAG, SWD, SPI, I2C), firmware extraction, fault injection,
+  side-channel, FPGA, and platform security.
+site_author: pavelknespl
+site_url: https://hwhacking.pavelknespl.cz/
 copyright: Content licensed under CC BY-SA 4.0. For authorized security research and education only.
 
 repo_name: pavelknespl/hwhack.info
@@ -14,10 +18,11 @@ theme:
   font:
     text: Inter
     code: JetBrains Mono
+  custom_dir: overrides
+  logo: assets/mascot.svg
   icon:
     repo: fontawesome/brands/github
-    logo: material/chip
-  favicon: assets/favicon.png
+  favicon: assets/favicon.ico
   palette:
     - media: "(prefers-color-scheme)"
       toggle:
@@ -120,6 +125,7 @@ nav:
       - Finding and Identifying Pins: fundamentals/identifying-pins.md
       - Logic Levels and Level Shifting: fundamentals/level-shifting.md
       - Memory Types: fundamentals/memory-types.md
+      - eFuse and OTP Memory: fundamentals/efuse-otp.md
       - Soldering and Rework: fundamentals/soldering-rework.md
   - Protocols and Interfaces:
       - protocols/index.md
@@ -158,11 +164,15 @@ nav:
           - Logic Analyzers (sigrok): software/logic-analyzers.md
           - esptool: software/esptool.md
           - Depthcharge: software/depthcharge.md
+          - openFPGALoader: software/openfpgaloader.md
+          - UrJTAG: software/urjtag.md
       - Hardware Tools:
           - ChipWhisperer: software/chipwhisperer.md
           - JTAGulator: software/jtagulator.md
           - Proxmark3: software/proxmark3.md
           - Flipper Zero: software/flipper-zero.md
+          - Tigard: software/tigard.md
+          - Glasgow Interface Explorer: software/glasgow.md
   - Attacks and Techniques:
       - attacks/index.md
       - Recon and Firmware Acquisition:
@@ -179,6 +189,7 @@ nav:
       - Fault and Physical Attacks:
           - Fault Injection and Glitching: attacks/fault-injection.md
           - Side-Channel Attacks: attacks/side-channel.md
+          - Electromagnetic Fault Injection: attacks/emfi.md
           - Cold Boot Attacks: attacks/cold-boot.md
           - DMA Attacks: attacks/dma-attacks.md
           - Secure Elements: attacks/secure-elements.md
@@ -202,10 +213,17 @@ nav:
           - AVR and PIC Fuses: mcu/avr-pic-fuses.md
       - Platform Security:
           - platform/index.md
+          - Boot ROM Exploitation: platform/bootrom-exploitation.md
+          - SoC Recovery and Download Modes: platform/soc-recovery-modes.md
           - UEFI and BIOS: platform/uefi-bios.md
           - Intel ME and AMD PSP: platform/intel-me-amd-psp.md
           - Qualcomm EDL and MediaTek: platform/mobile-soc-edl.md
           - Android Bootloaders: platform/android-bootloader.md
+      - FPGA Security:
+          - fpga/index.md
+          - Bitstream Extraction: fpga/bitstream-extraction.md
+          - Bitstream Encryption and Attacks: fpga/bitstream-encryption.md
+          - Bitstream Reverse Engineering: fpga/bitstream-re.md
   - Radio and RF:
       - radio/index.md
       - Foundations:

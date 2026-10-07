@@ -93,6 +93,12 @@ When software paths are locked down, attack the silicon and the physics.
 
     [:octicons-arrow-right-24: Read](side-channel.md)
 
+-   __Electromagnetic Fault Injection__
+
+    Induce faults with an EM pulse, no decap and no contact needed.
+
+    [:octicons-arrow-right-24: Read](emfi.md)
+
 -   __Cold Boot Attacks__
 
     Recover keys from DRAM remanence after power loss.

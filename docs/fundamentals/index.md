@@ -40,6 +40,12 @@ Before you can attack a device you have to read it. This section covers the grou
 
     [:octicons-arrow-right-24: Read](memory-types.md)
 
+-   __eFuse and OTP Memory__
+
+    One-time-programmable on-die memory: keys, lock bits, and the anchor of the trust chain.
+
+    [:octicons-arrow-right-24: Read](efuse-otp.md)
+
 -   __Soldering and Rework__
 
     Fine wires, hot air, chip-off, and reading BGA with adapters.

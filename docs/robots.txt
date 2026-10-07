@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hwhacking.pavelknespl.cz/sitemap.xml

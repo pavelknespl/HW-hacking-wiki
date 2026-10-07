@@ -62,6 +62,18 @@ Tools you run on your workstation to drive an adapter, decode a bus, or process 
 
     [:octicons-arrow-right-24: Read](depthcharge.md)
 
+-   __openFPGALoader__
+
+    Vendor-neutral bitstream and flash loading for FPGAs over JTAG or SPI.
+
+    [:octicons-arrow-right-24: Read](openfpgaloader.md)
+
+-   __UrJTAG__
+
+    Low-level JTAG boundary scan and flash access for odd targets.
+
+    [:octicons-arrow-right-24: Read](urjtag.md)
+
 </div>
 
 ## Hardware tools
@@ -93,6 +105,18 @@ Self-contained devices that bundle the adapter, the capture, and the attack logi
     Pocket sub-GHz, NFC, IR, and GPIO multi-tool.
 
     [:octicons-arrow-right-24: Read](flipper-zero.md)
+
+-   __Tigard__
+
+    FT2232H multi-protocol board: UART, JTAG, SWD, SPI, and I2C with safe voltages.
+
+    [:octicons-arrow-right-24: Read](tigard.md)
+
+-   __Glasgow Interface Explorer__
+
+    Software-defined FPGA multi-tool for exploring unknown boards and buses.
+
+    [:octicons-arrow-right-24: Read](glasgow.md)
 
 </div>
 

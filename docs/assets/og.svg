@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17171b"/>
+      <stop offset="1" stop-color="#0a0a0c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- circuit traces -->
+  <g stroke="#26262d" stroke-width="3" fill="none">
+    <path d="M0 120 H180 l40 40 H420"/>
+    <path d="M1200 520 H1000 l-40 -40 H760"/>
+    <path d="M60 540 h120 m40 0 h80"/>
+    <circle cx="420" cy="160" r="5" fill="#ff5722" stroke="none"/>
+    <circle cx="760" cy="480" r="5" fill="#ff5722" stroke="none"/>
+  </g>
+  <!-- mascot -->
+  <g transform="translate(96,135) scale(5.6)">
+    <image href="mascot.svg" width="64" height="64"/>
+  </g>
+  <!-- wordmark -->
+  <g font-family="Inter, Segoe UI, sans-serif">
+    <text x="520" y="285" font-size="74" font-weight="800" fill="#ffffff">hwhacking</text>
+    <text x="520" y="345" font-size="34" font-weight="600" fill="#ff5722">.pavelknespl.cz</text>
+    <text x="520" y="415" font-size="30" font-weight="400" fill="#b8b8c0">Hardware hacking, firmware security,</text>
+    <text x="520" y="455" font-size="30" font-weight="400" fill="#b8b8c0">and embedded reverse engineering.</text>
+  </g>
+</svg>

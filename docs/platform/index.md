@@ -4,6 +4,18 @@ The chips covered in [MCU Targets](../mcu/index.md) are small microcontrollers. 
 
 <div class="grid cards" markdown>
 
+-   __Boot ROM Exploitation__
+
+    The unpatchable first code a chip runs, and why a bug there (checkm8) owns the device.
+
+    [:octicons-arrow-right-24: Read](bootrom-exploitation.md)
+
+-   __SoC Recovery and Download Modes__
+
+    Factory download modes (FEL, maskrom, SDP, BROM, EDL) as a dump path and an attack surface.
+
+    [:octicons-arrow-right-24: Read](soc-recovery-modes.md)
+
 -   __UEFI and BIOS__
 
     Dump PC firmware from the SPI chip and analyze it with chipsec and UEFITool.
