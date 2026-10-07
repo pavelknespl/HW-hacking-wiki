@@ -1,6 +1,10 @@
-# Software Tools
+# Tools
 
-Hardware access is only half the job. The other half is the software that drives your adapters, decodes buses, dumps memory, and tears firmware apart. This section is a practical reference to the toolchain, with the commands you actually run.
+Hardware access is only half the job. The other half is the software that drives your adapters, decodes buses, dumps memory, and tears firmware apart, plus the dedicated hardware tools that package a whole attack into one box. This section is a practical reference to both, with the commands you actually run.
+
+## Host software
+
+Tools you run on your workstation to drive an adapter, decode a bus, or process a dump.
 
 <div class="grid cards" markdown>
 
@@ -57,6 +61,14 @@ Hardware access is only half the job. The other half is the software that drives
     Automate attacks against a U-Boot console.
 
     [:octicons-arrow-right-24: Read](depthcharge.md)
+
+</div>
+
+## Hardware tools
+
+Self-contained devices that bundle the adapter, the capture, and the attack logic into one piece of kit.
+
+<div class="grid cards" markdown>
 
 -   __ChipWhisperer__
 

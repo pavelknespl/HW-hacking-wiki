@@ -5,6 +5,10 @@ This section ties the protocols and tools into complete workflows: how to actual
 !!! warning "Authorized use only"
     Every technique here is for devices you own or are explicitly authorized to test. Many are destructive and all void warranties. See the [home page](../index.md) note on scope.
 
+## Recon and firmware acquisition
+
+Learn the target, then get its firmware off by whatever route is open.
+
 <div class="grid cards" markdown>
 
 -   __Reconnaissance__
@@ -37,6 +41,14 @@ This section ties the protocols and tools into complete workflows: how to actual
 
     [:octicons-arrow-right-24: Read](firmware-analysis.md)
 
+</div>
+
+## Gaining access
+
+Turn a boot interface or console into control of the running system.
+
+<div class="grid cards" markdown>
+
 -   __Bootloader Access (U-Boot)__
 
     Interrupt the bootloader and take control of boot.
@@ -61,6 +73,14 @@ This section ties the protocols and tools into complete workflows: how to actual
 
     [:octicons-arrow-right-24: Read](bootloader-bypass.md)
 
+</div>
+
+## Fault and physical attacks
+
+When software paths are locked down, attack the silicon and the physics.
+
+<div class="grid cards" markdown>
+
 -   __Fault Injection and Glitching__
 
     Skip a check with voltage or clock faults.
@@ -72,30 +92,6 @@ This section ties the protocols and tools into complete workflows: how to actual
     Recover keys from power and timing.
 
     [:octicons-arrow-right-24: Read](side-channel.md)
-
--   __Chain of Trust and Secure Boot__
-
-    How verified boot chains, TrustZone, and eFuse roots are built and broken.
-
-    [:octicons-arrow-right-24: Read](chain-of-trust.md)
-
--   __TPM Sniffing__
-
-    Capture keys off an unencrypted TPM bus, including BitLocker.
-
-    [:octicons-arrow-right-24: Read](tpm-sniffing.md)
-
--   __Firmware Modification__
-
-    Repack, patch, defeat signatures, and flash back.
-
-    [:octicons-arrow-right-24: Read](firmware-modification.md)
-
--   __NVRAM and U-Boot Environment__
-
-    Recover credentials, keys, and boot logic from config stores.
-
-    [:octicons-arrow-right-24: Read](nvram-uboot-env.md)
 
 -   __Cold Boot Attacks__
 
@@ -120,6 +116,38 @@ This section ties the protocols and tools into complete workflows: how to actual
     Die-level: decap, microprobing, FIB, optical fault injection.
 
     [:octicons-arrow-right-24: Read](decapping.md)
+
+</div>
+
+## Boot security and persistence
+
+Understand and defeat the trust chain, and the stores that survive a reboot.
+
+<div class="grid cards" markdown>
+
+-   __Chain of Trust and Secure Boot__
+
+    How verified boot chains, TrustZone, and eFuse roots are built and broken.
+
+    [:octicons-arrow-right-24: Read](chain-of-trust.md)
+
+-   __TPM Sniffing__
+
+    Capture keys off an unencrypted TPM bus, including BitLocker.
+
+    [:octicons-arrow-right-24: Read](tpm-sniffing.md)
+
+-   __Firmware Modification__
+
+    Repack, patch, defeat signatures, and flash back.
+
+    [:octicons-arrow-right-24: Read](firmware-modification.md)
+
+-   __NVRAM and U-Boot Environment__
+
+    Recover credentials, keys, and boot logic from config stores.
+
+    [:octicons-arrow-right-24: Read](nvram-uboot-env.md)
 
 </div>
 

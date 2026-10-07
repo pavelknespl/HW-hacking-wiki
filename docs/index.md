@@ -51,7 +51,7 @@ This site collects the workflow that repeats across almost every embedded target
 
     `screen`, `minicom`, `tio`, `flashrom`, `binwalk`, `dd`, [OpenOCD](software/openocd.md), sigrok, and the rest of the toolchain.
 
-    [:octicons-arrow-right-24: Software Tools](software/index.md)
+    [:octicons-arrow-right-24: Tools](software/index.md)
 
 -   :material-target:{ .lg .middle } __Attacks and techniques__
 

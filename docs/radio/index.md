@@ -2,6 +2,10 @@
 
 Many devices talk wirelessly, and that radio link is an attack surface in its own right. With a software defined radio you can observe, decode, and (within legal limits) interact with these signals. This section is a starting point, not a full RF course: enough to recognize what a device is transmitting and begin analyzing it.
 
+## Foundations
+
+Start here: the hardware, the software, and how RF analysis proceeds.
+
 <div class="grid cards" markdown>
 
 -   __SDR Basics__
@@ -15,6 +19,14 @@ Many devices talk wirelessly, and that radio link is an attack surface in its ow
     Common wireless weaknesses and how analysis of them proceeds.
 
     [:octicons-arrow-right-24: Read](rf-attacks.md)
+
+</div>
+
+## Wireless protocols
+
+The standard links you meet on consumer and IoT devices.
+
+<div class="grid cards" markdown>
 
 -   __NFC and RFID__
 
@@ -39,6 +51,14 @@ Many devices talk wirelessly, and that radio link is an attack surface in its ow
     Long-range IoT and where its AES keys leak.
 
     [:octicons-arrow-right-24: Read](lora.md)
+
+</div>
+
+## Signal targets
+
+Specific signals worth attacking or defending.
+
+<div class="grid cards" markdown>
 
 -   __GNSS and GPS Spoofing__
 

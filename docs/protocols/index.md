@@ -2,6 +2,10 @@
 
 Chips talk to each other and to the outside world over a small set of standard buses. Learn these and you can read a device's internal conversation, drop into its debug interface, and pull data straight from its memory. Each page below explains the protocol from the wire up, then shows the wiring and commands to probe it.
 
+## Core buses
+
+The handful you meet on almost every board. Learn these first.
+
 <div class="grid cards" markdown>
 
 -   __UART__
@@ -34,6 +38,14 @@ Chips talk to each other and to the outside world over a small set of standard b
 
     [:octicons-arrow-right-24: Read](spi.md)
 
+</div>
+
+## Memory and peripheral
+
+Buses that reach mass storage and attached devices.
+
+<div class="grid cards" markdown>
+
 -   __eMMC and SD__
 
     Reading large managed [NAND](../fundamentals/memory-types.md) as a block device.
@@ -52,6 +64,14 @@ Chips talk to each other and to the outside world over a small set of standard b
 
     [:octicons-arrow-right-24: Read](one-wire.md)
 
+</div>
+
+## System and networking
+
+Platform housekeeping buses and industrial serial links.
+
+<div class="grid cards" markdown>
+
 -   __MDIO__
 
     Configuring and reading Ethernet PHY registers.
@@ -64,12 +84,6 @@ Chips talk to each other and to the outside world over a small set of standard b
 
     [:octicons-arrow-right-24: Read](lpc.md)
 
--   __MCU Debug (SWIM/UPDI/PDI/debugWIRE)__
-
-    Single-wire program and debug interfaces on STM8 and AVR.
-
-    [:octicons-arrow-right-24: Read](mcu-debug.md)
-
 -   __RS-485 and Modbus__
 
     The industrial serial bus and its unauthenticated protocol.
@@ -81,6 +95,20 @@ Chips talk to each other and to the outside world over a small set of standard b
     I2C with a rulebook: system and power management.
 
     [:octicons-arrow-right-24: Read](smbus-pmbus.md)
+
+</div>
+
+## Debug extensions
+
+Program and trace interfaces beyond the core JTAG/SWD pair.
+
+<div class="grid cards" markdown>
+
+-   __MCU Debug (SWIM/UPDI/PDI/debugWIRE)__
+
+    Single-wire program and debug interfaces on STM8 and AVR.
+
+    [:octicons-arrow-right-24: Read](mcu-debug.md)
 
 -   __ARM Trace (SWO/ITM/ETM)__
 

@@ -67,7 +67,7 @@ See [SPI](../protocols/spi.md).
 *SPI flash · input · active low · doubles as IO2.* Write Protect. When asserted it blocks writes to the status register and protected regions. In quad mode this same pin becomes data line [IO2](#io2).
 
 #### HOLD# { #hold }
-*SPI flash · input · active low · also RESET#, doubles as IO3.* Pauses the chip without deselecting it. In quad mode it becomes data line [IO3](#io3). On some parts it is a reset instead.
+*SPI flash · input · active low · also RESET#, doubles as IO3.* Pauses the chip without deselecting it. In quad mode it becomes data line [IO3](#io2). On some parts it is a reset instead.
 
 #### IO0-IO3 { #io2 }
 *Quad SPI · bidirectional.* In Quad SPI (QSPI) four data lines carry four bits per clock. IO0 and IO1 are [MOSI](#mosi) and [MISO](#miso); IO2 and IO3 are the repurposed [WP#](#wp) and [HOLD#](#hold). For plain dumping you use single-bit SPI and ignore IO2/IO3.
