@@ -25,6 +25,15 @@ These projects documented bitstream formats to build free synthesis/place-and-ro
 
 For Xilinx 7-series the practical path is: unpack the bitstream to a frame/feature list with prjxray tooling, recover LUTs and routing, then rebuild a netlist you can read or re-synthesize. For iCE40, `iceunpack` plus the IceStorm database gets you a human-readable description directly.
 
+```bash
+# iCE40 (IceStorm): bitstream -> documented ASCII, read LUTs/BRAM directly
+iceunpack design.bin design.asc
+icebram -g 8 256 < design.asc      # helper for locating/replacing BRAM contents
+# Xilinx 7-series (prjxray): bitstream -> frame list -> features
+xc7frames2bit --help               # (and bit2fasm.py) convert .bit <-> FASM
+bit2fasm.py --db-root $XRAY_DB design.bit > design.fasm   # FASM = feature list
+```
+
 ## Workflow
 
 1. **Confirm it is plaintext.** Entropy should not be uniform; vendor headers and sync words should be visible. If not, go back to [encryption attacks](bitstream-encryption.md).

@@ -40,6 +40,13 @@ Many FPGAs can read their current configuration back out through [JTAG](../proto
 - Xilinx/AMD: the `READBACK` path via JTAG, driven by vendor tools or `openocd`/custom TAP sequences. 7-series parts expose readback registers; this is the same path the [Starbleed attack](bitstream-encryption.md) abuses.
 - Use [openFPGALoader](../software/openfpgaloader.md) or [UrJTAG](../software/urjtag.md) to talk to the TAP once you have found it with a [JTAGulator](../software/jtagulator.md) or from the datasheet.
 
+```bash
+openFPGALoader --detect                       # enumerate the JTAG chain / IDCODE
+openFPGALoader --dump-flash -o config.bin     # read the attached config flash via JTAG
+# vendor readback of the live fabric (7-series) uses the READBACK CAPTURE path
+# driven by openocd/custom TAP sequences; the result is the running configuration.
+```
+
 Readback is frequently **disabled** by a security bit or by setting the device to encrypted-only mode, so treat it as a path to try rather than rely on. When it is open, it is the cleanest dump because it reflects exactly what the fabric is running.
 
 ## After extraction
