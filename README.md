@@ -29,10 +29,6 @@ mkdocs serve        # live reload at http://127.0.0.1:8000
 mkdocs build        # static site in site/
 ```
 
-## Deployment
-
-Pushing to `main` triggers [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which runs on a **self-hosted runner inside a home LXC** (runner label `hwhacking`), builds the site, and publishes it straight to the nginx webroot (`/var/www/hwhacking`). Only `main` deploys; other branches never publish. The public endpoint is reached via Cloudflare → an Oracle relay → WireGuard → the LXC.
-
 ## Contributing
 
 One page = one Markdown file in a category folder under `docs/`. To add a page, create the file and add it to the `nav:` in `mkdocs.yml`. House style:
