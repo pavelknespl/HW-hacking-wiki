@@ -40,6 +40,12 @@ The chips covered in [MCU Targets](../mcu/index.md) are small microcontrollers. 
 
     [:octicons-arrow-right-24: Read](android-bootloader.md)
 
+-   __TEE and TrustZone__
+
+    Exploit the secure world: TA bugs over SMC, rollback, and CLKSCREW.
+
+    [:octicons-arrow-right-24: Read](tee-trustzone.md)
+
 </div>
 
 ## How these relate to the rest of the wiki

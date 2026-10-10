@@ -194,7 +194,10 @@ nav:
           - Cold Boot Attacks: attacks/cold-boot.md
           - DMA Attacks: attacks/dma-attacks.md
           - Secure Elements: attacks/secure-elements.md
+          - Hardware Wallets: attacks/hardware-wallets.md
           - Decapping and Invasive Attacks: attacks/decapping.md
+          - Rowhammer: attacks/rowhammer.md
+          - Transient Execution: attacks/transient-execution.md
       - Boot Security and Persistence:
           - Chain of Trust and Secure Boot: attacks/chain-of-trust.md
           - TPM Sniffing: attacks/tpm-sniffing.md
@@ -220,6 +223,7 @@ nav:
           - Intel ME and AMD PSP: platform/intel-me-amd-psp.md
           - Qualcomm EDL and MediaTek: platform/mobile-soc-edl.md
           - Android Bootloaders: platform/android-bootloader.md
+          - TEE and TrustZone: platform/tee-trustzone.md
       - FPGA Security:
           - fpga/index.md
           - Bitstream Extraction: fpga/bitstream-extraction.md
@@ -235,6 +239,7 @@ nav:
           - Bluetooth Low Energy: radio/ble.md
           - Zigbee, Thread, 802.15.4: radio/zigbee-thread.md
           - LoRa and LoRaWAN: radio/lora.md
+          - SIM and eSIM: radio/sim-attacks.md
       - Signal Targets:
           - GNSS and GPS Spoofing: radio/gps-spoofing.md
           - Key Fobs and Rolling Codes: radio/key-fobs.md

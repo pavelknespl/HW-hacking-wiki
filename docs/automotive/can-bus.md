@@ -76,6 +76,20 @@ canplayer -I capture.log         # replay a candump log
 
 Replaying a captured "unlock" or "window down" frame often reproduces the action. Injection goes further: flooding a high-priority ID can starve lower-priority traffic (a bus-level denial of service), and crafted frames can command actuators directly. This is exactly why the UDS layer matters, and why real ECUs increasingly add message authentication.
 
+### Attack — CAN injection (the real car-theft technique)
+
+**Target:** vehicles where a peripheral ECU sits on a CAN segment that also reaches immobilizer/door/start logic, with no message authentication.
+**Why it works:** because any node can send any ID and nothing authenticates frames, a thief reaches an exposed CAN wire behind an easy-access component (famously the **headlight connector**) and injects the exact frames the smart-key ECU would send — "key is valid, unlock, allow start".
+**Gear:** a small injector (an MCU + CAN transceiver, sometimes disguised in a speaker/JBL housing) spliced onto the harness.
+
+Steps:
+
+1. [Tap CAN](#finding-and-tapping-the-bus) at an accessible point (headlight, mirror, bumper sensor wiring).
+2. Capture or already-know the valid-key / unlock / start frames for that model (reverse-engineered once per model per [frame RE](#reverse-engineering-frames)).
+3. Inject them with `cansend`/a standalone injector; the car unlocks and starts with no key present.
+
+**Mitigation:** segment/gateway sensitive buses, authenticate critical messages (SecOC), and detect rogue nodes. See [UDS](uds-obd2.md).
+
 ## Where to go next
 
 Reading raw CAN tells you what the car broadcasts. To reach flashing, memory, and actuator routines, you move up to the diagnostic layer. See [UDS and OBD-II](uds-obd2.md). Once you reach an ECU's firmware through UDS, it is a [microcontroller target](../mcu/index.md) like any other.

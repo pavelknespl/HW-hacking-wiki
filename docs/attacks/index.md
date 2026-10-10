@@ -123,6 +123,24 @@ When software paths are locked down, attack the silicon and the physics.
 
     [:octicons-arrow-right-24: Read](decapping.md)
 
+-   __Hardware Wallets__
+
+    Glitch, side-channel, and protocol attacks on crypto wallets.
+
+    [:octicons-arrow-right-24: Read](hardware-wallets.md)
+
+-   __Rowhammer__
+
+    Flip DRAM bits from software to escalate, corrupt keys, or read secrets.
+
+    [:octicons-arrow-right-24: Read](rowhammer.md)
+
+-   __Transient Execution__
+
+    Spectre, Meltdown, MDS, PACMAN: leak secrets through speculation.
+
+    [:octicons-arrow-right-24: Read](transient-execution.md)
+
 </div>
 
 ## Boot security and persistence

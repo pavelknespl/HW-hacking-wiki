@@ -39,6 +39,19 @@ i2cdump -y <bus> <addr>       # survey a device's registers (read-only, carefull
 !!! warning "Writing to power hardware is risky"
     Changing a PMBus regulator's output or limits can destroy the board it powers (over-voltage) or is a deliberate [glitch](../attacks/fault-injection.md). Only write to power devices on hardware you are prepared to damage and understand.
 
+### Attack — undervolt a CPU over the voltage bus (VoltPillager)
+
+**Target:** a CPU whose core voltage is set by a regulator over **SVID** or PMBus (most x86 boards).
+**Gear:** a cheap MCU (Teensy-class) wired to the SVID/PMBus clock+data between CPU and VRM.
+**Why it works:** the regulator obeys whatever voltage-ID commands it receives; injecting them from outside the CPU undervolts the core on demand — a hardware [fault-injection](../attacks/fault-injection.md#software-triggered-fault-injection-no-bench-rig) primitive that bypasses software undervolt locks (the fix for Plundervolt).
+
+Steps: find the SVID clock/data lines near the VRM, sniff the normal VID traffic to learn the encoding, then inject a brief deep-undervolt command synchronized to the target crypto operation; detect a faulted result and iterate (same loop as [voltage glitching](../attacks/fault-injection.md#the-workflow)).
+
+### Attack — overvolt a fast charger (BadPower)
+
+**Target:** USB-PD fast chargers whose firmware is updatable over the data lines.
+**Idea:** reflash the charger's MCU so it negotiates a higher voltage than the sink can tolerate, over-volting and physically damaging the attached device. Reads/writes ride the same I2C/PD comms the charger already uses. Destructive by design — bench only.
+
 ## The practical point
 
 Treat SMBus/PMBus as "I2C with a rulebook and a known command set". Enumerate and read with the [I2C](i2c.md) tooling, consult the SMBus/PMBus spec or the specific chip datasheet for the command meanings, and remember that the readable identity and telemetry (SPD, battery data, power rails) is often the useful part, while writing, especially to PMBus power devices, is where you can do damage or, deliberately, induce faults.

@@ -52,6 +52,12 @@ The standard links you meet on consumer and IoT devices.
 
     [:octicons-arrow-right-24: Read](lora.md)
 
+-   __SIM and eSIM__
+
+    Clone weak SIMs, Simjacker applet attacks, and eUICC provisioning.
+
+    [:octicons-arrow-right-24: Read](sim-attacks.md)
+
 </div>
 
 ## Signal targets

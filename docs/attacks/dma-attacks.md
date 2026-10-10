@@ -56,6 +56,15 @@ The hardware **IOMMU** (Intel VT-d, AMD-Vi) restricts what physical memory a dev
 
 Pre-boot and early-boot windows (before the OS sets up IOMMU protections) are a recurring soft spot even on protected systems.
 
+## Attack — Thunderspy (defeat Thunderbolt security by reflashing the controller)
+
+**Target:** Thunderbolt 1/2/3 hosts, even with Security Levels enabled and Kernel DMA Protection off or pre-dating the machine.
+**Gear:** an [SPI flash programmer](spi-flash-dump.md) (CH341A/clip) + a DMA board.
+**Why it works:** the Thunderbolt controller's security state lives in an external [SPI flash](../protocols/spi.md). Clip that flash and rewrite the controller firmware to force Security Level "none" and clone an allowed device's identity, re-enabling unrestricted PCIe/DMA — then run the PCILeech attacks above. It also disables future security without leaving an obvious trace.
+
+Steps: locate and read the TB controller's SPI flash, patch the security descriptor (the public `tcfp`/Thunderspy tooling does this), write it back, then attach a DMA device and `pcileech dump`.
+**Mitigation:** Kernel DMA Protection (requires VT-d + firmware support, so newer machines only); disable Thunderbolt in firmware on older ones.
+
 ## Defender's view
 
 - Enable the **IOMMU / Kernel DMA Protection**; it is the real mitigation.

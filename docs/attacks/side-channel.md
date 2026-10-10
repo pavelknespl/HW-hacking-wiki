@@ -146,6 +146,14 @@ When you can **profile** a device identical to the target (a clone you fully con
 - **Template attacks** build a statistical model (multivariate Gaussian) of the leakage for each value of the sensitive intermediate during a profiling phase, then match a *handful* of target traces against those templates. They are the most trace-efficient classical attack: profiling is expensive, but the attack on the real target can need only a few traces.
 - **Deep-learning SCA** trains a neural network (MLP/CNN) to map a trace to the sensitive intermediate. CNNs are notably robust to misalignment and jitter, which lets them beat some hiding countermeasures without explicit alignment. Needs a large profiling set and tuning, but it is now a standard tool.
 
+## Named remote and timing variants
+
+The classic attacks above need a probe on the target. Several published results extend reach:
+
+- **Screaming Channels.** On mixed-signal SoCs (a CPU and a radio on one die, e.g. BLE chips), the crypto's power leakage couples into the RF and is **broadcast by the antenna**. You capture the leak over the air with an SDR at meters of distance, then run normal CPA on the demodulated trace. Turns a contact power attack into a remote one against cheap wireless SoCs.
+- **Minerva / TPM-Fail.** Timing attacks on **ECDSA** where the scalar multiply leaks the nonce's bit length. Collect many signatures with their timings, recover a few nonce bits each, then solve for the private key with a lattice (hidden number problem). **TPM-Fail** did exactly this remotely against several hardware and firmware TPMs; **Minerva** hit multiple smartcards/libraries. The fix is constant-time nonce handling.
+- **Bellcore / RSA-CRT fault.** One faulty RSA-CRT signature (induced by [fault injection](fault-injection.md)) plus one correct one recovers the private key by a GCD — the DFA counterpart to these timing leaks.
+
 ## Expectations and countermeasures
 
 Side-channel analysis is measurement-intensive and sensitive to setup quality, but against an unprotected implementation it is remarkably effective, and it needs no code execution on the target. Defenses raise the cost rather than eliminate the leak:

@@ -53,7 +53,7 @@ Steps:
 ### Attack 2 — analyze a SHA challenge-response part
 
 **Target:** DS28E/DS1961S-style chip that MACs a challenge.
-**Steps:** sniff several challenge/response pairs; check whether the challenge is static or reused (replayable), whether the host actually verifies the MAC (patch the host check per [secure elements](../attacks/secure-elements.md#attack-1-bypass-replay-the-host-side-decision-usually-the-weak-link)), and only then consider [side-channel](../attacks/side-channel.md) recovery of the secret during the MAC computation. The host's verification is usually weaker than the chip.
+**Steps:** sniff several challenge/response pairs; check whether the challenge is static or reused (replayable), whether the host actually verifies the MAC (patch the host check per [secure elements](../attacks/secure-elements.md#attack-1-bypassreplay-the-host-side-decision-usually-the-weak-link)), and only then consider [side-channel](../attacks/side-channel.md) recovery of the secret during the MAC computation. The host's verification is usually weaker than the chip.
 
 ## Related pages
 

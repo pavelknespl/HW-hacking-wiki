@@ -37,6 +37,16 @@ The attacker's whole job is to land that disturbance at the precise moment a sec
 
     Decapsulate the chip and fault specific transistors with a laser. The most precise and most powerful method, and the most demanding: it needs [decapping](decapping.md), a laser station, and die-level targeting. Reserved for well-resourced labs.
 
+## Software-triggered fault injection (no bench rig)
+
+A whole class of published attacks induces faults **from software** by abusing the chip's own power/clock management, needing no physical access at all. The CPU exposes voltage and frequency controls for power saving; pushed out of spec, they fault the silicon.
+
+- **Plundervolt / V0ltpwn (CVE-2019-11157).** On Intel Core CPUs, the undocumented voltage MSR `0x150` lets ring-0 software undervolt the core. A precise undervolt during an SGX enclave's AES or multiplication produces bit flips, corrupting results enough to break RSA/AES inside the enclave and even induce memory-safety faults in otherwise-correct enclave code. Mitigated by microcode that locks the MSR and by SGX attestation reflecting the voltage setting.
+- **CLKSCREW.** On an ARM/Android phone, the DVFS driver's frequency/voltage regulators were pushed past their safe envelope from software to fault TrustZone — extracting an AES key from, and loading a self-signed app into, the TEE. No hardware at all.
+- **VoltPillager.** The hardware cousin: a ~$30 microcontroller injects **SVID** commands on the board's serial voltage-ID bus between CPU and voltage regulator, undervolting from outside the CPU and defeating Plundervolt's software mitigations. Same primitive as a PMBus attack — see [SMBus and PMBus](../protocols/smbus-pmbus.md).
+
+The attack loop is the same as [voltage glitching](#the-workflow) (sweep depth/timing of the undervolt around the target operation, detect a faulted result), but the "glitcher" is a register write or a bus command rather than a crowbar.
+
 ## The equipment
 
 - **ChipWhisperer** (Nano, Lite, Husky) is the standard integrated platform: it generates glitches, provides the trigger and cycle-accurate timing, and resets the target. See the [ChipWhisperer page](../software/chipwhisperer.md) for the models and Python API. The best place to learn.

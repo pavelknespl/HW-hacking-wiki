@@ -71,6 +71,14 @@ The same plaintext-bus weakness exposes any secret a TPM releases without an enc
 
 The same plaintext-bus weakness exposes any secret a TPM releases without an encrypted session: disk keys from other full-disk encryption schemes, attestation secrets, and keys used by measured-boot setups. The defense is identical everywhere.
 
+## Attack 3 — TPM-Fail (timing side-channel, no bus tap)
+
+**Target:** TPMs whose ECDSA/ECSchnorr signing leaks nonce bit-length through timing (several discrete and firmware TPMs were affected).
+**Gear:** just the ability to request signatures and time them — **no physical tap**, and it works remotely over the network in some setups.
+**How:** collect many signatures with precise timings, recover a few nonce bits per signature from the timing, then solve for the private key with a lattice (hidden number problem). See [side-channel](side-channel.md#named-remote-and-timing-variants).
+**Success condition:** reconstructed TPM private signing key.
+**Mitigation:** patched/constant-time TPM firmware.
+
 ## Defender's view
 
 - Add a **pre-boot PIN or passphrase** so a secret that never touches the bus is required; this defeats pure bus sniffing for BitLocker.

@@ -63,6 +63,20 @@ The powerful technique is to **be** a USB device in software, so you control eve
 
 Host-side fuzzing matters because USB drivers run early, in privileged kernel context, and parse attacker-controlled descriptors, which has produced real kernel vulnerabilities. **umap2** builds on Facedancer specifically to fuzz hosts by class.
 
+### Attack — BadUSB / HID injection
+
+**Target:** any host that trusts USB device class by identity (nearly all).
+**Idea:** a device that *claims* to be a keyboard is trusted as one. **BadUSB** reflashes a device's controller firmware (the original research reflashed Phison mass-storage controllers) so a "USB stick" also enumerates as an HID keyboard and types commands at machine speed on insert. A **Rubber Ducky / Digispark / Pico** does the same purpose-built.
+**Gear:** a scriptable HID device (Rubber Ducky, Raspberry Pi Pico running a HID payload, or [Flipper Zero](../software/flipper-zero.md) BadUSB), or a reflashable-controller flash drive.
+
+Steps: write a keystroke script (open a terminal, fetch+run a payload), flash it to the HID device, plug in; the host injects the keystrokes as if typed. The user cannot tell a malicious keyboard from a real one by class.
+
+**Mitigation:** USB device allowlisting (e.g. `usbguard`), disabling HID auto-enrollment, and physical port control. There is no class-level defense because the class claim is the attack.
+
+### Attack — host USB-stack fuzzing
+
+Use **Facedancer + umap2** to present malformed descriptors/class behavior to the host and crash or exploit its early, privileged USB parsers (above). Success = kernel oops / driver crash / memory corruption reachable before login.
+
 ## USB as a bridge to other buses
 
 Many of the adapters elsewhere in this wiki are USB devices that bridge to [UART](uart.md), [SPI](spi.md), [I2C](i2c.md), or [JTAG](jtag.md). An FT2232H, for example, is a USB device whose vendor interface `pyftdi` drives to speak those buses. So USB is often the layer your tools ride on, not only a target in itself.
