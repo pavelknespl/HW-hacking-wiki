@@ -246,6 +246,14 @@ nav:
       - Peripherals:
           - GPIO: programming/gpio.md
           - I2C: programming/i2c.md
+          - UART: programming/uart.md
+          - ADC, DAC and PWM: programming/analog-pwm.md
+          - Timers, Interrupts and Timing: programming/timers-interrupts.md
+          - 1-Wire and Addressable LEDs: programming/one-wire-leds.md
+      - Advanced:
+          - Bit-Banging and RP2040 PIO: programming/bit-banging-pio.md
+          - Wi-Fi and Networking: programming/networking.md
+          - Storage, Sleep and Watchdog: programming/storage-power.md
   - Scripting and Automation:
       - scripting/index.md
       - GPIO Control: scripting/gpio-control.md

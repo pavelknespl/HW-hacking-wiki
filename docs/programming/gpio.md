@@ -1,6 +1,6 @@
 # GPIO
 
-General-purpose I/O pins are the simplest peripheral and the one every other page builds on. A pin is either an **output** that the MCU drives high or low, or an **input** that reads the voltage someone else applies. Holding a target in reset, sensing a status line, pressing a button, or bit-banging a protocol all come down to these two operations.
+General-purpose I/O pins are the simplest peripheral and the one every other page builds on. A pin is either an **output** that the MCU drives high or low, or an **input** that reads the voltage someone else applies. Holding a target in reset, sensing a status line, pressing a button, or [bit-banging](bit-banging-pio.md) a protocol all come down to these two operations.
 
 ## Output
 
@@ -173,6 +173,8 @@ Mechanical contacts bounce for a few milliseconds, so one press looks like sever
       }
     }
     ```
+
+For edge-triggered handling with interrupts, see [Timers, Interrupts and Timing](timers-interrupts.md).
 
 ## Open-drain outputs
 

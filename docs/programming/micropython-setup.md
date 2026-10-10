@@ -161,8 +161,8 @@ def xor_buf(buf: ptr8, n: int, key: int):
         buf[i] ^= key
 ```
 
-If that is still not enough, move the timing-critical part into the RP2040's PIO blocks (`rp2` module) or switch to [C](c-cpp-setup.md).
+If that is still not enough, move the timing-critical part into the RP2040's [PIO](bit-banging-pio.md) blocks or switch to [C](c-cpp-setup.md).
 
 ## Where next
 
-Continue with [GPIO](gpio.md), then [I2C](i2c.md).
+Continue with [GPIO](gpio.md), then the bus pages: [I2C](i2c.md) and [UART](uart.md).

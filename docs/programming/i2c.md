@@ -594,7 +594,7 @@ from machine import SoftI2C, Pin
 i2c = SoftI2C(sda=Pin(10), scl=Pin(11), freq=100_000)   # same API as I2C
 ```
 
-In C, the Arduino cores and most SDKs ship a software I2C option, or you can toggle two open-drain GPIOs yourself.
+In C, see [Bit-Banging and PIO](bit-banging-pio.md#bit-banged-i2c) for a complete software implementation on any two pins.
 
 ## Errors and timeouts
 
