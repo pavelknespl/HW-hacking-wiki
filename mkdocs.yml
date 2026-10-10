@@ -8,8 +8,8 @@ site_author: pavelknespl
 site_url: https://hwhacking.pavelknespl.cz/
 copyright: Content licensed under CC BY-SA 4.0. For authorized security research and education only.
 
-repo_name: pavelknespl/hwhack.info
-repo_url: https://github.com/pavelknespl/hwhack.info
+repo_name: pavelknespl/HW-hacking-wiki
+repo_url: https://github.com/pavelknespl/HW-hacking-wiki
 edit_uri: edit/main/docs/
 
 theme:
@@ -104,7 +104,7 @@ plugins:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/pavelknespl/hwhack.info
+      link: https://github.com/pavelknespl/HW-hacking-wiki
   generator: false
 
 not_in_nav: |
