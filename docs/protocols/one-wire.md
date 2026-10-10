@@ -36,6 +36,25 @@ The common security use of 1-Wire is consumable authentication: a printer, medic
 
 Either way, the workflow is to sniff the host-to-chip exchange, understand whether it is a plain read or a cryptographic challenge, and then either clone the value or attack the secret.
 
+### Attack 1 — clone an ID/EEPROM consumable
+
+**Target:** a host that only reads the ROM ID or an EEPROM value and compares it.
+**Gear:** a logic analyzer or 1-Wire master; a writable/blank 1-Wire part (or an MCU emulating one).
+
+Steps:
+
+1. Sniff the host↔chip exchange with the [1-Wire decoder](../software/logic-analyzers.md); record the 64-bit ROM ID and any EEPROM bytes read.
+2. On a Pi, confirm by reading the genuine part: `cat /sys/bus/w1/devices/<id>/*`.
+3. Write the captured ID/EEPROM onto a blank part, or bit-bang an MCU to answer with the recorded ROM command responses.
+4. Swap in the clone; the host accepts it.
+
+**Success condition:** host operates with the clone.
+
+### Attack 2 — analyze a SHA challenge-response part
+
+**Target:** DS28E/DS1961S-style chip that MACs a challenge.
+**Steps:** sniff several challenge/response pairs; check whether the challenge is static or reused (replayable), whether the host actually verifies the MAC (patch the host check per [secure elements](../attacks/secure-elements.md#attack-1-bypass-replay-the-host-side-decision-usually-the-weak-link)), and only then consider [side-channel](../attacks/side-channel.md) recovery of the secret during the MAC computation. The host's verification is usually weaker than the chip.
+
 ## Related pages
 
 - [Pin Reference](../reference/pin-reference.md)

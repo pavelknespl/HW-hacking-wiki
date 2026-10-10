@@ -38,16 +38,43 @@ nrfconnect / nRF Connect (mobile)      # GUI GATT explorer
 - **Static or app-layer secrets** recoverable from the companion app (decompile the APK) or the device [firmware](../attacks/firmware-analysis.md).
 - **Replay** of a captured command when there is no freshness.
 
+## Attack 1 — write an unauthenticated characteristic
+
+**Target:** a device with a sensitive GATT characteristic (unlock, config) that needs no bonding/app-layer auth.
+**Gear:** any BLE host (`gatttool`/`bleak`), or nRF Connect.
+
+```bash
+gatttool -b <MAC> --primary                 # map services
+gatttool -b <MAC> --characteristics         # find the writable handle
+# write the "unlock" value to its handle:
+gatttool -b <MAC> --char-write-req -a 0x002b -n 01
+```
+
+**Success condition:** the device acts on the write (e.g. the lock opens) with no pairing.
+
+## Attack 2 — sniff + replay a command
+
+**Gear:** nRF52840 dongle (Nordic sniffer fw) or Ubertooth → Wireshark.
+
+Steps: lock the sniffer onto the connection as it forms, capture the app controlling the device, decode the ATT write in Wireshark, then replay that write with Attack 1's `--char-write-req`. Works whenever there is no link encryption or no per-command freshness.
+
+## Attack 3 — hijack / MITM an active connection
+
+**Gear:** **btlejack** (single BLE board) or **GATTacker** (clones the GATT profile to sit between app and device).
+
+```bash
+btlejack -s                 # scan for existing connections
+btlejack -f <access_addr>   # follow, then jam/hijack that connection
+```
+
+`btlejack` can jam and take over an existing connection; GATTacker proxies it so you observe and modify traffic live. This turns a passive capture into an active test of what the device accepts.
+
 ## The workflow
 
-1. **Recon** with nRF Connect: enumerate services and characteristics, note which are writable and whether they need bonding.
-2. **Sniff** a legitimate interaction (the app controlling the device) to see which handle does what and whether data is encrypted.
-3. **Replay or craft** writes to the interesting characteristics.
+1. **Recon** with nRF Connect: enumerate services/characteristics, note which are writable and whether they need bonding → Attack 1.
+2. **Sniff** a legitimate interaction to see which handle does what and whether data is encrypted → Attack 2.
+3. **Hijack** live where you need to modify in-flight → Attack 3.
 4. **Pull the companion app and firmware** when the on-air protocol has an app-layer secret; reverse them to recover it.
-
-## MITM with GATTacker / btlejack
-
-Tools like **btlejack** can jam and hijack an existing BLE connection, and **GATTacker** clones a device's GATT profile to sit between the app and the device, so you observe and modify traffic live. These turn a passive capture into an active test of what the device accepts.
 
 ## Defender's view
 
