@@ -1,60 +1,118 @@
 # ESP32 Security
 
-Espressif's ESP32 and ESP8266 are everywhere in cheap Wi-Fi and Bluetooth devices. Unlike [STM32](stm32-rdp.md) or [nRF52](nrf52-approtect.md), the classic ESP32 stores its firmware in an **external** SPI flash, so the default situation is wide open: clip the flash and read it. The security story is therefore about two optional features, **flash encryption** and **secure boot**, and what they do and do not stop.
+Espressif's ESP32 and ESP8266 are everywhere in cheap Wi-Fi and Bluetooth devices. Unlike [STM32](stm32-rdp.md) or [nRF52](nrf52-approtect.md), the classic ESP32 stores its firmware in an **external** SPI flash, so the default situation is wide open. The security story is two optional eFuse features — **flash encryption** and **secure boot** — and what they do and do not stop.
 
-## The default: external flash, wide open
+!!! warning "Authorized use only"
+    For devices you own or are authorized to assess. Burning eFuses is one-time and irreversible.
 
-A stock ESP32 keeps its application in an external [SPI flash](../protocols/spi.md). With no protections enabled you simply:
+## Step 0 — read the eFuse state
+
+Everything branches on what is actually enabled, and most devices enable nothing.
 
 ```bash
-esptool.py --port /dev/ttyUSB0 read_flash 0x0 0x400000 flash.bin
+espefuse.py --port /dev/ttyUSB0 summary
 ```
 
-or clip the flash chip and use [flashrom](../software/flashrom.md). That gives you the whole image, including any secrets. Most hobby and many commercial ESP32 devices ship exactly like this, so always try the plain read first.
+Look for: `FLASH_CRYPT_CNT` (flash encryption on/off and dev vs release), `ABS_DONE_0`/`ABS_DONE_1` or `SECURE_BOOT_EN` (secure boot v1/v2), `UART_DOWNLOAD_DIS`, `DISABLE_DL_ENCRYPT`, and the chip **revision** (`espefuse.py summary` header, or `esptool.py chip_id`). The exact attack depends on the variant (ESP32, ESP32-S2/S3, ESP32-C3) and revision, so record them.
 
-## Flash Encryption
+---
 
-Flash encryption encrypts the external flash contents with a key stored in the chip's **eFuse** (one-time-programmable). The flash controller decrypts transparently at runtime, so a raw read of the external chip yields ciphertext.
+## Attack 1 — plain external-flash dump (default devices)
 
-Boundaries and caveats:
+**Target:** stock ESP32 with no protections (the common case).
+**Gear:** USB-UART adapter, or a [SOIC-8 clip + flashrom](../software/flashrom.md).
 
-- A direct flash dump is now **encrypted**, so clipping the chip no longer hands you plaintext.
-- The key lives in eFuse and, when properly configured, is not software-readable.
-- **Development mode** flash encryption is reversible and much weaker than **release mode**; many devices are left in development mode, which undermines the protection.
-- Encryption protects confidentiality of the flash, not integrity of boot, and it does not by itself stop you running your own code unless secure boot is also on.
+In-circuit over the ROM UART bootloader:
 
-## Secure Boot
+```bash
+# hold GPIO0 low at reset to enter download mode, then:
+esptool.py --port /dev/ttyUSB0 --baud 921600 read_flash 0x0 0x400000 flash.bin
+```
 
-Secure Boot makes the ROM verify a signature on the bootloader, and the bootloader verify the app, rooting trust in a key digest burned into eFuse. With it enabled, modified firmware is rejected. Espressif has shipped **Secure Boot v1** and **v2** (RSA/ECDSA based, the current recommendation). Together, flash encryption plus secure boot v2 is the intended strong configuration.
+Or clip the external [SPI flash](../protocols/spi.md) and read it directly:
 
-## Attack surface
+```bash
+flashrom -p ch341a_spi -r flash.bin
+```
 
-- **Check what is actually enabled.** `espefuse.py summary` reads the eFuse state: whether flash encryption and secure boot are on, and whether in development or release mode. Many devices enable neither.
+**Success condition:** `binwalk flash.bin` shows the partition table at `0x8000` and an `app` partition; [esptool image_info](../software/esptool.md) parses the app header.
+**Mitigation:** enable flash encryption *and* secure boot (below).
 
-    ```bash
-    espefuse.py --port /dev/ttyUSB0 summary
-    ```
+---
 
-- **Development-mode flash encryption** can often be worked around, since the mode exists precisely to allow re-flashing during development.
-- **Published silicon vulnerabilities.** Specific ESP32 revisions have had documented [fault-injection](../attacks/fault-injection.md) attacks against secure boot and flash encryption (for example glitching the bootloader to bypass signature verification, and attacks recovering or misusing the encryption flow on certain chip versions). The applicable attack depends heavily on the exact chip (ESP32, ESP32-S2/S3, ESP32-C3) and its revision, so identify the part precisely.
-- **The newer RISC-V parts** (ESP32-C series) changed the [architecture](../fundamentals/architectures.md#espressif-a-common-special-case) and the security implementation; treat them separately from the original Xtensa ESP32.
+## Attack 2 — development-mode flash-encryption rollback
 
-## Workflow
+**Target:** devices left in **development-mode** flash encryption (very common; the mode exists to allow re-flashing).
+**Why it works:** dev mode leaves the download-mode encryption/decryption path usable and `FLASH_CRYPT_CNT` re-writable, so you can re-flash and read plaintext through the bootloader, unlike release mode.
 
-1. Identify the exact ESP32 variant and revision.
-2. Run `espefuse.py summary` to see which protections are set and in which mode.
-3. If none, [read the flash](../attacks/spi-flash-dump.md) directly.
-4. If encryption/secure boot are on, determine the mode (development vs release) and check current research for a fault-injection bypass against that specific chip revision.
-5. Analyze the recovered (and decrypted) image with [binwalk](../software/binwalk.md) and [Ghidra](../reverse-engineering/ghidra-setup.md); remember the original ESP32 core is Xtensa and needs a Ghidra plugin.
+Steps:
+
+1. Confirm dev mode in `espefuse.py summary` (`FLASH_CRYPT_CNT` odd/low count, `DISABLE_DL_DECRYPT` **not** burned).
+2. Use the download-mode decrypt path to read decrypted contents, or re-flash a known plaintext and compare:
+   ```bash
+   # dev mode: bootloader will transparently handle the encrypted read/write path
+   esptool.py --port /dev/ttyUSB0 read_flash 0x0 0x400000 enc.bin
+   ```
+3. If the key can still be used in download mode, the external dump is effectively recoverable.
+
+**Success condition:** decrypted app image parses.
+**Mitigation:** release mode only; burn `DISABLE_DL_ENCRYPT` / `DISABLE_DL_DECRYPT` / `DISABLE_DL_CACHE`.
+
+---
+
+## Attack 3 — fault-injection secure-boot bypass
+
+**Target:** specific ESP32 revisions with documented glitch bypasses of secure boot (Raelize / LimitedResults ESP32 research; see also CVE-2019-15894 class fault-injection flaws).
+**Precondition:** controllable reset, core-rail access.
+**Gear:** [ChipWhisperer](../software/chipwhisperer.md) or custom crowbar + the UART bootloader.
+**Why it works:** the ROM/bootloader signature check and the download-mode gate are single decision points; a timed fault during the check can let unsigned firmware run or re-open download mode on a locked part.
+
+Steps (standard [glitch loop](../attacks/fault-injection.md#the-workflow)):
+
+1. Trigger on reset release / bootloader entry.
+2. Sweep `ext_offset` across the verification window × `width`.
+3. Success detector: the part accepts an unsigned image / drops back into download mode / enables cache so plaintext is reachable.
+4. Once in, dump or run a stub.
+
+**Success condition:** unsigned stub executes, or download mode returns on a part that had it disabled.
+**Mitigation:** current revision with the fix; defense-in-depth per [chain of trust](../attacks/chain-of-trust.md).
+
+---
+
+## Attack 4 — glitch the flash-encryption / download path
+
+**Target:** revisions where a fault during the encryption-flow enforcement exposes plaintext or the key path.
+**Gear:** glitcher + UART.
+**Idea:** glitch the bootloader so `DISABLE_DL_DECRYPT`/cache gating is bypassed, then use the download-mode decrypt path (as in Attack 2) on a part that was supposed to be in release mode. Highly revision-specific — verify against current research for the exact die.
+
+**Mitigation:** release-mode encryption on a fixed revision; burn all download-mode disable fuses.
+
+---
+
+## Newer RISC-V parts
+
+The ESP32-C series (RISC-V) changed the [architecture](../fundamentals/architectures.md#espressif-a-common-special-case) and the security implementation; treat them separately from the original Xtensa ESP32 and re-check which attacks apply.
+
+## Decision flow
+
+```mermaid
+graph TD
+  A[espefuse summary] --> B{Encryption + Secure boot?}
+  B -->|neither| C[Attack 1: plain dump]
+  B -->|enc dev-mode| D[Attack 2: dev-mode rollback]
+  B -->|enc release + SB| E{Revision has published glitch?}
+  E -->|yes| F[Attack 3/4: fault injection]
+  E -->|no| G[Analyze externally reachable surfaces]
+```
 
 ## Defender's view
 
-Enable **both** flash encryption (release mode, not development) **and** secure boot v2, on a current chip revision. Encryption alone leaves code-execution open; secure boot alone leaves secrets in plaintext flash. Verify the eFuse state on production units rather than assuming the build configuration took effect.
+Enable **both** flash encryption (release mode, not development) **and** secure boot v2, on a current chip revision, and burn the download-mode disable fuses. Encryption alone leaves code-execution open; secure boot alone leaves secrets in plaintext flash. Verify the eFuse state on production units rather than trusting that the build config took effect.
 
 ## Related pages
 
 - [MCU Targets](index.md)
 - [SPI Flash Dumping](../attacks/spi-flash-dump.md)
+- [esptool](../software/esptool.md)
 - [Fault Injection and Glitching](../attacks/fault-injection.md)
-- [CPU Architectures](../fundamentals/architectures.md)
 - [Chain of Trust and Secure Boot](../attacks/chain-of-trust.md)
