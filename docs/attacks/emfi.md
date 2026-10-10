@@ -18,18 +18,45 @@ The trade-off is a larger parameter space: on top of timing you now tune positio
 
 ## The attack loop
 
-1. **Find a trigger** tied to the operation you want to fault (the signature check, the key comparison, the fuse read).
+The EM loop adds two search dimensions (position, energy) on top of the [voltage-glitch loop](fault-injection.md#the-workflow):
+
+1. **Find a trigger** tied to the operation you want to fault (signature check, key comparison, fuse read).
 2. **Scan position** across the package to locate a region where pulses produce faults rather than resets.
 3. **Sweep timing** around the trigger with a fine delay step.
 4. **Sweep pulse energy** so faults are frequent but the chip does not crash or brown out.
-5. **Detect success**: a skipped check, a wrong branch taken, unsigned code accepted, or a dumped value. Expect a low success rate and automate thousands of attempts.
+5. **Detect success**: a skipped check, a wrong branch, unsigned code accepted, or a dumped value. Expect a low hit rate; automate thousands of attempts.
 
-## What it is used for
+```python
+# ChipWhisperer + EMFI tip (e.g. ChipSHOUTER): add X/Y to the glitch sweep
+for x in xrange:                      # motorized stage grid over the die
+    for y in yrange:
+        stage.move(x, y)
+        for off in offsets:           # timing after trigger
+            for power in powers:      # pulse energy / gain
+                emfi.pulse.power = power
+                scope.glitch.ext_offset = off
+                reset_target(); scope.arm(); go(); scope.capture()
+                if success_detector():        # unsigned code ran / value leaked
+                    log_hit(x, y, off, power)
+```
 
-- **Secure boot bypass.** Skip the [signature verification](chain-of-trust.md) in a [boot ROM](../platform/bootrom-exploitation.md) so unsigned code runs.
-- **Read-protection bypass.** Fault the read of a lock [eFuse](../fundamentals/efuse-otp.md) so a protected device exposes [JTAG](../protocols/jtag.md) or flash.
-- **Crypto fault attacks.** Corrupt an intermediate value in RSA or AES to enable differential fault analysis and recover the key.
-- **FPGA config attacks.** Disturb [bitstream authentication](../fpga/bitstream-encryption.md) or force a device out of encrypted-only mode.
+---
+
+## Attack 1 — secure-boot bypass
+
+Skip the [signature verification](chain-of-trust.md) in a [boot ROM](../platform/bootrom-exploitation.md) so unsigned code runs. Trigger on the verify window; scan the coil over the CPU-fetch region; success = unsigned next-stage executes. The go-to when there is no public ROM software bug and the supply is too clean for voltage glitching.
+
+## Attack 2 — read-protection / fuse bypass
+
+Fault the read of a lock [eFuse](../fundamentals/efuse-otp.md) so a protected device re-exposes [JTAG](../protocols/jtag.md) or flash. Scan over the fuse/efuse sense logic; trigger on the post-reset fuse-load window (same principle as [nRF52 APPROTECT](../mcu/nrf52-approtect.md), but contactless).
+
+## Attack 3 — crypto differential fault analysis (DFA)
+
+Corrupt one intermediate byte in an RSA or AES operation, capture the faulty output, and recover the key with DFA math (one good/faulty ciphertext pair recovers an AES-128 key with published DFA). Trigger on the crypto operation (power-trace feature works well); scan over the crypto engine.
+
+## Attack 4 — FPGA config disturbance
+
+Disturb [bitstream authentication](../fpga/bitstream-encryption.md) or force a device out of encrypted-only mode during configuration. Scan over the config logic; trigger on the config-load phase.
 
 ## Defender's view
 

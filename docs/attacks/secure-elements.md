@@ -20,11 +20,34 @@ When a device stores its secret in a secure element rather than plain [flash](sp
 - A [firmware dump](firmware-extraction.md) no longer contains the key (unlike the usual [plaintext-secret sweep](firmware-analysis.md)); it contains only calls to the secure element.
 - You cannot read the key over the bus, because it never crosses the bus.
 
-So the attack shifts from "find the key" to one of:
+So the attack shifts from "find the key" to one of the following. **Try them in this order** — the first two usually work and need no attack on the chip.
 
-1. **Attack the protocol around it.** The secure element proves possession of a key, but how does the host *use* that proof? If the host checks only "did the chip answer", you may **replay** a captured valid response, or **bypass the check in the host firmware** entirely (patch out the "is this accessory genuine" branch). This is often the weakest link and needs no attack on the chip at all.
-2. **Attack the host-to-element channel.** [Sniff the I2C](../protocols/i2c.md) exchange to understand the challenge-response; if the channel is unencrypted and the host trusts a simple value, you may clone that behavior.
-3. **Attack the element itself.** [Side-channel](side-channel.md) (power/EM analysis of the crypto operation) and [fault injection](fault-injection.md) have recovered keys from specific secure elements and wallets, and [invasive](decapping.md) methods against the die. This is the hard path and depends entirely on the chip's countermeasures and known research for that exact part.
+### Attack 1 — bypass/replay the host-side decision (usually the weak link)
+
+**Idea:** the element proves possession of a key, but the *host* decides what to do with that proof. If the host only checks "did the chip answer", forge or skip that decision.
+
+Steps:
+
+1. [Extract and reverse the host firmware](firmware-analysis.md); find where it calls the element and what it branches on.
+2. **Patch the check** — NOP out the "is this accessory genuine" branch, or force it true, then re-flash. This defeats the whole scheme without touching the element.
+3. Or **replay**: if the challenge is static/reused, capture a valid response (Attack 2) and replay it.
+
+### Attack 2 — sniff the host-to-element channel
+
+**Idea:** on [I2C](../protocols/i2c.md)/SPI the exchange is often plaintext.
+
+Steps:
+
+1. Tap the bus and capture the challenge-response:
+   ```bash
+   sigrok-cli -d fx2lafw --config samplerate=4m -C scl,sda -o se.sr --continuous
+   ```
+2. Decode (I2C/SPI → the element's command set, e.g. ATECC `Nonce`/`MAC`/`CheckMac`).
+3. If the channel is unencrypted and the host trusts a simple value, clone that behavior or feed the host a forged answer.
+
+### Attack 3 — attack the element silicon (hard path, part-specific)
+
+**Idea:** recover the key from the chip itself. [Side-channel](side-channel.md) (power/EM analysis of the crypto op), [fault injection](fault-injection.md), and [invasive](decapping.md) methods have recovered keys from *specific* secure elements and wallets. Entirely dependent on that part's countermeasures and published research — identify the exact chip first and check whether a documented attack exists before investing lab time.
 
 ## The practical lesson
 

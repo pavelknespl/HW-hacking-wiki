@@ -37,11 +37,15 @@ pcileech wx64_unlock ...               # known memory patches for lock screens
 
 PCILeech ships known techniques to dump memory, inject a kernel module, and patch common OS authentication checks, turning raw DMA into a working lock-screen bypass or key dump.
 
-## What it achieves
+## Attacks it enables
 
-- **Key extraction** from RAM, same prize as a [cold boot attack](cold-boot.md) but live and without power games.
-- **Lock-screen bypass** by patching the authentication check in kernel memory.
-- **Persistence** by writing an implant into the running kernel.
+Each maps to a PCILeech workflow against a machine whose IOMMU is off/misconfigured or in the pre-boot window:
+
+- **Attack 1 — key extraction from RAM.** `pcileech dump` the physical memory, then run `aeskeyfind`/`bitlocker2john` on it (same prize as a [cold boot attack](cold-boot.md), but live and without power games). Success: a disk key recovered from the dump.
+- **Attack 2 — lock-screen bypass.** Use PCILeech's known memory patches (`wx64_unlock` and friends) to patch the OS authentication check in kernel memory. Success: screen unlocks without credentials.
+- **Attack 3 — kernel implant / persistence.** `pcileech kmdload` injects a kernel module into the victim, giving code execution and persistence. Success: injected module runs.
+
+All three require the IOMMU to be absent, disabled, or not yet initialized.
 
 ## The defense: IOMMU
 

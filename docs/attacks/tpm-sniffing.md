@@ -21,15 +21,51 @@ BitLocker in **TPM-only** mode (the default, with no PIN or USB key) is the cano
 
 Sniff the bus during that boot window and you capture the VMK, then decrypt the drive offline. The attack needs only brief physical access and cheap hardware, which is why TPM-only BitLocker is considered weak against a physical attacker, and why adding a **pre-boot PIN** (which never crosses the bus) defeats it.
 
-## Doing the capture
+## Step 0 — locate and identify the bus
 
-1. **Locate the bus.** Find the TPM: a discrete module on a header, or a surface-mount TPM chip. Determine whether it is [LPC](../protocols/lpc.md) or [SPI](../protocols/spi.md) from the chip and routing. A populated TPM header is the easiest tap.
-2. **Tap the signals.**
-    - **SPI TPM**: tap `CLK`, `MOSI`, `MISO`, `CS` like any [SPI sniff](../protocols/spi.md#sniffing-an-spi-bus). This is the common modern case and the easiest, because SPI is simple to decode.
-    - **LPC TPM**: tap `LCLK`, `LFRAME#`, `LAD[3:0]`; the multiplexed 33 MHz bus needs a faster analyzer or an FPGA sniffer. See [LPC](../protocols/lpc.md).
-3. **Capture at boot.** Trigger on reset and record the window where the TPM releases the key.
-4. **Decode and extract.** Decode the bus, find the TPM command/response for the unseal, and pull the key bytes from the response. Community tooling exists for both SPI and LPC TPM extraction (including ready-made FPGA bitstreams and parsers that locate the key in a capture).
-5. **Decrypt.** Use the recovered key with the appropriate tool (for BitLocker, `dislocker` or `bdemu` with the VMK/FVEK) to mount the volume.
+Find the TPM: a discrete module on a header, or a surface-mount chip. Determine whether it is [LPC](../protocols/lpc.md) or [SPI](../protocols/spi.md) from the part number and routing. A populated TPM header is the easiest tap.
+
+---
+
+## Attack 1 — SPI TPM sniff (common modern case)
+
+**Target:** a board with a discrete SPI TPM in a plaintext (no encrypted-session) config.
+**Gear:** a logic analyzer ≥ ~4× the SPI clock (a cheap FX2 does ~24 MSa/s; a faster Saleae/FPGA is safer), fine clips.
+
+Steps:
+
+1. Tap `CLK`, `MOSI`, `MISO`, `CS` like any [SPI sniff](../protocols/spi.md#sniffing-an-spi-bus). Share grounds.
+2. Arm on power-on and capture the boot window:
+   ```bash
+   sigrok-cli -d fx2lafw --config samplerate=24m \
+     -C clk,cs,miso,mosi -o tpm.sr --continuous   # stop after the key is released
+   ```
+3. Decode SPI, then the TPM framing, and locate the `TPM2_Unseal`/response that carries the key. The published `TPM-genie` / `bitlocker-spi-toolkit` parsers find the VMK in a capture automatically.
+4. Mount offline (below).
+
+**Success condition:** a 32-byte VMK/FVEK appears in the unseal response.
+
+## Attack 2 — LPC TPM sniff (older boards)
+
+**Target:** a discrete LPC TPM.
+**Gear:** the multiplexed 33 MHz LPC bus needs a fast analyzer or an **FPGA sniffer** (ready-made bitstreams exist, e.g. `lpc_sniffer_tpm` for cheap FPGA boards).
+
+Steps:
+
+1. Tap `LCLK`, `LFRAME#`, `LAD[3:0]` (and `LRESET#`). See [LPC](../protocols/lpc.md).
+2. Capture at boot with the FPGA sniffer; it reconstructs LPC cycles and dumps TPM traffic.
+3. Locate the unseal response and pull the key bytes.
+
+**Success condition:** VMK recovered from the decoded LPC stream.
+
+## Decrypt the volume
+
+```bash
+# BitLocker: use the recovered VMK/FVEK
+dislocker -V /dev/sdX1 -K recovered.fvek -- /mnt/bitlocker
+```
+
+The same plaintext-bus weakness exposes any secret a TPM releases without an encrypted session (other FDE schemes, attestation secrets, measured-boot keys).
 
 ## Beyond BitLocker
 

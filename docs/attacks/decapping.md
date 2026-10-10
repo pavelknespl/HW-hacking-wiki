@@ -19,12 +19,12 @@ Removing the package to expose the die:
 
 The result is a working chip with its die visible under a microscope, which you can then image or probe.
 
-## What you can do once the die is exposed
+## Attacks once the die is exposed
 
-- **Optical imaging / reverse engineering**: photograph the die layer by layer (delayering between shots) to reconstruct the circuit, including **mask ROM** contents, which can be read optically because the bits are physically encoded. This is how some ROM-stored secrets and algorithms are recovered.
-- **Microprobing**: land fine needles (or use a probe station) on internal buses to read data as the chip runs, for example tapping an internal memory bus to capture firmware or keys in transit inside the chip, below any external protection.
-- **Optical fault injection**: a focused laser pulse flips bits or faults specific transistors with far more precision than [voltage glitching](fault-injection.md), defeating protections that resist electrical faults.
-- **Focused Ion Beam (FIB) editing**: a FIB can cut and reconnect traces on the die, for example severing a security fuse's sense line or reconnecting a disabled debug path. Circuit edit at the nanometer scale.
+- **Attack 1 — optical imaging / RE**: photograph the die layer by layer (delayering between shots) to reconstruct the circuit, including **mask ROM** contents, which read optically because the bits are physically encoded. How some ROM-stored secrets and algorithms are recovered.
+- **Attack 2 — microprobing**: land fine needles (or use a probe station) on internal buses to read data as the chip runs — e.g. tap an internal memory bus to capture firmware or keys in transit inside the chip, below any external protection.
+- **Attack 3 — optical (laser) fault injection**: a focused laser pulse flips bits or faults specific transistors with far more precision than [voltage glitching](fault-injection.md) or [EMFI](emfi.md), defeating protections that resist electrical faults. Same [glitch loop](fault-injection.md#the-workflow) logic, but the "position" axis is micron-scale on the bare die.
+- **Attack 4 — Focused Ion Beam (FIB) edit**: cut and reconnect traces on the die — sever a security fuse's sense line, or reconnect a disabled debug path. Circuit edit at the nanometer scale.
 
 ## Reading fuses and secure storage
 

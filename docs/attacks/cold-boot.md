@@ -11,13 +11,40 @@ Dynamic RAM stores each bit as charge in a tiny capacitor that must be refreshed
 
 So a key sitting in RAM, for example a disk-encryption key that software was careful never to write to disk, is nonetheless sitting in a medium you can read after power loss.
 
-## The attack
+## Attack 1 — fast-reboot imager
 
-1. **Target a running or suspended machine** whose disk is decrypted (the key is in RAM). A locked screen does not help the defender here; the key is still resident.
-2. **Drop power and capture fast**, two common variants:
-    - **Reboot into a tiny imager**: cut power and immediately boot a minimal USB/PXE tool that dumps RAM before the OS clears it. Works when boot is fast and memory is not scrubbed.
-    - **Transplant the DIMM**: with the chips chilled, physically move the module to an attacker-controlled machine and image it there.
-3. **Recover keys from the image**: disk-encryption keys (and their key schedules) have recognizable structure. Tools scan a RAM dump for **AES key schedules** and reconstruct the key even from partially decayed memory, because the schedule is redundant.
+**Target:** a running/suspended machine with a decrypted disk; firmware that boots fast and does not scrub RAM.
+**Gear:** a USB stick with a minimal RAM-dumping image (the original PoC used `msramdump`/`bios_memimage`; a tiny Linux or iPXE that images physical memory works too).
+
+Steps:
+
+1. Confirm the disk key is resident (machine on, suspended, or recently off; a locked screen does not evict it).
+2. Cut power and immediately boot the USB imager before the OS/firmware clears RAM.
+3. Dump physical memory to the stick.
+
+## Attack 2 — DIMM transplant (chilled)
+
+**Target:** socketed DRAM.
+**Gear:** inverted canned air (cold blast) or colder; a second attacker-controlled machine.
+
+Steps:
+
+1. Chill the modules to slow decay (extends the window to minutes).
+2. Move the DIMM to the capture machine and image it there.
+3. Note: soldered/on-package memory (most laptops, phones) cannot be transplanted — use Attack 1 instead.
+
+## Recovering the key from the image
+
+Disk-encryption keys and their **key schedules** have recognizable, redundant structure, so tools reconstruct them even from partially decayed memory:
+
+```bash
+aeskeyfind mem.raw           # scan a RAM image for AES key schedules
+rsakeyfind mem.raw           # find RSA private keys
+# for BitLocker specifically:
+bitlocker2john -i mem.raw    # extract the VMK/FVEK material, then mount with dislocker
+```
+
+Feed a recovered VMK/FVEK to `dislocker` (BitLocker), `cryptsetup` (LUKS), etc. to mount the volume offline.
 
 ## What it defeats
 
