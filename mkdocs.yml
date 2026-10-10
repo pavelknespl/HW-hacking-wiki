@@ -55,6 +55,7 @@ theme:
     - search.highlight
     - search.share
     - content.code.copy
+    - content.tabs.link
     - content.code.annotate
     - content.tooltips
 
@@ -237,6 +238,14 @@ nav:
       - Signal Targets:
           - GNSS and GPS Spoofing: radio/gps-spoofing.md
           - Key Fobs and Rolling Codes: radio/key-fobs.md
+  - MCU Programming:
+      - programming/index.md
+      - Getting Started:
+          - MicroPython: programming/micropython-setup.md
+          - C and C++: programming/c-cpp-setup.md
+      - Peripherals:
+          - GPIO: programming/gpio.md
+          - I2C: programming/i2c.md
   - Scripting and Automation:
       - scripting/index.md
       - GPIO Control: scripting/gpio-control.md
