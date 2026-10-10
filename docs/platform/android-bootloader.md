@@ -1,10 +1,11 @@
 # Android Bootloaders
 
-An Android phone is an ARM SoC running a layered, verified boot chain, with a well-defined low-level interface, **fastboot**, that a hardware hacker can reach over USB. Understanding the bootloader, how unlocking works, and where firmware lives is the entry point for most phone security work. For authorized work on devices you own.
+An Android phone is an ARM SoC running a layered, verified boot chain, with a well-defined low-level interface, **fastboot**, reachable over USB. Understanding the bootloader, how unlocking works, and where firmware lives is the entry point for most phone security work.
+
+!!! warning "Authorized use only"
+    For devices you own or are authorized to test.
 
 ## The boot chain
-
-Android boot is a textbook [chain of trust](../attacks/chain-of-trust.md):
 
 ```
 Boot ROM -> Primary bootloader (SoC, e.g. Qualcomm XBL) -> ABL/aboot (fastboot)
@@ -13,9 +14,7 @@ Boot ROM -> Primary bootloader (SoC, e.g. Qualcomm XBL) -> ABL/aboot (fastboot)
 
 Each stage verifies the next, rooted in keys fused into the SoC. **Android Verified Boot (AVB / vbmeta)** and **dm-verity** protect the kernel and system partitions, so modified images are rejected unless the bootloader is unlocked.
 
-## fastboot
-
-The **ABL** (Android Bootloader) exposes fastboot over USB, entered with a key combo or `adb reboot bootloader`:
+## Step 0 — read bootloader state
 
 ```bash
 fastboot devices
@@ -23,49 +22,77 @@ fastboot getvar all           # device, bootloader, unlock state, partitions
 fastboot oem device-info      # lock status on many devices
 ```
 
-fastboot is how you query state, flash partitions (when unlocked), and boot images. A **locked** bootloader refuses to flash or boot unsigned images; that lock is the main protection.
+Enter fastboot with a key combo or `adb reboot bootloader`. A **locked** bootloader refuses to flash or boot unsigned images — that lock is the main protection.
 
-## Unlocking
+---
 
-Official unlocking (where the vendor allows it) flips the bootloader to an unlocked state:
+## Attack 1 — unlock + patched-boot root (vendor permits unlock)
 
-```bash
-fastboot flashing unlock      # or: fastboot oem unlock
+**Target:** devices where the vendor allows official unlocking.
+**Why it works:** unlocking disables AVB enforcement, so a custom (e.g. Magisk-patched) boot image runs.
+
+Steps:
+
+1. Unlock (wipes user data by design, so it cannot exfiltrate a found phone's data):
+   ```bash
+   fastboot flashing unlock      # or: fastboot oem unlock
+   ```
+2. Obtain the stock `boot`/`init_boot` from the factory image, patch it (e.g. Magisk), then:
+   ```bash
+   fastboot flash boot boot_patched.img
+   # or boot it once without flashing:
+   fastboot boot boot_patched.img
+   ```
+
+**Success condition:** device boots with the patched image and root/instrumentation is available.
+**Mitigation:** this is the intended, data-wiping path; it is not a protection bypass.
+
+---
+
+## Attack 2 — dump firmware below a locked bootloader
+
+**Target:** locked devices where fastboot refuses flashing/booting.
+**Route:** drop below the bootloader to a [Qualcomm EDL or MediaTek BROM](mobile-soc-edl.md) mode, which can read storage even when fastboot is locked.
+
+Steps:
+
+1. Prefer the **official factory image** if the vendor publishes one — easiest source for [analysis](../attacks/firmware-analysis.md).
+2. Else dump via [EDL/BROM](mobile-soc-edl.md) (Attacks 1–2 there).
+3. Last resort: [chip-off eMMC/UFS](../attacks/nand-emmc-dump.md).
+
+**Success condition:** partitions imaged. Note userdata is keystore-encrypted — raw access yields ciphertext without the hardware-bound keys.
+**Mitigation:** secure the below-bootloader modes; bind encryption to a hardware keystore.
+
+---
+
+## Attack 3 — verified-boot / downgrade bypass (model-specific)
+
+**Target:** a device with a flaw in its boot chain.
+**Classes to test:**
+
+- **AVB/vbmeta misconfiguration:** a stage that accepts an unsigned or disabled-verification partition. Covered as [bootloader bypass](../attacks/bootloader-bypass.md).
+- **Anti-rollback gaps:** flashing an older *signed* image with a known bug where rollback counters are not enforced.
+- **A stage that fails to verify the next**, the classic chain-of-trust break.
+
+These are specific to an exact model/firmware version — enumerate the boot chain, then check published advisories for that device.
+
+**Mitigation:** enforce AVB + rollback protection; verify every stage.
+
+## Decision flow
+
+```mermaid
+graph TD
+  A[fastboot getvar all] --> B{Unlockable?}
+  B -->|yes| C[Attack 1: unlock + patched boot]
+  B -->|no| D{Factory image public?}
+  D -->|yes| E[download + analyze]
+  D -->|no| F[Attack 2: EDL/BROM dump]
+  G[Need to run unsigned on locked] --> H[Attack 3: AVB/downgrade bypass]
 ```
-
-Important consequences:
-
-- Unlocking **wipes user data** by design (so unlocking cannot be used to steal data from a found phone).
-- An unlocked bootloader lets you flash a custom boot image (patched kernel, Magisk for root) and boot unsigned images.
-- Many carrier/vendor devices **disallow** unlocking, or gate it behind a vendor token, which is the obstacle.
-
-## Where firmware lives, and how to get it
-
-Phone firmware sits in [eMMC or UFS](../protocols/emmc.md) as many partitions (boot, vendor, system, modem, etc.). Routes to it:
-
-- **Official factory images**: many vendors publish full firmware packages; the easiest source for [analysis](../attacks/firmware-analysis.md).
-- **fastboot (unlocked)**: read/boot images; flashing a patched boot image is the standard root path.
-- **Recovery / download mode below the bootloader**: [Qualcomm EDL or MediaTek BROM](mobile-soc-edl.md) can read storage even when fastboot is locked, which is why those modes matter so much.
-- **Chip-off** [eMMC/UFS](../attacks/nand-emmc-dump.md) as a last resort.
-
-## The attack surface
-
-- **Locked vs unlockable**: whether the vendor permits unlocking, and whether the unlock is enforced properly, is the first question.
-- **Downgrade / anti-rollback**: flashing an older signed image with a known bug, blocked by rollback counters when implemented.
-- **Secure boot / AVB flaws**: a stage that fails to verify the next, an accepted unsigned partition, or a vbmeta misconfiguration, is the classic [bootloader bypass](../attacks/bootloader-bypass.md).
-- **Below-bootloader modes**: [EDL/BROM](mobile-soc-edl.md) bypass fastboot's lock entirely, the reason they are a prime target.
-- **Encrypted userdata**: modern Android encrypts user data with keys bound to the hardware keystore, so even raw storage access yields ciphertext without the keys.
-
-## The workflow
-
-1. `fastboot getvar all` to read bootloader, unlock state, and partition layout.
-2. Obtain firmware (factory image, or dump via fastboot/[EDL](mobile-soc-edl.md)).
-3. Analyze partitions with [binwalk](../software/binwalk.md) and [Ghidra](../reverse-engineering/ghidra-setup.md); the kernel, init, and vendor binaries are the meat.
-4. If the bootloader is locked and unofficial, evaluate [below-bootloader modes](mobile-soc-edl.md) or known AVB/bootloader bypasses for that exact model.
 
 ## Defender's view
 
-Keep the bootloader locked, enforce AVB and rollback protection, bind data encryption to a hardware keystore so storage access alone is useless, and secure the [download modes](mobile-soc-edl.md) that sit below the bootloader. Tie unlocking to a data wipe so it cannot exfiltrate user data.
+Keep the bootloader locked, enforce AVB and rollback protection, bind data encryption to a hardware keystore so storage access alone is useless, and secure the [download modes](mobile-soc-edl.md) below the bootloader. Tie unlocking to a data wipe so it cannot exfiltrate user data.
 
 ## Related pages
 
